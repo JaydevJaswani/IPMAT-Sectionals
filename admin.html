@@ -132,6 +132,25 @@ tr.prac td{opacity:.5}
   </div>
 
   <div id="panel">
+    <h2 class="sec">Students <small>your enrolment roster — upload once, edit anytime</small></h2>
+    <div class="conn" style="margin-top:0">
+      <p>Upload a <b>CSV</b> or <b>Excel (.xlsx)</b> with columns
+        <span class="mono" style="font-family:var(--f-mono)">pin, name, batch, centre, active</span>
+        &mdash; only <b>pin</b> is required, <b>active</b> defaults to 1. Existing PINs are updated,
+        so you can re-upload an edited sheet anytime. <a href="#" id="rostertemplate">Download a template</a>.</p>
+      <div class="row" style="grid-template-columns:1fr 190px 190px">
+        <div class="fld"><label for="rosterfile">Roster file</label>
+          <input type="file" id="rosterfile" accept=".csv,.xlsx,.xls"></div>
+        <div class="fld"><label>&nbsp;</label>
+          <label style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:400;display:flex;gap:7px;align-items:center;color:var(--ink-2)">
+            <input type="checkbox" id="rosterreplace" style="width:auto"> Replace whole roster</label></div>
+        <div class="fld"><label>&nbsp;</label>
+          <button class="btn" id="rosterupload" style="width:100%">Upload roster</button></div>
+      </div>
+      <div class="s" id="rostersummary" style="margin-top:6px"></div>
+      <div id="rosterwrap" style="margin-top:12px"></div>
+    </div>
+
     <!-- Faculty control. A paper only accepts its passcode while it is open, so a passcode
          that leaks into a WhatsApp group is dead by the evening. -->
     <h2 class="sec">Sessions <small>open a paper when the students are in front of you</small></h2>
@@ -173,6 +192,7 @@ tr.prac td{opacity:.5}
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const el = (t,c,x) => { const e=document.createElement(t); if(c)e.className=c;
@@ -185,7 +205,8 @@ const SS = {
   get key(){ return sessionStorage.getItem('ims.key')||''; },
   set key(v){ try{sessionStorage.setItem('ims.key',v)}catch(e){} }
 };
-$('#ep').value = SS.ep; $('#key').value = SS.key;
+$('#ep').value = SS.ep || 'https://ipmat-sectionals.jaydev-jaswani.workers.dev';
+$('#key').value = SS.key;
 
 function msg(t, cls){ const m=$('#msg'); m.textContent=t; m.className='msg on '+(cls||''); }
 function hide(){ $('#msg').className='msg'; }
@@ -397,7 +418,7 @@ async function load(paper){
         : 'The server refused: '+(j.reason||'unknown'),'err');
       $('#load').disabled=false; return;
     }
-    DATA = j; hide(); render(); loadSessions();
+    DATA = j; hide(); render(); loadSessions(); loadRoster();
   }catch(e){
     msg('Could not reach that URL. Check it ends in /exec, that the deployment is set to '+
         '"Anyone" access, and that you are online. ('+e.message+')','err');
@@ -607,6 +628,92 @@ $('#csvp').onclick = () => {
   const rows = [['Student','PIN','Batch','Centre']].concat(
     (DATA.pending||[]).map(s=>[s.name,s.pin,s.batch,s.centre]));
   dl('IMS_pending_'+tagp()+'_'+stamp()+'.csv', rows);
+};
+
+/* ---------------- roster: upload / list / remove ---------------- */
+function rosterUrl(action){
+  return SS.ep + (SS.ep.includes('?')?'&':'?') + 'action='+action+'&key='+encodeURIComponent(SS.key);
+}
+async function loadRoster(){
+  const wrap=$('#rosterwrap'), sum=$('#rostersummary');
+  try{
+    const j = await (await fetch(rosterUrl('roster_list'))).json();
+    if(!j.ok){ sum.textContent=''; wrap.innerHTML=''; return; }
+    sum.innerHTML = '<b>'+j.count+'</b> student'+(j.count===1?'':'s')+' enrolled.';
+    if(!j.count){ wrap.innerHTML='<div class="empty">No students yet — upload your roster above.</div>'; return; }
+    const t=el('table'),th=el('thead'),hr=el('tr');
+    ['PIN','Name','Batch','Centre','Active',''].forEach(x=>hr.appendChild(el('th','',x)));
+    th.appendChild(hr); t.appendChild(th);
+    const tb=el('tbody');
+    j.rows.forEach(s=>{
+      const tr=el('tr', s.active?'':'prac');
+      tr.appendChild(el('td','m',s.pin));
+      tr.appendChild(el('td','nm',s.name||'—'));
+      tr.appendChild(el('td','',s.batch||'—'));
+      tr.appendChild(el('td','',s.centre||'—'));
+      tr.appendChild(el('td','',s.active?'yes':'no'));
+      const td=el('td'); const b=el('button','btn-g btn','remove');
+      b.style.padding='4px 10px'; b.dataset.rm=s.pin; td.appendChild(b); tr.appendChild(td);
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb); wrap.innerHTML=''; wrap.appendChild(t);
+  }catch(e){ sum.textContent=''; }
+}
+function readRosterFile(file){
+  return new Promise((resolve,reject)=>{
+    const fr=new FileReader();
+    fr.onload=()=>{
+      try{
+        const wb=XLSX.read(new Uint8Array(fr.result),{type:'array'});
+        const ws=wb.Sheets[wb.SheetNames[0]];
+        const raw=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});
+        const rows=raw.map(r=>{
+          const m={}; Object.keys(r).forEach(k=>m[String(k).trim().toLowerCase()]=r[k]);
+          return {pin:m.pin, name:m.name, batch:m.batch, centre:(m.centre!==undefined?m.centre:m.center), active:m.active};
+        }).filter(r=>String(r.pin==null?'':r.pin).trim().length>=4);
+        resolve(rows);
+      }catch(err){ reject(err); }
+    };
+    fr.onerror=reject; fr.readAsArrayBuffer(file);
+  });
+}
+$('#rosterupload').onclick = async () => {
+  if(!SS.ep||!SS.key){ msg('Load with your admin key first.','err'); return; }
+  const f=$('#rosterfile').files[0];
+  if(!f){ msg('Choose a CSV or Excel file first.','err'); return; }
+  const btn=$('#rosterupload'); btn.disabled=true; btn.textContent='Reading…';
+  try{
+    const rows=await readRosterFile(f);
+    if(!rows.length){ msg('No rows with a valid PIN found. Check that a column is named "pin".','err');
+      btn.disabled=false; btn.textContent='Upload roster'; return; }
+    btn.textContent='Uploading '+rows.length+'…';
+    const r=await fetch(rosterUrl('roster_upload'),{method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({rows, replace: $('#rosterreplace').checked?1:0})});
+    const j=await r.json();
+    if(j.ok){ msg('Uploaded '+j.added+' student'+(j.added===1?'':'s')+'. Roster now has '+j.total+'.','ok');
+      $('#rosterfile').value=''; loadRoster(); }
+    else msg('Upload failed: '+(j.reason||'unknown'),'err');
+  }catch(e){ msg('Could not read that file. Use a .csv or .xlsx with a header row. ('+e.message+')','err'); }
+  if(btn.isConnected){ btn.disabled=false; btn.textContent='Upload roster'; }
+};
+document.addEventListener('click', async e=>{
+  const b=e.target.closest('#rosterwrap button[data-rm]');
+  if(!b) return;
+  const pin=b.dataset.rm;
+  if(!confirm('Remove '+pin+' from the roster?')) return;
+  b.disabled=true; b.textContent='…';
+  try{
+    const r=await fetch(rosterUrl('roster_remove'),{method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({pin})});
+    const j=await r.json();
+    if(j.ok){ msg(pin+' removed.','ok'); loadRoster(); } else msg('Could not remove: '+(j.reason||'unknown'),'err');
+  }catch(err){ msg('Could not reach the server.','err'); }
+});
+$('#rostertemplate').onclick = (e) => {
+  e.preventDefault();
+  dl('IPMAT_roster_template.csv', [['pin','name','batch','centre','active'],
+    ['IMS0000000001','Aarav Shah','IPMAT-M-01','Ahmedabad','1']]);
 };
 
 $('#load').onclick = () => load($('#paper').value || '');
