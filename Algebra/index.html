@@ -714,7 +714,7 @@ section.blk:last-of-type{border-bottom:0}
 const CONFIG = {
   /* The backend base URL. Used for the greeting, peer data and recording attempts —
      but NOT for opening the paper: that check is local (see PINS below). */
-  ENDPOINT: "https://ims-cat26.vipul-tg.workers.dev",
+  ENDPOINT: "https://ipmat-sectionals.jaydev-jaswani.workers.dev",
   /* Deliberate downgrade for a centre with no working connection AND no baked-in
      enrolment table: opens the paper for any PIN of four characters or more, with no
      name and no recording. Leave false in normal use. */
@@ -1098,7 +1098,7 @@ const N = QS.length;
    enrolment gate: it runs locally, so opening the paper never touches the network and
    never queues behind anyone else. Student names are deliberately NOT here; they are
    fetched afterwards and never block the start. */
-const PINS = ["fdeddd50879e77b7", "852da58eacf0efa8", "e3a5c27909af22a6", "efe974f3e129c30f"];
+const PINS = [];  /* cleared — roster is enforced by the Worker */
 
 /* ---------------- state ---------------- */
 const S = {
