@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMS · CAT 2026 Sectional — Numbers & Modern Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* The hidden attribute hides via the browser's own [hidden]{display:none}, which ANY
+   author rule setting display outranks. #startrow carries .startrow{display:flex} and
+   was therefore visible while marked hidden, exposing Begin before the passcode. This
+   rule makes hidden mean hidden for every element, whatever else sets display. */
+[hidden]{display:none !important}
+:root{
+  --paper:#FAF8F4; --paper-2:#F2EEE6; --card:#FFFFFF;
+  --ink:#14203A; --ink-2:#4A5568; --ink-3:#8A8578;
+  --navy:#1F3864; --navy-lt:#2E4E86; --red:#C00000; --red-lt:#E23B3B;
+  --rule:#DAD3C6; --rule-2:#EAE5DA;
+  --ok:#1B5E3F; --ok-lt:#3E8C66;
+  --warn:#B07D2B; --bleed:#8C7A55; --sunk:#7A1518;
+  --f-disp:'Fraunces',Georgia,serif;
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --w:1180px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+.screen{display:none}
+.screen:not(.on){display:none!important}
+.screen.on{display:block}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------------- GATE ---------------- */
+#gate.on{display:grid}
+#gate{min-height:100vh;place-items:center;background:var(--navy);
+   background-image:radial-gradient(900px 520px at 12% -12%, rgba(255,255,255,.09), transparent 62%);
+   padding:32px 20px}
+#gate::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:22px 22px;opacity:.6}
+.gatewrap{position:relative;width:100%;max-width:960px;display:grid;grid-template-columns:1.15fr .85fr;
+  gap:0;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03)}
+.gateleft{padding:52px 48px;color:#EDE9E0}
+.gate-brand{font-family:var(--f-ui);font-weight:700;letter-spacing:.24em;font-size:12px;color:#fff;opacity:.85}
+.gate-tag{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
+.gateleft h1{font-family:var(--f-disp);font-weight:600;font-size:clamp(34px,4.6vw,52px);line-height:1.02;
+  margin:38px 0 0;letter-spacing:-.02em}
+.gateleft h1 em{font-style:normal;color:#F0B8B8}
+.gate-sub{margin-top:18px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.72);max-width:44ch}
+.gate-facts{margin-top:34px;display:flex;gap:0;border-top:1px solid rgba(255,255,255,.16)}
+.gate-fact{flex:1;padding:16px 0 0;border-right:1px solid rgba(255,255,255,.12)}
+.gate-fact:last-child{border-right:0}
+.gate-fact b{display:block;font-family:var(--f-mono);font-size:23px;font-weight:500;color:#fff}
+.gate-fact span{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-top:3px}
+.gateright{background:var(--paper);padding:52px 42px;display:flex;flex-direction:column;justify-content:center}
+.gateright label{display:block;font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin-bottom:9px}
+#pin{width:100%;padding:14px 15px;border:1.5px solid var(--rule);background:#fff;font-family:var(--f-mono);
+  font-size:19px;letter-spacing:.09em;color:var(--ink);outline:none;text-transform:uppercase}
+#pin:focus{border-color:var(--navy)}
+.hint{font-size:12.5px;color:var(--ink-2);margin-top:10px;line-height:1.5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;
+  background:var(--navy);color:#fff;border:none;font-weight:600;font-size:14.5px;letter-spacing:.02em;
+  transition:background .15s}
+.btn:hover{background:var(--navy-lt)}
+.btn:disabled{background:#B9B3A6;cursor:not-allowed}
+.btn-red{background:var(--red)} .btn-red:hover{background:var(--red-lt)}
+.btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--rule);font-weight:600}
+.btn-ghost:hover{background:var(--paper-2)}
+.gateright .btn{margin-top:22px;width:100%}
+.warnbox{margin-top:18px;border-left:3px solid var(--red);background:#FBF0EF;padding:11px 13px;
+  font-size:12.5px;color:#6E1B1B;display:none}
+.warnbox.on{display:block}
+.warnbox.info{border-color:var(--navy);background:#EEF2F9;color:#1F3864}
+.wel-eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ok)}
+.rs-eyebrow{color:var(--navy)}
+.wel-name{font-family:var(--f-disp);font-size:34px;font-weight:600;letter-spacing:-.02em;
+  margin:8px 0 0;line-height:1.05}
+.wel-meta{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-3);margin:9px 0 0;line-height:1.6}
+.btn-link{background:none;border:0;color:var(--ink-3);font-size:12.5px;padding:12px 0 0;
+  text-decoration:underline;text-underline-offset:3px;width:100%}
+.btn-link:hover{color:var(--navy)}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.35);
+  border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---------------- SHELL ---------------- */
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:40}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:18px}
+.tb-l{display:flex;align-items:baseline;gap:14px;min-width:0}
+.tb-brand{font-weight:700;letter-spacing:.2em;font-size:12px}
+.tb-title{font-size:13px;color:rgba(255,255,255,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-r{display:flex;align-items:center;gap:20px}
+.tb-pin{font-family:var(--f-mono);font-size:12.5px;color:rgba(255,255,255,.7)}
+.timer{font-family:var(--f-mono);font-size:22px;font-weight:500;letter-spacing:.02em;
+  padding:3px 12px;border:1px solid rgba(255,255,255,.28);min-width:104px;text-align:center}
+.timer.warn{border-color:#F2A0A0;color:#FFD9D9}
+.timer.crit{background:var(--red);border-color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.62}}
+
+/* ---------------- INSTRUCTIONS ---------------- */
+#instr .wrap{padding-top:44px;padding-bottom:80px;max-width:860px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2.disp{font-family:var(--f-disp);font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.08;
+  margin:10px 0 0;letter-spacing:-.015em}
+.lead{font-size:15.5px;color:var(--ink-2);margin-top:14px;max-width:62ch;line-height:1.65}
+.rulegrid{margin-top:34px;border-top:1px solid var(--rule)}
+.rulerow{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:15px 0;border-bottom:1px solid var(--rule-2)}
+.rulerow dt{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600;
+  padding-top:3px}
+.rulerow dd{margin:0;font-size:14.5px;line-height:1.6}
+.rulerow dd b{color:var(--navy)}
+.callout{margin-top:30px;border:1px solid var(--rule);border-left:3px solid var(--navy);
+  background:var(--card);padding:18px 20px}
+.callout h4{margin:0 0 7px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+.callout p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.62}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+.lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.sw{width:20px;height:20px;border:1px solid var(--rule);display:inline-block}
+.startrow{margin-top:38px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.startrow .btn{padding:16px 34px;font-size:15px}
+.startnote{font-size:12.5px;color:var(--ink-3);max-width:40ch}
+
+/* ---------------- TEST ---------------- */
+#test .layout{display:grid;grid-template-columns:1fr 268px;gap:0;min-height:calc(100vh - 58px)}
+.qpane{padding:30px 34px 120px 0;border-right:1px solid var(--rule)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.qnum{font-family:var(--f-disp);font-size:22px;font-weight:600}
+.qmeta{display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.chip{border:1px solid var(--rule);padding:3px 9px;background:var(--card)}
+.chip.tita{border-color:var(--navy);color:var(--navy)}
+.qtext{font-size:17px;line-height:1.72;margin:26px 0 30px;max-width:70ch}
+.opts{display:grid;gap:10px;max-width:640px}
+.opt{display:flex;align-items:flex-start;gap:13px;padding:13px 16px;border:1.5px solid var(--rule);
+  background:var(--card);text-align:left;transition:border-color .12s,background .12s;width:100%}
+.opt:hover{border-color:var(--navy-lt);background:var(--paper-2)}
+.opt.sel{border-color:var(--navy);background:#EEF2F9;box-shadow:inset 0 0 0 1px var(--navy)}
+.optn{font-family:var(--f-mono);font-size:13px;color:var(--ink-3);font-weight:600;padding-top:2px;min-width:20px}
+.opt.sel .optn{color:var(--navy)}
+.optv{font-size:16px}
+/* --- inline maths. Authoring subset: \frac{a}{b}  \sqrt{x}  ^{..}  _{..}  + symbols.
+   Plain text containing none of these renders exactly as it did before. --- */
+.qtext sup,.qtext sub,.optv sup,.optv sub,.meth sup,.meth sub{font-size:.68em;line-height:0}
+.qtext sup,.optv sup,.meth sup{vertical-align:.62em}
+.qtext sub,.optv sub,.meth sub{vertical-align:-.3em}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 .16em;
+  font-size:.9em;line-height:1.18}
+.fr .fn{display:block;border-bottom:1.2px solid currentColor;padding:0 .26em .06em}
+.fr .fd{display:block;padding:.06em .26em 0}
+.fr .fr{font-size:.87em}
+.sq{display:inline-flex;align-items:flex-start;white-space:nowrap}
+.sq .sqr{padding-right:.02em}
+.sq .sqb{border-top:1.2px solid currentColor;padding:.06em .16em 0 .08em;margin-top:.22em}
+.titabox{max-width:340px}
+.titabox input{width:100%;padding:15px 16px;border:1.5px solid var(--rule);background:var(--card);
+  font-family:var(--f-mono);font-size:20px;color:var(--ink);outline:none}
+.titabox input:focus{border-color:var(--navy)}
+.titanote{font-size:12.5px;color:var(--ink-3);margin-top:9px}
+.qactions{position:fixed;bottom:0;left:0;right:0;background:var(--paper);
+  border-top:1px solid var(--rule);z-index:30}
+.qactions .inner{max-width:var(--w);margin:0 auto;padding:13px 292px 13px 24px;
+  display:flex;gap:11px;align-items:center}
+.qactions .sp{flex:1}
+.qactions .btn{padding:11px 18px;font-size:13.5px}
+
+.pal{padding:26px 0 26px 22px;position:sticky;top:58px;align-self:start;max-height:calc(100vh - 58px);
+  overflow:auto}
+.pal h5{margin:0 0 12px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700}
+.palgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pb{aspect-ratio:1;border:1.5px solid var(--rule);background:var(--card);font-family:var(--f-mono);
+  font-size:13px;font-weight:500;color:var(--ink-2);display:grid;place-items:center;position:relative}
+.pb:hover{border-color:var(--navy)}
+.pb.cur{outline:2px solid var(--navy);outline-offset:1px}
+.pb.seen{background:#EDE9E0;color:var(--ink-2)}
+.pb.ans{background:var(--ok);border-color:var(--ok);color:#fff}
+.pb.mark{background:#6B3FA0;border-color:#6B3FA0;color:#fff}
+.pb.ansmark{background:#6B3FA0;border-color:#6B3FA0;color:#fff}
+.pb.ansmark::after{content:'';position:absolute;right:2px;bottom:2px;width:7px;height:7px;
+  background:var(--ok-lt);border-radius:50%}
+.palstat{margin-top:18px;border-top:1px solid var(--rule);padding-top:14px;display:grid;gap:6px;
+  font-size:12px;color:var(--ink-2)}
+.palstat div{display:flex;justify-content:space-between}
+.palstat b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+.pal .btn{width:100%;margin-top:18px;padding:12px}
+
+/* ---------------- RESULTS ---------------- */
+#res .wrap{padding-top:0;padding-bottom:90px}
+.rhero{background:var(--navy);color:#fff;padding:46px 0 40px;margin-bottom:0}
+.rhero .wrap{padding-top:0;padding-bottom:0}
+.rhero .eyebrow{color:#F0B8B8}
+.rhero h2{font-family:var(--f-disp);font-weight:600;font-size:clamp(30px,4vw,44px);margin:10px 0 0;
+  letter-spacing:-.02em}
+.rhero .sub{color:rgba(255,255,255,.65);font-size:14px;margin-top:8px}
+.scorerow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:34px;
+  border-top:1px solid rgba(255,255,255,.2)}
+.sc{padding:18px 22px 4px 0;border-right:1px solid rgba(255,255,255,.14)}
+.sc:last-child{border-right:0}
+.sc b{display:block;font-family:var(--f-disp);font-size:38px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.sc b small{font-family:var(--f-mono);font-size:15px;font-weight:400;color:rgba(255,255,255,.5);
+  letter-spacing:0}
+.sc span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-top:8px}
+.sc .delta{font-family:var(--f-mono);font-size:12px;letter-spacing:0;text-transform:none;margin-top:5px;
+  color:rgba(255,255,255,.75)}
+
+section.blk{padding:44px 0 6px;border-bottom:1px solid var(--rule)}
+section.blk:last-of-type{border-bottom:0}
+.blkhead{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.blkhead h3{font-family:var(--f-disp);font-size:26px;font-weight:600;margin:0;letter-spacing:-.015em}
+.blkhead p{margin:0;font-size:13px;color:var(--ink-3);max-width:46ch;text-align:right}
+.blkintro{font-size:14.5px;color:var(--ink-2);line-height:1.65;max-width:66ch;margin:14px 0 0}
+
+/* ribbon */
+.ribbon{margin-top:26px;border:1px solid var(--rule);background:var(--card);padding:20px 20px 14px}
+.ribbar{display:flex;height:62px;width:100%;border:1px solid var(--rule);overflow:hidden}
+.rseg{position:relative;min-width:2px;transition:filter .12s}
+.rseg:hover{filter:brightness(1.18)}
+.rseg span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-mono);
+  font-size:10px;color:rgba(255,255,255,.92);pointer-events:none;white-space:nowrap}
+.rseg.unused{background:repeating-linear-gradient(45deg,#F2EEE6 0 6px,#E7E1D4 6px 12px)}
+.rseg.unused span{color:var(--ink-3)}
+.rseg.gapseg{background:repeating-linear-gradient(45deg,#DCD5C6 0 5px,#C7BEAA 5px 10px)}
+.rseg.gapseg span{color:#4A4438}
+.ribaxis{display:flex;justify-content:space-between;margin-top:7px;font-family:var(--f-mono);
+  font-size:10.5px;color:var(--ink-3)}
+.ribkey{display:flex;flex-wrap:wrap;gap:7px 18px;margin-top:14px;padding-top:13px;border-top:1px solid var(--rule-2)}
+.rk{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2)}
+.rk i{width:13px;height:13px;display:inline-block}
+#ribtip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;padding:8px 11px;
+  font-size:12px;line-height:1.45;max-width:250px;z-index:99;display:none;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+#ribtip b{color:#fff}
+#ribtip .t{font-family:var(--f-mono);color:#B9C6E0}
+
+/* ledger */
+.ledger{margin-top:24px;border:1px solid var(--rule);background:var(--card)}
+.ledrow{display:grid;grid-template-columns:16px 1fr 92px 62px;gap:14px;align-items:center;
+  padding:12px 18px;border-bottom:1px solid var(--rule-2)}
+.ledrow:last-child{border-bottom:0}
+.ledrow.tot{background:var(--paper-2);font-weight:600}
+.ledrow i{width:12px;height:12px;display:block}
+.ledrow .lb{font-size:13.5px}
+.ledrow .lb small{display:block;color:var(--ink-3);font-size:12px;font-weight:400;margin-top:1px}
+.ledrow .lt,.ledrow .lc{font-family:var(--f-mono);font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums}
+
+.verdict{margin-top:26px;border-left:3px solid var(--red);background:#FBF0EF;padding:20px 22px}
+.verdict h4{margin:0 0 9px;font-family:var(--f-disp);font-size:20px;font-weight:600;color:#6E1B1B}
+.verdict p{margin:0 0 9px;font-size:14.5px;line-height:1.65;color:#5A2422}
+.verdict p:last-child{margin-bottom:0}
+.verdict b{color:#6E1B1B}
+.verdict.good{border-color:var(--ok);background:#EFF6F1}
+.verdict.good h4{color:var(--ok)} .verdict.good p{color:#20452F} .verdict.good b{color:var(--ok)}
+
+/* triage plot */
+.plot{margin-top:24px;border:1px solid var(--rule);background:var(--card);padding:22px 22px 14px}
+.plotnote{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.55}
+
+/* table */
+.qtable{margin-top:24px;width:100%;border-collapse:collapse;font-size:13.5px}
+.qtable th{text-align:left;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;padding:0 10px 9px 0;border-bottom:1px solid var(--rule)}
+.qtable th.r,.qtable td.r{text-align:right}
+.qtable td{padding:10px 10px 10px 0;border-bottom:1px solid var(--rule-2);vertical-align:top}
+.qtable tr.miss td{background:#FDF7F6}
+.qtable .qid{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+.qtable .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+  padding:2px 7px;border:1px solid currentColor}
+.t-ok{color:var(--ok)} .t-slow{color:var(--warn)} .t-wrong{color:var(--red)}
+.t-sunk{color:var(--sunk)} .t-bleed{color:var(--bleed)} .t-skip{color:var(--ink-3)}
+.qtable .meth{font-size:13px;color:var(--ink-2);line-height:1.6;padding:2px 0 14px;max-width:80ch}
+.qtable tr.mrow td{border-bottom:1px solid var(--rule-2);padding-top:0}
+.exp{background:none;border:0;color:var(--navy);font-family:var(--f-mono);font-size:11.5px;padding:0;
+  text-decoration:underline;text-underline-offset:3px}
+
+.peernote{margin-top:18px;font-size:12.5px;color:var(--ink-3);line-height:1.6;border-top:1px solid var(--rule-2);
+  padding-top:14px}
+.footer{padding:40px 0 60px;font-size:12px;color:var(--ink-3);line-height:1.6}
+.actionbar{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}
+.banner{background:#FFF6E5;border:1px solid #E8CE95;color:#6B4E12;padding:11px 16px;font-size:13px;
+  margin:14px 0 0}
+.banner.err{background:#FBF0EF;border-color:#E5B5B5;color:#6E1B1B}
+
+@media(max-width:900px){
+  #gate .gatewrap{grid-template-columns:1fr}
+  .gateleft{padding:38px 30px} .gateright{padding:34px 30px}
+  #test .layout{grid-template-columns:1fr}
+  .qpane{padding:22px 0 200px;border-right:0}
+  .pal{position:static;padding:0 0 30px;border-top:1px solid var(--rule);padding-top:20px}
+  .qactions .inner{padding-right:24px}
+  .blkhead p{text-align:left}
+}
+/* ============ PASSCODE ============ */
+.pcbox{margin-top:34px;background:var(--navy-soft,#EAEFF8);border:1px solid #C9D6EC;
+  border-radius:11px;padding:22px 24px;max-width:640px}
+.pcbox h4{margin:0 0 6px;font-size:15px;font-weight:700;color:var(--navy)}
+.pcbox p{margin:0 0 16px;font-size:14.5px;color:var(--ink-2,#4A4F5A);max-width:56ch}
+.pcrow{display:flex;gap:12px;flex-wrap:wrap}
+.pcrow input{flex:1;min-width:200px;padding:13px 15px;border:1.5px solid #C9D6EC;border-radius:7px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:16px;letter-spacing:.05em;background:#fff}
+.pcrow input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,56,100,.14)}
+.pcwarn{display:none;margin-top:13px;padding:11px 14px;border-radius:7px;background:#FDECEA;
+  border:1px solid #F0BDB6;color:#8A2318;font-size:14px}
+.pcwarn.on{display:block}
+.pcok{background:#EAF2ED;border:1px solid #B5D6C2;color:#1B5E3F}
+
+/* ============ REVIEW BANNER ============ */
+.revbar{background:#1B5E3F;color:#fff;padding:11px 0;font-size:14px}
+.revbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.revbar a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+/* ============ ON-SCREEN CALCULATOR ============
+   A deliberate clone of the exam's Windows-Standard calculator, awkwardness included:
+   mouse only, no keyboard, no bracket, no history, "/" and "*" rather than the proper
+   signs. A friendlier calculator would teach a habit that costs marks on the day. */
+#calc{position:fixed;z-index:60;width:290px;display:none;
+  box-shadow:0 18px 48px rgba(20,26,40,.34);border-radius:4px;overflow:hidden;
+  font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  user-select:none;-webkit-user-select:none}
+#calc.on{display:block}
+#calc .ctitle{background:#4a7ebb;color:#fff;padding:9px 10px 9px 14px;
+  display:flex;align-items:center;justify-content:space-between;cursor:move;touch-action:none}
+#calc .ctitle span{font-size:19px;font-weight:600;letter-spacing:.2px}
+#calc .cx{width:30px;height:26px;border:1px solid #b9600f;border-radius:3px;background:#ec7a1c;
+  color:#fff;font-size:15px;font-weight:700;line-height:1;cursor:pointer;padding:0}
+#calc .cx:hover{background:#d96c12}
+#calc .cbody{background:#e6e6e6;padding:11px;display:flex;flex-direction:column;gap:9px}
+#calc .cexpr,#calc .cdisp{background:#fff;border:2px solid #c9c9c9;border-radius:2px;
+  padding:8px 10px;text-align:right;font-variant-numeric:tabular-nums;overflow:hidden;
+  white-space:nowrap;direction:ltr}
+#calc .cexpr{min-height:34px;font-size:14px;color:#555;line-height:18px}
+#calc .cdisp{min-height:44px;font-size:29px;font-weight:600;color:#111;line-height:28px}
+#calc .cmem{float:left;font-size:12px;font-weight:700;color:#4a7ebb;letter-spacing:.5px}
+#calc .cpad{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+#calc .cpad button{border:1px solid #adadad;border-radius:3px;background:#f5f5f5;color:#1a1a1a;
+  font-size:16px;font-weight:600;padding:11px 0;cursor:pointer;min-height:42px;
+  font-family:inherit;transition:background .06s}
+#calc .cpad button:hover{background:#e2e2e2}
+#calc .cpad button:active{background:#cfcfcf;transform:translateY(1px)}
+#calc .cpad button:focus-visible{outline:2px solid #4a7ebb;outline-offset:1px}
+#calc .cpad .k-red{background:#c9483a;border-color:#a5382c;color:#fff}
+#calc .cpad .k-red:hover{background:#b03e31}
+#calc .cpad .k-red:active{background:#96352a}
+#calc .cpad .k-eq{background:#5cb85c;border-color:#4a9d4a;color:#fff;font-size:20px}
+#calc .cpad .k-eq:hover{background:#4fa54f}
+#calc .cpad .w2{grid-column:span 2}
+#calc .cpad .h2{grid-row:span 2}
+#calc.err .cdisp{color:#c00000;font-size:19px}
+#calcbtn.live{background:var(--navy);color:#fff;border-color:var(--navy)}
+@media (max-width:520px){ #calc{width:calc(100vw - 24px);max-width:290px} }
+
+
+/* ---- TITA on-screen keypad. The physical keyboard is deliberately dead here. ---- */
+.titabox input[readonly]{cursor:pointer;background:var(--card)}
+.titabox input[readonly]:hover{border-color:var(--navy)}
+.vkey{display:grid;grid-template-columns:repeat(3,74px);gap:9px;margin-top:16px}
+.vk{height:54px;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);
+  font-family:var(--f-mono);font-size:20px;font-weight:600;cursor:pointer;
+  transition:background .1s,border-color .1s}
+.vk:hover{border-color:var(--navy);background:var(--paper-2)}
+.vk:active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.vk-fn{font-size:13px;font-family:inherit;font-weight:600;letter-spacing:.02em}
+/* ---- two-pass flags ---- */
+.pb.leave{background:var(--ink-3);color:#fff;border-color:var(--ink-3)}
+.pb.ansleave{background:var(--ink-3);color:#fff;border-color:var(--navy);
+  box-shadow:inset 0 0 0 2px var(--navy)}
+.btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.homelink{display:inline-block;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;
+  color:inherit;opacity:.72;text-decoration:none;border-bottom:1px solid currentColor;
+  padding-bottom:2px;margin-bottom:16px}
+.homelink:hover{opacity:1}
+
+/* Cohort Rank — live, and deliberately printed with its denominator. */
+#r-rank:empty{display:none}
+.rankbox{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 22px;
+  padding:16px 20px;border:1px solid var(--rule);background:var(--card)}
+.rankbox .rk{font-family:var(--f-disp);font-size:34px;font-weight:700;line-height:1;
+  letter-spacing:-.02em;color:var(--navy)}
+.rankbox .rk small{font-size:16px;font-weight:500;color:var(--ink-2);margin-left:5px}
+.rankbox .rlab{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3)}
+.rankbox .rnote{font-size:13px;color:var(--ink-2);line-height:1.55;flex:1 1 260px;min-width:0}
+
+/* ---- triage report ---- */
+.trilock{border:1px dashed var(--rule);padding:22px 24px;background:var(--paper-2);
+  font-size:14.5px;line-height:1.6;color:var(--ink-2);margin-bottom:26px}
+.trilock b{color:var(--ink)}
+.trihead{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin-bottom:20px}
+.triscore{font-family:var(--f-disp);font-size:60px;font-weight:700;line-height:.88;
+  letter-spacing:-.03em;color:var(--navy)}
+.triscore small{font-size:19px;font-weight:500;color:var(--ink-3);margin-left:4px}
+.triband{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--navy);color:var(--navy);padding:5px 11px;margin-bottom:7px}
+.trisum{flex:1 1 280px;min-width:0;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.tribars{display:grid;gap:15px;margin-bottom:22px}
+.tribar .tl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  margin-bottom:6px}
+.tribar .tn{font-weight:700;font-size:14.5px}
+.tribar .tn em{font-style:normal;font-weight:400;color:var(--ink-3);font-size:12.5px;
+  margin-left:8px}
+.tribar .tv{font-family:var(--f-mono);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.tribar .tt{height:13px;background:var(--paper-2);border:1px solid var(--rule);overflow:hidden;
+  display:flex}
+.tribar .tf{height:100%;background:var(--navy)}
+.tribar .tw{height:100%;background:repeating-linear-gradient(45deg,
+  #DCD5C6 0 5px,#C7BEAA 5px 10px)}
+.trikey{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 6px;
+  font-size:12px;color:var(--ink-3)}
+.trikey .sw{width:13px;height:10px;display:inline-block;border:1px solid var(--rule)}
+.trikey .sw-f{background:var(--navy)}
+.trikey .sw-w{background:repeating-linear-gradient(45deg,#DCD5C6 0 5px,#C7BEAA 5px 10px);
+  margin-left:12px}
+.trikey .trirest{margin-left:auto}
+.tribar .td{font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.5}
+.triprov{font-size:12px;color:var(--ink-3);font-style:italic;margin:0 0 26px}
+
+/* The post-submission screen shows the score and nothing else. */
+#res.scoreonly .blk{display:none}
+#res.scoreonly #r-rank{display:none}
+#res.scoreonly #rfoot{display:none}
+.gatecard{border:1px solid var(--rule);background:var(--card);padding:26px 28px;margin:4px 0 30px}
+.gatecard h3{margin:0 0 10px;font-family:var(--f-disp);font-size:20px;font-weight:600}
+.gatecard p{margin:0 0 20px;font-size:14.5px;line-height:1.62;color:var(--ink-2);max-width:64ch}
+.gaterow{display:flex;gap:12px;flex-wrap:wrap}
+.gaterow .btn[disabled]{opacity:.45;cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<!-- ============ GATE ============ -->
+<div id="gate" class="screen on">
+  <div class="gatewrap">
+    <div class="gateleft">
+      <div class="gate-brand">IMS</div>
+      <div class="gate-tag">Trusted for Success</div>
+      <a class="homelink" href="../">&larr; All papers</a>
+      <h1>Most Expected<br>CAT 2026<br><em>Numbers</em></h1>
+      <p class="gate-sub">Twenty-two questions built against the CAT 2022&ndash;2025 papers only.
+        Forty minutes. The paper is deliberately longer than the clock &mdash; what it measures is
+        which questions you choose, not only which you can solve.</p>
+      <div class="gate-facts">
+        <div class="gate-fact"><b>22</b><span>Questions</span></div>
+        <div class="gate-fact"><b>40:00</b><span>Minutes</span></div>
+        <div class="gate-fact"><b>7.14</b><span>Mean difficulty</span></div>
+        <div class="gate-fact"><b>+3/&minus;1</b><span>Marking</span></div>
+      </div>
+    </div>
+    <div class="gateright">
+      <div id="rsbox" hidden>
+        <div class="wel-eyebrow rs-eyebrow">Unfinished attempt</div>
+        <h3 class="wel-name">Pick up where you stopped.</h3>
+        <p class="wel-meta" id="rsmeta"></p>
+        <p class="hint" id="rsline"></p>
+        <button class="btn" id="rsgo">Resume the paper &rarr;</button>
+        <button class="btn-link" id="rsdrop">Discard it and start the paper again</button>
+      </div>
+      <div id="gateform">
+        <label for="pin">IMS PIN</label>
+        <input id="pin" autocomplete="off" spellcheck="false" placeholder="e.g. AHM26QA001">
+        <p class="hint">Enter your PIN exactly as it appears on your IMS record. It is checked
+          against the enrolled list before the paper opens.</p>
+        <div class="warnbox" id="gatewarn"></div>
+        <button class="btn" id="gatego">Verify PIN &rarr;</button>
+      </div>
+      <div id="gatewelcome" hidden>
+        <div class="wel-eyebrow">Verified</div>
+        <h3 class="wel-name" id="welname"></h3>
+        <p class="wel-meta" id="welmeta"></p>
+        <div class="warnbox" id="welwarn"></div>
+        <button class="btn" id="welgo">Continue to instructions &rarr;</button>
+        <button class="btn-link" id="welback">Not you? Use a different PIN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INSTRUCTIONS ============ -->
+<div id="instr" class="screen">
+  <div class="topbar"><div class="wrap">
+    <div class="tb-l"><span class="tb-brand">IMS</span>
+      <span class="tb-title">Most Expected CAT 2026 — Recalibrated Set &middot; Numbers & Modern Math Sectional</span></div>
+    <div class="tb-r"><span class="tb-pin" id="pinlbl2"></span></div>
+  </div></div>
+  <div class="wrap">
+    <div class="eyebrow">General instructions</div>
+    <h2 class="disp">Read this once. The clock starts when you press Begin.</h2>
+    <p class="lead">This is a sectional paper, not a full mock. It behaves like one section of the
+      real exam and it is scored the same way.</p>
+
+    <dl class="rulegrid">
+      <div class="rulerow"><dt>Duration</dt><dd><b>40 minutes</b>, counted down on screen. When it reaches
+        zero the paper submits itself &mdash; whatever is on screen at that moment is recorded.</dd></div>
+      <div class="rulerow"><dt>Questions</dt><dd><b>22</b>, shown one at a time. You may move between them
+        freely using the palette on the right, in any order, as often as you like.</dd></div>
+      <div class="rulerow"><dt>Marking</dt><dd>Multiple choice: <b>+3</b> correct, <b>&minus;1</b> wrong.
+        TITA questions carry <b>no negative marking</b> &mdash; every TITA answer is a whole number.
+        Tap the answer box to open the on-screen keypad; the physical keyboard does not type into
+        it.</dd></div>
+      <div class="rulerow"><dt>The two passes</dt><dd>Go once from Q1 to Q22 and solve only what you
+        are certain of. For everything else, say which it is: <b>Come back to this</b> for a question
+        you will return to on the second pass, <b>Leave this one</b> for a question you are done with.
+        Both still count as answered if you have entered something. <b>Clear Response</b> empties
+        it.</dd></div>
+      <div class="rulerow"><dt>Once you begin</dt><dd>The paper takes over the screen and the browser
+        Back button stops working until you submit. Leaving the page still ends the attempt.</dd></div>
+      <div class="rulerow"><dt>If it crashes</dt><dd>Your answers are saved on this computer every
+        few seconds. If the browser or the machine dies, open this page again <b>on the same
+        computer</b> and it will offer to put you back exactly where you were. The clock keeps
+        running while you are away, as it would in the hall &mdash; so come straight back.</dd></div>
+      <div class="rulerow"><dt>Keyboard</dt><dd><span class="mono">1&ndash;4</span> select an option,
+        <span class="mono">Enter</span> save and next, <span class="mono">&larr; &rarr;</span> move between
+        questions, <span class="mono">M</span> mark for review.</dd></div>
+      <div class="rulerow"><dt>What is recorded</dt><dd>Time on every question, every visit, and every
+        option you select or change. That is what the analysis at the end is built from, and it is
+        worthless if you look anything up. Sit it as an exam.</dd></div>
+    </dl>
+
+    <div class="callout">
+      <h4>The paper is longer than the clock, on purpose</h4>
+      <p>At a strong candidate's pace these 22 questions need about 43 minutes. You have 40.
+        Nobody is expected to attempt all of them. The report you get at the end spends as much
+        space on the questions you should have left alone as on the ones you got wrong.</p>
+    </div>
+
+    <div style="margin-top:26px">
+      <div class="eyebrow" style="color:var(--ink-3)">Palette colours</div>
+      <div class="legend">
+        <span class="lg"><i class="sw" style="background:#fff"></i> Not visited</span>
+        <span class="lg"><i class="sw" style="background:#EDE9E0"></i> Seen, not answered</span>
+        <span class="lg"><i class="sw" style="background:var(--ok);border-color:var(--ok)"></i> Answered</span>
+        <span class="lg"><i class="sw" style="background:#6B3FA0;border-color:#6B3FA0"></i> Marked for review</span>
+      </div>
+    </div>
+
+    <!-- The passcode is checked on the server; it is not in this file. -->
+    <div class="pcbox" id="pcbox">
+      <h4>Passcode</h4>
+      <p>Your faculty will read out the passcode for this paper when the session begins at the
+        centre. The paper will not open without it.</p>
+      <div class="pcrow">
+        <input type="text" id="passcode" autocomplete="off" autocapitalize="none"
+               spellcheck="false" placeholder="Passcode">
+        <button class="btn" id="pcgo">Unlock paper</button>
+      </div>
+      <div class="pcwarn" id="pcwarn"></div>
+    </div>
+
+    <div class="startrow" id="startrow" hidden>
+      <button class="btn btn-red" id="begin">Begin test &rarr;</button>
+      <p class="startnote">Once you begin, leaving or reloading this page ends the attempt.
+        Make sure you have 40 uninterrupted minutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEST ============ -->
+<div id="test" class="screen">
+  <div class="topbar"><div class="wrap">
+    <div class="tb-l"><span class="tb-brand">IMS</span>
+      <span class="tb-title">Numbers & Modern Math Sectional &middot; Most Expected CAT 2026 — Recalibrated Set</span></div>
+    <div class="tb-r">
+      <span class="tb-pin" id="pinlbl"></span>
+      <span class="timer mono" id="timer">40:00</span>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="layout">
+    <div class="qpane">
+      <div class="qhead">
+        <div class="qnum" id="qnum">Question 1</div>
+        <div class="qmeta"><span class="chip" id="qsub"></span><span class="chip" id="qtype"></span></div>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div id="qbody"></div>
+    </div>
+    <aside class="pal">
+      <h5>Question palette</h5>
+      <div class="palgrid" id="palgrid"></div>
+      <div class="palstat">
+        <div><span>Answered</span><b id="s-ans">0</b></div>
+        <div><span>Marked</span><b id="s-mark">0</b></div>
+        <div><span>Not visited</span><b id="s-nv">22</b></div>
+      </div>
+      <button class="btn btn-red" id="submitbtn">Submit test</button>
+    </aside>
+  </div></div>
+  <div class="qactions"><div class="inner">
+    <button class="btn btn-ghost" id="calcbtn">Calculator</button>
+    <button class="btn btn-ghost" id="a-clear">Clear response</button>
+    <button class="btn btn-ghost" id="a-come">Come back to this</button>
+    <button class="btn btn-ghost" id="a-leave">Leave this one</button>
+    <span class="sp"></span>
+    <button class="btn btn-ghost" id="a-prev">&larr; Previous</button>
+    <button class="btn" id="a-next">Save &amp; next &rarr;</button>
+  </div></div>
+
+  <!-- Exam-clone calculator. Mouse only, by design. -->
+  <div id="calc" role="dialog" aria-label="Calculator">
+    <div class="ctitle" id="calcdrag">
+      <span>Calculator</span>
+      <button class="cx" id="calcclose" aria-label="Close calculator">&#10006;</button>
+    </div>
+    <div class="cbody">
+      <div class="cexpr"><span class="cmem" id="calcmem"></span><span id="calcexpr"></span></div>
+      <div class="cdisp" id="calcdisp">0</div>
+      <div class="cpad" id="calcpad">
+        <button data-k="MC">MC</button><button data-k="MR">MR</button><button data-k="MS">MS</button>
+        <button data-k="M+">M+</button><button data-k="M-">M-</button>
+
+        <button data-k="back" class="k-red w2">&larr;</button>
+        <button data-k="C" class="k-red">C</button>
+        <button data-k="neg" class="k-red">+/-</button>
+        <button data-k="sqrt">&radic;</button>
+
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+        <button data-k="/">/</button><button data-k="pct">%</button>
+
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+        <button data-k="*">*</button><button data-k="inv">1/x</button>
+
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+        <button data-k="-">-</button>
+        <button data-k="=" class="k-eq h2">=</button>
+
+        <button data-k="0" class="w2">0</button>
+        <button data-k=".">.</button>
+        <button data-k="+">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="res" class="screen">
+  <div class="rhero"><div class="wrap">
+    <a class="homelink" href="../">&larr; All papers</a>
+    <div class="eyebrow">Attempt report</div>
+    <h2 id="r-title">Numbers & Modern Math Sectional</h2>
+    <div class="sub" id="r-sub"></div>
+    <div class="scorerow" id="scorerow"></div>
+  </div></div>
+  <div class="wrap">
+    <div id="r-banner"></div>
+    <!-- Shown only on the screen a candidate lands on straight after submitting. The
+         report behind Review carries every answer, so it stays shut until faculty
+         releases it for the whole paper. -->
+    <div id="r-gate" hidden>
+      <div class="gatecard">
+        <h3>That is your score. The paper is closed.</h3>
+        <p id="r-gatemsg">Your detailed report &mdash; every question, where the time went and
+          your triage &mdash; is released by your faculty once the batch has finished. It is not
+          available yet.</p>
+        <div class="gaterow">
+          <a class="btn" href="../">Close</a>
+          <button class="btn btn-ghost" id="r-review" disabled>Review &mdash; not released yet</button>
+        </div>
+      </div>
+    </div>
+    <div id="r-rank"></div>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Where the forty minutes went</h3>
+        <p>Every block is one visit to one question. Width is time; colour is what that time bought.</p></div>
+      <div class="ribbon">
+        <div class="ribbar" id="ribbar"></div>
+        <div class="ribaxis" id="ribaxis"></div>
+        <div class="ribkey" id="ribkey"></div>
+      </div>
+      <div class="ledger" id="ledger"></div>
+      <div id="verdict"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Triage</h3>
+        <p>How well you chose, ordered and abandoned &mdash; scored against what the batch
+          actually did on each question.</p></div>
+      <div id="triagepanel"></div>
+      <p class="blkintro">Below: the order you answered questions in, against how hard each one
+        proved to be. A candidate who triages well answers cheap questions early and expensive ones
+        late, so the dots drift upward. Dots high on the left are the expensive habit: hard questions
+        taken on before the easy marks were banked.</p>
+      <div class="plot" id="triage"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Question by question</h3>
+        <p>Your time against the pace benchmark for a question of that difficulty.</p></div>
+      <table class="qtable" id="qtable"></table>
+      <div class="peernote" id="peernote"></div>
+    </section>
+
+    <div class="actionbar">
+      <button class="btn btn-ghost" id="retry" style="display:none">Retry sending to IMS</button>
+    </div>
+    <div class="footer" id="rfoot"></div>
+  </div>
+</div>
+
+<div id="ribtip"></div>
+
+<script>
+/* ============================================================
+   IMS · CAT 2026 sectional test player
+   Static build — deploy anywhere. Peer data via optional endpoint.
+   ============================================================ */
+const CONFIG = {
+  /* The backend base URL. Used for the greeting, peer data and recording attempts —
+     but NOT for opening the paper: that check is local (see PINS below). */
+  ENDPOINT: "https://ims-cat26.vipul-tg.workers.dev",
+  /* Deliberate downgrade for a centre with no working connection AND no baked-in
+     enrolment table: opens the paper for any PIN of four characters or more, with no
+     name and no recording. Leave false in normal use. */
+  OFFLINE_FALLBACK: false,
+  PAPER_ID: "REC-NM-01",
+  PAPER_NAME: "Numbers & Modern Math — Most Expected CAT 2026 — Recalibrated Set",
+  DURATION: 40 * 60,
+  SALT: "IMSGJ-CAT26-REC-NM-01",
+  PIN_SALT: "IMSGJ-PIN-REC-NM-01",
+  PIN_ITER: 12000,       // hash rounds — makes offline guessing of the PIN list expensive
+  PEER_MIN: 30,          // real peer data replaces the model at this many attempts
+  BLEED_AFTER: 45,       // seconds on a blank question before it counts as bleed
+  SUNK_AFTER: 120,       // seconds on a wrong question before it counts as sunk
+  SEND_JITTER: 20,       // seconds of random spread on auto-submit, to flatten the burst
+  SEND_TRIES: 4,         // send attempts before the payload is parked for a later retry
+  SAVE_EVERY: 4,         // seconds between crash-recovery snapshots
+  RESUME_MAX: 24 * 3600  // an unfinished attempt older than this is dropped, never offered
+};
+
+const QS = [
+ {
+  "n": 1,
+  "id": "MM-M12",
+  "sub": "Counting & Digit Problems",
+  "rate": 8,
+  "type": "TITA",
+  "q": "How many four-digit numbers have all four digits distinct and are divisible by 4?",
+  "opts": null,
+  "bench": 190,
+  "k": "6383480dce8c281a6ee5f6e12809238888fe3a964379da7a9959d75b42d5bab2",
+  "m": "usbqpfrwn0zJie+K7Ob8v+mij7de6yuE1KRtkQu31C+Xn6Sn//eUHoCU74rk7vmiur+atBuvIJqd5D7UFbnFNtuHpL3i/o5XmYz5iufpquK26560G7wmj5+wK4Ycu5cvk4OkpPL8iROcjvXe+6/6t/O5w/tvoyyPkbAshhb2hW7blfGz/7KfUI2J8s37r+yk9abN6wvrPZLUqXvPU7LeKJiH9rT+/J0e2dCwiry7qrf0r83jA+slmJXmKIdT5IV7jI/wuLf2k02difLJ/K/uv/2imagV6xqUjLAiklOi3zSIg6Sz+PyOX4COvMuo9e+k9evF6w/nac3MvG3GQ/qXb8vKpOanvtoG2cm8y+brqqXzs5m+XqVpmZuwI5sH+JcMk4Pq8OP6nx6MjvjD5uiqo+munvta6zOYhv9h1Ae+0nuPjuul5POUWprA+MPv5v72+72Csl+4ac3U8SOQU6LfPtuJ6rW3/Y5WjJK83/vq7vb+ooqyT+dpmp3mJJoU9o97mI7rufT3iRLJgfLOqPvis7qjmLVfuSyZh7ApnRS/w3uTh/fwoKjaCMm86MPl6vn2ouuxr1KmLI7Up23JU+WEbdXG07jy/NpKgYW8z+br47j964W6SOsnktTqKIYc+pcvk4OkpP/9j02IjvjZqOvjsfO/zbpNpCCZh7B91BK403uZifC4t+eJW43A+MPv5v6ltuuKsk2iJ5rUp22XG7neOJ6VqPD2/J4enYj5iuD65LLoromoG68gmp3kbZUUt94129G+8Kak2mKdifHP+6+99sa/hLZeuGnK1K1tw0vimXuvjuHw4/2OX4XA9dmovLnguuDN7AP/acDUoXzGQ/g=",
+  "a": "DoeZ1w=="
+ },
+ {
+  "n": 2,
+  "id": "NM-FCT",
+  "sub": "Factors & Divisors",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "A positive integer N has 24 factors, 3N has 30 factors and 5N has 32 factors. How many factors does 15N have?",
+  "opts": [
+   "36",
+   "40",
+   "45",
+   "48"
+  ],
+  "bench": 120,
+  "k": "5a6c477da83c24ad41a116153944df129328e4c16c107b5a12596cca43131617",
+  "m": "hWG8U0K6Eczfms7kgkpRLUML/iPz+BtKUHIqorfJGGq/dqYHarZ/m4rfj9/ZZgx+dx7lK+WrVRAubym84/oeI6V6oU8Hq2rMg9SZmpFKXy1yX/Ev9f9UDX0naIv/8AIjnDO9RlS6d43Ji9SSmwAdJHJf8S/1/1QNfSVo7Nm1BGKhM/1GDKh2xICRzJOUBww4UV//L+WrEx4lOGH39b5eKr8ztElDum7ZrJqV24oLBGw0Tb5m9KAJVmMnaJv+4wVnu32yB1PyOsyR357Vl08Mb2Zf4ybzq10WfHo887fJCnGzcK5GDKgil4ORzMfZFgxReQ32Le24CwJ1O3yit6hMX7RhtERcryKX1sfRmopEDGw/Qrd9uKt/FnhgLLb58kx3unb1U0/zLYjC2ISajUNJLXkW5T3ipxsjaHspvOz3RzGvaLcMFud/0cLmm8iYSFc+LQLsfKL2G0IuVS6t9vYXN69o5loLuiyDwtjdh9kZAi1LF/Igtr8bI3pgJbrktV8jjme8SkLpf4HCh92IzQtLZGka5G77qwZfPCVovvnxTDLnXfVPRul/2cLmidOUTl8tK1/LOv/mXgwuO2jit6FcI7RytlNI6CzCwvycyY1OXi1sC/4i+rEbV28ieva/90cx+371TlS6OpSD2YnWgAtYZXpf5zz5704ceiknubfhBGbyIJsHRvQ7zNf03dmWXkJ5bF/zJ+DiXxpqKSqmt+EEZvJd9URI7zGYzpqO1dlfRGg/Hvk94e5JX2d6aIPx5w1gqSDlB3vuNoGHyd2Jy1ZXPysCt3O2vwtfeWA8t7f7AyO8drBDB+4wzITTk97ZSgAtfV/4PLbmFV9aYS3/5PgNb752plMH1H+YituJmp9CWH4/FuRup7gOTyA=",
+  "a": "vtU="
+ },
+ {
+  "n": 3,
+  "id": "NM-PRB",
+  "sub": "Probability",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "Three numbers are chosen at random, without replacement, from the first twelve positive integers. What is the probability that the three chosen numbers can be arranged to form an arithmetic progression?",
+  "opts": [
+   "\\frac{1}{11}",
+   "\\frac{3}{22}",
+   "\\frac{5}{44}",
+   "\\frac{2}{11}"
+  ],
+  "bench": 150,
+  "k": "6bd4f591e028a4ca5c2b658d311661dbe775ad2e9822c5c62671209e41f04c43",
+  "m": "LlxRgW36EHYJ5qH8AJpdvaLrJbmfrhctWB5AioVUaUASW1CBZvoWfgnOsOsNj0Os/r4Ur5OxAX4bTh+Ku0UgTh9HA9U4pwQmVLLruV7eCL27/zGo1PwlLUgaWoqIV2lXEkZGgSi8EGJE4fb4AsxZ76XqILafqA1uGw9cxYBDLFAJXUyKKL8HcUrmuuBMm1D4or4hr9q1Fy1dFlbPgxErWlpdV5coqRJxRf6z6hjMTPi+82i6lLhEZE8MDsmIXCRMFBRHjW68GmJM/LX8TIgWvYrxOvub/ANkTRpAioMRPUsfFFOWZ70NdVrhv/YCnxjxtfcmvNq1Cn5SG0uK1hE9TFoFEcRmrxJyTOD2qF7MFb3++mT7ibNEaRsNW8SJWCdEWlJRi2X6TjBd/fasTI9X87jsIbmPqAF+G04eiswRcQNRFBXEI/pLMAKy5LlRzAut4r4cs5/8FH9UHU/Ijl0gVwMUSpcohhliSPGtqlyRQ6/+rjX7x/w4a0keTdHUTDIRSEkN",
+  "a": "g97lfHePO+t3r4/l"
+ },
+ {
+  "n": 4,
+  "id": "MM-M16",
+  "sub": "Set Theory & Venn Diagrams",
+  "rate": 8,
+  "type": "TITA",
+  "q": "In a survey of 100 people, 75 own a car, 70 own a two-wheeler and 65 own a bicycle, and 8 people own none of the three. What is the difference between the largest and the smallest possible number of people who own all three?",
+  "opts": null,
+  "bench": 190,
+  "k": "18f3990981935ead200481b96cf7b1da9f2b14b075c83e96a0fe7b4a1259da54",
+  "m": "bkBWkJmUEaeEe0GoRHerBhio0maewPx54DMQVIXsUFxYXRGXg9FQ8KY+W+daPqdXS6acO4ySs2zrMwVIwKBbSEZLVIqelBGnhDJBoAp3/0cIs54mjI/9a6IzFFjE40FRUglFj4KUH76Oe06rRjLzThmil3GMtPtr4DMBAI6gRB0ACUPY0JRH4so6QaMKYqcNS/WDf4fAoHyuLlEXkKAeHRwZEdPNgkvw13sd9ho8p3UepYYtzYPnZ+B0XQDUoB4dGVsRxc2FT+jGe06pTjL0Uwm0hjbYledn4HRRQsTjXhELWRHFzcZe/cppGekKQe5ICKLSL4y89GuuI1FXwKBbWE5NEYrN6Bm1ymkZ6wpz6UJLtJsxz4Wzf65PFkWFsBVKTglfnYjQXqLKB0OiCie+CEuFnSvEwPZg6mBRQdflFVxIXUSZgdgH8Jg+TqRCc+VKDv3SPtjA4S6zM0QZhfRdWAtdWYqI0V6/hDdW6lh34E8EqYF/zZL2Lr8lXQCUsRVcRU0Rzs3DF6SCe0GoSH3jX0uunH/JmPJt+n8IANH3WhELSF+czdUK8Jh7EucYJKdSA6LSK8SS9muudglBxvRZRAZdRpfNxhu3gzRBtApz9UNL9cVzjNGkLu99FQCXshVKQl1Z2IPbHL+OIg+uRDLiXgqkhjPVwPxg6z1RdM3lFVlCT1edn9EQs497RrQKJ74GRufAaYzdsz29PQ==",
+  "a": "5VU="
+ },
+ {
+  "n": 5,
+  "id": "NM-RM1",
+  "sub": "Remainders",
+  "rate": 8,
+  "type": "TITA",
+  "q": "Let k = 7^{7}. What is the remainder when 7^{k} is divided by 100?",
+  "opts": null,
+  "bench": 190,
+  "k": "70c3399a264f5b1a744d556a24545d90ec29f54931c2308aeffd0685fd46c054",
+  "m": "cDoQ3AzJxwMmtS+rlBJb61D2uHLV0bg8r/GO9XSSl7QwDA6GUY2TVX3lev6UHEeqF6P7fofHun2y94+wdNfL9S4KD40DmtpMcqFv9cMbTPkG/K1ykJSnOLb6i+Qmxc/gL0QbjQOAlUc0tT/72hoe5Uj/snLT3LB9sP6G5WOSyfJnD0uFHo2PT3uhK7rZH0r+Q+G4fIf6uirm9MqtJoX473AZRcgigJRAcaEoutgbX/xD4Osgwtm0NKj7j+ImgYbjLwEFyBWAjEpw5Hu61gcevgqzqjzDlOYDva2XsDuSn7QrAQqeFJraUXHsfvPaGlv4BqLncsbarH2p+46wdt3R8TVEBI5R2tpCc+B29JQSW+tQ9rhy1dG4PK/xjvV0kpW0peT/yAKG2kg07Xr7whtNqlT2pjPO2rE4tL/ZsHHaw/pnAAKeGI2fRzTjZrqAUB7CQ/2oN4eDiyat4sr4Z8GG4C8BS5sQhJ8DZuRy+90QWu9Us6ohh4OLJvXiyq0mgZKna0QcgBiKkgN98j+uh1A=",
+  "a": "xk8="
+ },
+ {
+  "n": 6,
+  "id": "NM-PC4",
+  "sub": "Permutations & Combinations",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "Six letters are written and six envelopes are addressed, one for each letter. In how many ways can the letters be placed into the envelopes so that exactly two letters go into their own envelopes?",
+  "opts": [
+   "44",
+   "90",
+   "120",
+   "135"
+  ],
+  "bench": 150,
+  "k": "b96cc4f575a4da1a124d5f92f084b7da19819e1f1039d45cb6513f14096e0ec9",
+  "m": "vDMuEXRwd0WtfAV+ztOTEfV2bwGyG4kI0+X6Ut8b1s7fOC4MdXA0RalgBWPXnO8b4mN4H/ZI9QjS6esBk0/F0c0mYUMnJGIRsnhceZec5xX1ImkBrQnAEtLq6VLVFc3Y3zY0DXM1Mkega1wq1tLWXfJnOwmpG9kQ2ufrFp9az8KWOClebmZ3Ra18BWTM0dEY4iJ0AuAMzA7a6ukX3h/W3ox7LhgnczhEtzlKaNPZ0AnjODtW9EiEXImwrlmTS4qK0nt1Xiw1ZhH4ORwkmejbGLBjdRe3Ddtc0veuQ4Za5N6WNiQNJyx3DOUoFj+XnOcV9SJ4C60FxhKb4fwA3AiYw4x7NREnczhDonxRKs3U0gmwdnMB4AfdFN72rhTcD8qKki4yCid3MhGhfFdr19vWGbBwehCoDdtcz+zvHJMX3diaNzhedXA2Q7d4S23c2J0=",
+  "a": "QVIV"
+ },
+ {
+  "n": 7,
+  "id": "NM-MXM",
+  "sub": "Maxima & Minima",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "What is the smallest value that 2|x - 1| + 3|x - 5| + 6|x - 11| can take, as x ranges over all real numbers?",
+  "opts": [
+   "30",
+   "34",
+   "38",
+   "44"
+  ],
+  "bench": 150,
+  "k": "c77d353f57930a4a9c95b447a374cedf0cca13f83419c07fccf5817d1c402d02",
+  "m": "1rH1kzVDqZh/jUZfgrsclhFR0Z6VYcANqbqDgjtXi+7jq7yTI1T5g26NFVuEu1WSFxyBhJl21lqhvcbNOVvF5OT55Ns1G7uYf59eRoK8UosRUZDb0DeFFbLp15N5Hrfu47353TcbrYJ/3kZagqVZ3w4Ux4PQdspasqCByiMExenntf/EcAr5g27eXEXN+A7fT1GS190ik1r96cuTZgXF6eet59Y1VfnbOp9bUs3gHJYWUciE0DCFV+D6xo93CMW2ovSniHBZvJ5tm1BYzeAcngwVgcbBIswO4KCVgmUezqux+b2TZhvkyjfPDhaMt1OJB1GQxtBr0VqpusaQdxXFuKLysIVwBvnbK9AVYoWwHIwOHtGS0HHRG7m6xswyWYT/66/1kzFXtcpullAWmrRF3xYegY/QP4VL8emHzDMekf7wt+OTIFSqg26XQ1PNtFqLBwOBnoQuhQmv6ZLKMh6I4uyw/cY9G7CZOp9BFpX1Ad9TQI3Xh23XDqjp1IpmDsyrqfmjm2YS+cE6yB0GxPUB31FJj9ekasBas6GJ0CNdkP+isOOTJFO8ym2bXFGFoVmbQhzEk5ljy0DgvY7Hd06K4uytsNIkG66Cc51dFpm9Wd8QBM+ZmWzCWrSmksM7Hortoq341nBMvIN9lkFFzbNVjREFgYWVY8YSpbrGyjZSg6vtv7CBcBD52TrVFQDN6BzOU18=",
+  "a": "z0k="
+ },
+ {
+  "n": 8,
+  "id": "NS-M22",
+  "sub": "Diophantine Equations",
+  "rate": 8,
+  "type": "MCQ",
+  "q": "How many triples of positive integers (a, b, c) with a \\le b \\le c satisfy \\frac{1}{a} + \\frac{1}{b} + \\frac{1}{c} = \\frac{1}{3}?",
+  "opts": [
+   "18",
+   "21",
+   "24",
+   "27"
+  ],
+  "bench": 190,
+  "k": "385498294e5d6a71ad1097688bfdeca6f0e4162b100868e613406cb8cc4f9c87",
+  "m": "SLnyZlesjIbtlYqVRAKsfvHisMekbKGtflGQm3GwiGhmq/14EtCKw6S6zJNNBPc84fjv1uF5uvM9aIXJcfOvN37wpT4S7YPCpLrMk00E9zzh+L3W4X657jBo1oRloId7ebW8cFzoiNSkusyTTQT3POH479btP6bufmzWtXe202818NpsSqyMhuWIzsFYD+kt+fKpyrV2uu9+b5OKf76WKDuM+ndT75aX+Z3InAxMrFH68b3Iui6o+j1w1tQwj5UperPnNE/33tuky4q9ShXtbueyodCgYvmhP2OSyWO6nTh+8P4lbuCIhufG3olJR/9s8eb8ya5qu+U3Y5HJYLqdKDuyvHFdrIyG947Fk1hH/mzy5LmLI59BoTh/mYQwp5s+O6PxZF7giNXwxsOPWALraO6jvcmuabChKmWTyWK2kDJrovNmU+DNyeLG3olNE6xp9eW6zrN6u+I7LYOZMKece2+n9WZXrITSqsbsjl5H6Wz/6/zJ4Xa7oSxsmI51/9M4O7nvJVTjn8XhgobBTQnoLfXw/MCkb6GhMWOakDCkmz518PVxEu+Cy+GVio5ZE6xsvPS0xK169e8rYJSMYvOSLzu8+WRB+M3EqsbLwRFHuC3w5r3dpGz13Th/l4pr4o4gKuLhJVPiiYb9j8+NSBSsNbz3rsKxc7Dyci2EnH69mjV88Pp3XeHNjrDKitAfS6w8qbX1i7Vw9alqIdbbJP/TaS/5siVTrNCGscbGhE0R6X6837rZoHyusyN2x9xt85I1f/DlbFfgidWk05HBTUexLaqjsM6gabDyflGQm3GwiGpmq6p4Eu2DwqSfw4RAA/8tqbj8yq979eB+MNbePPPLe3q++CULrJTP4YrOwUMJ6S354r/D4f1VFX4lwcUw5N97KeG1KRKk1Yqk3obBHVWlLf3tuIvpJvmhZyHW0Dn90w9ztbxxXfiMyqSP2cEUR6ctqaP3i/Q//qFvLd3JIfPYeyrwoSUAvcM=",
+  "a": "2GU="
+ },
+ {
+  "n": 9,
+  "id": "MM-M08",
+  "sub": "Permutations & Combinations",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "In how many distinct ways can the letters of the word ARRANGE be arranged so that no two A's are adjacent?",
+  "opts": [
+   "900",
+   "1260",
+   "360",
+   "720"
+  ],
+  "bench": 120,
+  "k": "a8ea90b1583a905cea2cfe0fc4bda1a9c289f248dddb45f4623c0eefa5b011f6",
+  "m": "8ZFsG8t7LckTQ79xEpWi0Ow8Dm43uhG7dvlhcMEqLqHx40ot7F8NyRpMqHEz0KDC638HJWOdEb0loSliiCox7pCCGSmlXRuAH0fsMA+U9NTwbgNlJKtUvW2wYWjcNiPzkKVXLOAcimnvAp59QaL4lcwwQkxjrxqtJZBh5SjKZuje42I8910Lkk4DsSpT0amVvzxUO2O5FbB2+2FTwDE15JClVyzgHASMD1apIxLQt8fnfRZuY70dsSWyIHfbfiXuxa1KM+tbSJ0TR+wlFp/00Ox4ESdjrxqtJaEpYogqMe6Qqlo/60gBihpO7BBGg/TB43cHKze5G+lhvCdhzSwj78TjWTv1T0iAFQKQNxORt860PD5/KqMRuiXgPHyaI2a8kPILevJdEZpVApg5BNC32vdyFisqvVT/NfUdc8EzI/KQ8gt6uBxR2UsM",
+  "a": "kgIS"
+ },
+ {
+  "n": 10,
+  "id": "MM-M18",
+  "sub": "Set Theory & Venn Diagrams",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "In a survey of 240 people, each person owns at least one of three products, and the numbers owning the three products add up to 396. If at least one person owns all three, what is the smallest possible number of people who own exactly one product?",
+  "opts": [
+   "80",
+   "83",
+   "85",
+   "88"
+  ],
+  "bench": 150,
+  "k": "8c6c4e52cf6ed2fc7d79a3a88ddf515366411450b38cafb1c0531834c87e4dc2",
+  "m": "5m6q+qHqVhYzhqzTj7MBVKCXzKZoMw6ormr/p85ECArEYrC98aMOBnCTrs6Prk9T6ZfdtmxwFLG6KO6i0kQGE84rv7a95gIPYYKnmY+VSVOrl8juJjMR/ego6PWARFVJmiu/tLXmBkc4x/DGj+oBBbeXhe4+Klbz41vvt8kWBh7eYrC98aEfEXaU4saP6gEEt5eF7jwmVvHjafSxnRcSH9l/t66ksh8JdMeg1syqAVGswd29LWNA4OM6ruWdSUcMiib+qPH7Vl8nx+mX3e8BZaqXyO5kfQOvpmnpsM5EFAnYYr2uvb9WEHqTqpfd4cO2UZfduGhhGf2mcO6n3EQXGNh4sbTxqQEJeomll86tTRax38qraDMGsrFr/6adCwkYimaxqLTmGRB9jqzQj6RZV6bD1LctfA644+oaQZ0FCRmKe/6zouYFCnKLrtLctQFBrdLW7n8zCa7je/e00QgCDt4l/o65o1YEfImm3tuoTljlw9CveTMBqeNk/7TOEEcSxG7+qrS0BQh9x63AwbIBV6nbmLplYQW443jvoc5EExXPK7i2vqkER3KT4sWP/AEH6Zffp3t6DrrjeLronVxSUw==",
+  "a": "gGI="
+ },
+ {
+  "n": 11,
+  "id": "NM-BAS",
+  "sub": "Base Systems",
+  "rate": 8,
+  "type": "TITA",
+  "q": "A certain positive integer is a three-digit number in base 7 and also a three-digit number in base 9, and its base-9 representation is its base-7 representation written in reverse. What is the number in base 10?",
+  "opts": null,
+  "bench": 190,
+  "k": "4b579e82a2ad3b8b9cb4ef028b3ce8ed0950d39f4c7cb21edd39b3e14ec8c491",
+  "m": "sbAOBX87lymaeCiBS70dXZrJENYuLSuFAuE0HNp+V6eZ9RkJKyCdKYxxPsQI/1BbltxZyy4tfdlDoDMcjzwW4t22VAVZNpNt2HA1xBTvS1yB3RyCPH5pgQLieU/dcw/pk6AXR24h0mCMOTKXRrIMWtOFWZs/LWLAQ644b90qQqCTslpRYzaBbNh8KpEH5hEZx5YYgnAte4ICrTgEiD0W9N3lVgV/O5N92HAoxASqABnBmhiCcC190EGuOHnOO0Sw3bETQmIn0mSNai/EBO8dVZbJGM59ZCfAQOFrWZhpGumOulpEJ3OQKZl3P8QFqlxVn44VyzgtK4VW931Z1n4G6Zy7HgU9f9J+kW0zxAeqXFeXjhqCM2InzVjlalOYPFOqnKAJQCsxnX2QOSmBFvhYSpbADcMpZCaOUaBwXc47Fr2Vpx9AKzebbpFtKMpG3lhKh8cXxX1saYZQ73UciX5Cpt3jVgVkPZ5w2Hh72Ua/HU6a2hGCPi10wBGgc1ndLkXpn/VHBTphwinVOWrWVqoAGcOOEMwuZC2FAvRwWZgsV6easFQFXzuXKZxwPI0S+R1YgctZl3EtecwCszQcyzEWvZWwWkt+PpBsijkyl0a+BBHGh1mJfT1pywKzOAGYbALx3Tf6sSsynG3YK2/cRuNTGZHPCsd9NGmJUaArDI1yFr2VsFpXbiWXe4t8d8QH+R1Llt8Myy9oLc4=",
+  "a": "9QM+"
+ },
+ {
+  "n": 12,
+  "id": "NM-PC3",
+  "sub": "Counting & Digit Problems",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "How many five-digit numbers have their digits in non-decreasing order from left to right?",
+  "opts": [
+   "126",
+   "715",
+   "792",
+   "1287"
+  ],
+  "bench": 150,
+  "k": "4d804f95e125950c9823ca396a58988e62a2fc82fcfaed925e1b748f9296da73",
+  "m": "z8QJDsUkIKCVTNZ3LjlCdToRb2X4zt/O6hCSUvtP+ia2gkobw2FuoYpOzSM8aVx1LQY9JOiL3dDjUQO3Q0/ycqbVRg/BJSCsnV3aIyl2DHIpVGkt+YvQ2e4ViFmwT/9v4ctdVI0Sb+SIQ9ojM2xBcikGPSzvi9rV9xSFF7IB72/0x0UDjSN55J1Fn3Yzdl50KQZ4IbzY2dDqEpVeuAG7aeCCTxPbJCCglUzWdy41DGIpBHgx9d/V0+FRgFu7AOxj4o4JHN8ubeTNC8tsfSAWMC0aZGXv3t/UrwKEW7IM72/pzAkZzC8gppkLyHE0bVh1IlR0K7zF09KiFYRUpQr6de/MTlrCM2ShjgvWbX18VHEvAHE8vMTS2a8GgE77T/po4oJMDMgzeeSNXt5vNH9VeSITPSvpxt7Z/VGARb4c/nWmzUcZyG8gkJRKyyM0agxxbAd4KfnIyNXgH8FAvhvzJvTHWR/ZKHStk0WTIwF/XnEvDyx2vPfI1eIUkhfmXbta8stEH95hMfXcd8tqMHxfMH1EPRnowtHZ/FHYSqxeqTb7ghRanHM489IL62s4OVhiLQQ9LO+LyNOvEo5CuRu7aejOUFreNXKtn1/Ten1wQnM+EXw29cXbnOsYhl6jHLcm8cpAGcVhZ62KTswjbCsaPg==",
+  "a": "jLck7g=="
+ },
+ {
+  "n": 13,
+  "id": "MM-M17",
+  "sub": "Set Theory & Venn Diagrams",
+  "rate": 7,
+  "type": "TITA",
+  "q": "In a group of 120 people, every person likes at least one of tea and coffee. The number who like tea is twice the number who like coffee only. If the number of people who like coffee is between 60 and 75, both inclusive, how many values can the number of people who like both take?",
+  "opts": null,
+  "bench": 150,
+  "k": "2694d84184b87cfb32b458234dbd9c61dd021ea628524b3d90aba3b21dba55bd",
+  "m": "5HngiLZFBmKPjgfzR6M+5DwgBC3xxmdyU1On/EBnTizAPPXGqkUnJ9uSCrYJuCbrOzdWeu7BKD5WUam5A2pHPs15uoiaDQt0ytoY/gjtJ+A1IFZu6chuN1oao/cMfAE23XH2zbxFJyeC2he6R74kqSotGX7jjn86UBqg8AtgASzNfbTGuwgGYt3aXb4k7WapJmxYLdXHZjFaGqnvBXdYN8Z5tMSnDgF0j5sbtguoKvoqZRlj44IoYBd57LRAfQh4gzzXiONFHCeS2l6kV+Fr/jYsFWWmzWc+U1u86gV2ASzHPNeI40UcJ5LaW6ZJ7RjmfiYZa+DLbX9QVKDgQGxSeMlw48m3FkQzn9oO+APtP+w/ZR9+ps9kJV5Dv7lYNQ1433T13KsTAXWPuU/+Br077DA2Vnnpjmo3Exqt9wQlWXiVPNeI40VQN4HaLuVHjmv7KysFLenYbSAfDPy5FGoBb508/catCRF0xowKuke1a/srKwUt6dhtIB8I/LkUagFrnTz9xq0JEXTGjAq2hU3fqW9zVnvnwn03TBQ=",
+  "a": "i38="
+ },
+ {
+  "n": 14,
+  "id": "NS-M16",
+  "sub": "Digits & Place Value",
+  "rate": 7,
+  "type": "TITA",
+  "q": "The digits of a four-digit number, read from left to right, are a, b, c and d. Given that a + b + c + d = 20, that a = b + c, that d = b - 1 and that c \\times d = a + 4, what is the number?",
+  "opts": null,
+  "bench": 150,
+  "k": "0e3e6b7e322d30d3a2cb167498bd8ea761cc30bb525d65ed805a4258da05921a",
+  "m": "Aj7aXHY8ckA5r2I2sVzqLBRvL5Z4AcPTiOrE6AchPW0za5MPYXUtFSnmMXGjDep2XXtqznhQgprNvs/oWyEkfX1ry0AiMSZcPuZpJ/RT6nBaaS/ceF/D5oDsyqsdMyZtfGvcUnlnextth2Ai/h2uMQktbZ11QtKai/vKphUhdG1sa9wPKXU3GW2nYjWxSaJ0Wi1snWVCgprLvsnmRk95OnE/3Vx2dXJdKOZpJ/RT6mdVYXrYK0KM3Mb6hegCISttYWvVTmkwdRUs5jFxoA3mMVpie505QofTgfff5kZlNnBxeZhIayNjRm2nLGyxBOYxVi0ynWtCgtSCvsjoWyEgYXEpzVsiNiZpOa9hNOIdrjEJLT6PeAOE24/w2LxGYDZmcX+YEiJkNRttoixssQnqdl17as54A8OHxqaH6AQhK21ka9lBZnVlFXDmP32xXKR1FG4v4SwLjt+Vvs/oWyEnf3F2mE4ifiYBbSSMxbFJonhHLXjSKgmQlMb6i/VGNzYqOD3dXCI0Jght8SBx8x33MQMtbtM8QoCa276b5EZyeW0ya+RbazhjRm2iLGyxDepwU2xm0ysWw9vGtYv8Rjw2fGBlmEsiaCYNbaFlJ/RO6nAUMC+LeAON3sb8i/VGODptNyTKTGs7YRUu5jFxvA7mMUNlZt4wQorJxvDEvEZgNik4LNFbLHVSXSjmYiT8X69jFGR8nWBX0I7I",
+  "a": "WpYpBw=="
+ },
+ {
+  "n": 15,
+  "id": "MM-M06",
+  "sub": "Permutations & Combinations",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "In how many ways can 4 distinct prizes be awarded to 3 students so that no student goes without a prize?",
+  "opts": [
+   "36",
+   "64",
+   "24",
+   "81"
+  ],
+  "bench": 120,
+  "k": "54749fe96f482f6e8f924da76dee1aee3d7c1576d60d4e0f8c7d92847376fc42",
+  "m": "Ro0bPuTMXrL0jr+1vexhzxjW09QSqriA1v6sSzes6X9pygE584VWuqGI96Dv937ZH4Td2AOw95qV/qhELeSmdi+eHTS20VinsZ/3o+nrYNkC0MmNRvCJlc6j6Rd0/PgweIsMIriFYrC5laG1veps2UzA08QSsb6Mj6qgRTq36WRniwFx+sBRo7HapL/w+2bTCN2a2BO3+c65tqZFJ62ndy+LVSLi0FSwuo73pPK+YcQPyM/TA+O2gJ7+rU81qKB+aMoBOfOFQKe9gLKjvf9p0wLDmsMOpveBjrasWHSwvn8vixYy+dBeoafasb/vvjecMNDT2gOw99ykpf1XdPnpJDfGVTPj0RChvJ/34736bc8Y1tPVE7e+gZSt6V48pb0wepkQcfnLXKz0lbm1ve1wyQjB1MNGq7aYn/6rTzGq6WJqhxon88EQoaOTtLWxvnfTTMXe00a3v4uX/qtLN6/nMFuCEHH1ykW7oNq+o72mNZxBhI6PRuj33drj6Rli6g==",
+  "a": "hiw="
+ },
+ {
+  "n": 16,
+  "id": "NM-PC2",
+  "sub": "Permutations & Combinations",
+  "rate": 7,
+  "type": "TITA",
+  "q": "In how many distinct ways can the letters of the word MISSISSIPPI be arranged so that no two S's are adjacent?",
+  "opts": null,
+  "bench": 150,
+  "k": "bca4ff84298ea5182dca77bc24cf9b5736606129827e7d89fdce17d906d74444",
+  "m": "YaHidDoKwRftLVzS/V58Dac5GhggTQfVORZuqBcXV+ZDhtQHPnWyONIIZ9LcGHwB4jMQGzcDdJ4vQnujAUQZsUPI4QAAd7IK3BZw0uFXag2kOgocZXAAynwNb7lFBQOiDInDVRI39TudCX2XtVB7RacnXx0gVULXfICaWUUpQeZlxJFuX3nbcp00OdLFEy994rf/+mVKSZkABGisBh9Y9hjYzFxBbbICyRR4l+YfPVDiaF9fdRYHzj0baeNFMAWpX42RVBYv9zCdEXCG4Vp9XuI2DQskV0KZOQt9pRFECqdcm5FEHCz8KtQTctL3UHtF4jARCjYPB9gyBjq5DQFNoEOdwwcaPfcwyRR2k/kfXAqxdRANJlZXwHwEdbgXRAmvSo7UVRY35n7aHGWBtVZhDZ4zDQ8mWB+ZABZzoAAXTfEMtMVOHjzhfotdSYb8Umpe4mACFXcXWplhQi39RRMMv1/GkXMbPLI90gh7hrVWfA3zZUpOGVdO1DkROvpVRFDmG9uEF10=",
+  "a": "IgRrUA=="
+ },
+ {
+  "n": 17,
+  "id": "NM-RM2",
+  "sub": "Remainders",
+  "rate": 7,
+  "type": "TITA",
+  "q": "What is the remainder when 1! + 2! + 3! + \\ldots + 100! is divided by 36?",
+  "opts": null,
+  "bench": 150,
+  "k": "5cd126c0c15d7644d844acfaa78fb9fb8ce31c0604d8b3092a74a8d6b63f032d",
+  "m": "fr61c3Vi1e0iGPZbLWOl/tsEC0qrORTNh3eibru6bHJ/uLUSIT+Y1CVRqAhwY8+921NEDuphUc3fIfAu8ro3My78+jw8N5mRNxfvWyxj9abbDBYO6i9YmNYj/Czn/3E9K6imeHU3m9V2EvRQKjH1sI4RAF2rYVqZ0j77O6vuPnI54PBuJzOY0D8f/1ssbbydlQkcDv9nUM3cPucv/7o3OzvttTowJJjCdhz6Siom7ujbVEUFqz0VxpphtXerqGVyZqikfGV2yJFnRKgSfiLytttUUB2rMhXZmgvhNeb/InJ+vrVldW/bkQIZ/h4sJvGzkgsBS/kvXJ6abrs=",
+  "a": "rQ=="
+ },
+ {
+  "n": 18,
+  "id": "NM-PC1",
+  "sub": "Permutations & Combinations",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "In how many ways can 8 identical chocolates be distributed among 4 children if no child may receive more than 3 chocolates?",
+  "opts": [
+   "25",
+   "31",
+   "35",
+   "38"
+  ],
+  "bench": 150,
+  "k": "a5f6971f168390ba3a865ccd8a8b2770a6b3011e41a3212b9e5993b609c2209f",
+  "m": "MyoIlB5HxnjOQZnV+A8Og2lpbLlyTQeMP1uJDZB+hXEFOg/cGEGSLNJM3JvuAxzKOz1runJNHY9wUJ5KnmzMcAFjD5MdR8Yx1UeP1fQIXthpNiSkcghSmH0V21ffJYU+SGMLlBhR2njTWtyp/RwfzDIsNfwOVxuMOE3bHM84+XINLhmPUQvPI4xU3Mi7X0iaZz1KsyUDAIQwUY1I32zNY0QgHY8UQZIv0kyOkLsdEcIsf2u4KwMajjFaiA3LOMp0RC4TjhQIkjDbR5jV9AAbjyp1a683TVKCNVeXSd8shWUMLB+THVPGPckJnZv/ThrGOml2tTBWBoR9SpNI32rAawUqEpUfVZJsmk+OkP4CB4NpQWKuM0AJ1n1ij0SSfdYmUmMgiBhf1yuaHIGOrRNekmkuMfwlQguScR6aQ5s40W4BMRncEEDXeI4Jn530Bx3KOj1runJAGogxWtcNjHeFdREhCI4QUcZ4ix3M27s6CcBpfmy1PkcAhDMek0KTfMxoA2NI3B5AkjXVW5nV8h1ewCdxffwiTAGSNFyXSN951iZQYx2SFRKGdJpelJz4Bl7HKG10uTxQUogzHqdLjXnGfVBjIIgYX9crmhqBjqkTXpJpKySrM1oBwTxQnw2XedYmCiwL3BNX1zaaWomX7xwfzD14YPwmVBuCOBLbXpA4xGIAYxWIUVDTO9EH3KHzC17MJmhqqHJKAcFsCM4N0jiUMlRjV9xHEo94iRjS",
+  "a": "7n0="
+ },
+ {
+  "n": 19,
+  "id": "MM-M02",
+  "sub": "Counting & Digit Problems",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "How many positive integers less than 2000 end in the digit 4 and have all their digits distinct?",
+  "opts": [
+   "129",
+   "120",
+   "128",
+   "136"
+  ],
+  "bench": 150,
+  "k": "7fe94035033b3b5ca437e81f2818d405bfd530c20b8be548e18027f3b3eb557d",
+  "m": "tU7pJNz4aDAfmW1Eu70JKKtWID6VAzD5GleW93ti9TqIW6Upwb9jPQXNak/3qlxx5RMhcdpUPr0nR5CjbCWyHJJNv23csG9pS4hrUru3FSKgR3J3iUVx8woQkOUoffUBiR68bc2gaSxPmSUVt/MPKukLfD6uDWL4FhCb6m8loQbcHvElzfhiPFGJd0T/oFwhoFQ7atoEZvIaVIyjOGy0G4IesWGIv2M/VoNiAaP/XCSnV3JqkgAw6RZejKNsJbIckh7kO8exbjofmW1Eu6cLKulXO3mTEWO9ElyN5mkorFWTTeAphPhtIEmEa0a761ynSadyapIEZL0aQ9+1PGL1M4lL923MsW0gS54lQ/6/EzLpAWIuyl8w6RtV3+9tLbEciFmlKcG/Yz0fgHBS7/MeIOkCcn+UATDpG1Xf9mYloQbGWuwqwawqfRPNZE//8wgtrBMmaZVFffQXVJPmKCi8Eo9K9m3Jqm9pW4R2VfK9HzHpUjx62gRm8hpU37IoLbsRxgqpbc+xfCBRiiUZu48ILKRWIT7NRS29RgbRo1wksFWSUfEsxPhjOh/cJQq761xu6QVmPtFFJatTDd+yOnX7",
+  "a": "Yzgb"
+ },
+ {
+  "n": 20,
+  "id": "NS-M02",
+  "sub": "Factors & Divisors",
+  "rate": 8,
+  "type": "MCQ",
+  "q": "How many positive integers less than 300 have exactly 8 factors?",
+  "opts": [
+   "42",
+   "45",
+   "49",
+   "53"
+  ],
+  "bench": 190,
+  "k": "a6922b39e02c429dfb15535c164a5232d768e5ba599246938b541152f847ddad",
+  "m": "eEb31KWi95ncHCA0T3ucJ8Rg4SOt8xSVOvM90Gibn0VgEvnQ5qbqgsJZbTdPdptowmH3YrziC5R0+ybIb9KGRzlG/sCy9uyEjwRhcV16z3PYbaRtveYGnya2O8Vom5lFJUb+0+ai8JnKWW0iRnSfYsMypHOW8FOHeLYj+mCIi1psRv7H5qbpmY9LJCVGNZ8rkHmkYqbvRIh08jrXb9KYSDRG4cevu/2YgRwPNEJ6mCeDOLQv6Ps6gWPrc91y3ppPM0b+26qvuNqdBGNxen2KJ8Ng5XOtqxSkL6Uu1TvCn04sAuKV9+C4hdpRLzRcZs/lMJykO7mrApUmtiKEJpvFB2BTvZXx+rjFgRJhcR0iwyfEYOFt6LlTi3TwPNY7ytYWYFS9lfP6uNyPXSM1DiTeK5B87Gamq1XIYbYP0HLWk1hgVL+Vkr79y9xULCFLNZ92wiSkYuj7FpUw4zDQO9SQCzQO49Cj9vyC3EgkP01hz3fCYelmu6dEgz3zP8Bom8UZbEbjwKi48YXIHCsjQXjPNIAo8XPo/wvaZq9jijv6ml8vAfTBrrPqy54cZnEfI88skDu2I/WrUMN6",
+  "a": "GwU="
+ },
+ {
+  "n": 21,
+  "id": "NM-PC5",
+  "sub": "Permutations & Combinations",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "In how many ways can three numbers be chosen from 1 to 20 so that no two of them are consecutive?",
+  "opts": [
+   "969",
+   "680",
+   "560",
+   "816"
+  ],
+  "bench": 150,
+  "k": "e4909f96af52b53eff544cf62ecbfd884e6b35309ac526c45fe0e76df8f7d2ca",
+  "m": "IGWfn8Qlv+dq64FG4YZLByfCoJlU2GnLxepn2O75xUEZN5+Fwneu7nyim0mzjFxDIdjvi1/SadbF5XHP/emRCEc3kJnOaOv7Z67VSPqRXVNoiv7KV8QmyJDzbdi8+YBLGHmSy8Brr68965Nc/I4OUyzP755Z3zvBnqdE0+Wqlk0bcpWfyGqlr3iigUazjUEHMN2gylLZJ9bV5HDJ9fyACANihIXSJaLhe6TVT/3DW0k2z7yeQ98q0dXjJc755oBLA36ZhYFqra97o4dL9sNKTjfepoRSwmnLxepn2O75xU4FeJvLkCW/4C/6zQKzgkBDZN6njxHFPcDAp3fI8vnFShZ0nZzAd6/8L6GAXefDT1RkyaOPUNgl3JyndtK8/o1NV2OBhIFmpPphv4YO8pFLByHbuotdmGnx2OIl3PL5kk0FN5+YgVmt/W6ojh+rw3JTLceqmRGHfoXs82zQ+fnFGUFqjd3cJfavN/rDALOgRkgr2aaEVpY+zMTvasjoqpFAEjeEjtJxueZsv5xB/cNZSDHGq8pW3z/AkLY0iaymxUkZc9bSlzzr5nzrgkbylw5eK9/vjVTCacfJp2jU7/6EQxJ5mpKBd67iYL2cQPTDQUko0++eWdNpxNTtZN755JEIB3afmdIr",
+  "a": "fv5f"
+ },
+ {
+  "n": 22,
+  "id": "NS-M11",
+  "sub": "Remainders",
+  "rate": 7,
+  "type": "TITA",
+  "q": "What is the largest four-digit number that leaves remainder 5 when divided by 7, remainder 8 when divided by 11 and remainder 11 when divided by 13?",
+  "opts": null,
+  "bench": 150,
+  "k": "577223dbe7ede1afac2fc6f334f05fa9c0d716e4d3195c5976d8deb14ceb95f1",
+  "m": "Uz5ODMiBDkURgLVN+f6hTaYD2O/02CmWiM7fw7CI4+wBPk5OloEbQxCA8Bar+rYI5RzX4u/bKYqDnZzYr53v9Qx3HB2JyAELAcjhXrfqvkrjAZni6dguxYCB2Nmslaq2RE4aVJTEHAtEkaQirfa+TfVTiLWmkmDU3d6NguCp7+AWcQZUl8ZPXx3FpBiw7aBcphHV6eXEbMXb3YmMs5v+6Bd0B1iKgQ5HGYDwFqv6tgamNs/j9NZglJiP0MWmg+PvAzIASJTDCllVyfderfe2WuMV1vTjj3bW2M7MwLWJquBEfxtRjcgfRxCA6xj5ruMYt1+Z5+jLYJGFi5zAoYjt5BdmTl+czQBcVZG0Tumv80H1U4+1s49rxdTO4Nipl+/yRCNeDciBUgtMlrBK97+QQOMQ0u/oyGCBhJzZz7SW87tEK1gJzYFSC0KItU3uqPoIrVOMpruPcdTF1oua6dqhoVwyUx3IkkccQZGtXvK/4hmoU+ry6d8wjIOJnM202ryyUTIHTtnVB05V1PYfqb+nQONTyPPj3DSMgoCcxbPa6PQNfhodmNMAXhvEqg==",
+  "a": "4oaCcg=="
+ }
+];
+const N = QS.length;
+
+/* Enrolled PINs as salted, iterated hashes — 16 hex characters each. This is the whole
+   enrolment gate: it runs locally, so opening the paper never touches the network and
+   never queues behind anyone else. Student names are deliberately NOT here; they are
+   fetched afterwards and never block the start. */
+const PINS = ["12d9acba63703eef", "fd65a7e57f1a4222", "869515787b01aa8e", "d3eb254c95f211cc"];
+
+/* ---------------- state ---------------- */
+const S = {
+  pin: "", name: "", batch: "", centre: "", startedAt: 0, t0: 0, cur: 0, ended: false, autoSub: false,
+  ans: Array(N).fill(null),      // option index 1..4 | string | null
+  marked: Array(N).fill(0),
+  seen: Array(N).fill(false),
+  ev: [],                        // {t, type, q, v}
+  enterT: 0,
+  gap: 0,                        // seconds lost to interruptions, charged to no question
+  resumes: 0
+};
+const $ = s => document.querySelector(s);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c;
+  if (x !== undefined) e.textContent = x; return e; };
+const now = () => Date.now();
+/* ---- inline maths renderer. Everything is HTML-escaped first, then a small
+   authoring subset is expanded: \frac{a}{b}, \sqrt{x}, ^{..}/^c, _{..}/_c and a
+   symbol table. A bank written before this existed contains none of those
+   characters and therefore renders byte-identically. ---- */
+const MSYM = { '\\le':'\u2264','\\ge':'\u2265','\\ne':'\u2260','\\pm':'\u00B1',
+  '\\times':'\u00D7','\\div':'\u00F7','\\cdot':'\u00B7','\\ldots':'\u2026',
+  '\\Rightarrow':'\u21D2','\\infty':'\u221E','\\pi':'\u03C0','\\deg':'\u00B0' };
+function mgrp(s, i) { let d = 0;
+  for (let j = i; j < s.length; j++) { if (s[j] === '{') d++;
+    else if (s[j] === '}') { d--; if (!d) return [s.slice(i + 1, j), j + 1]; } }
+  return [s.slice(i + 1), s.length]; }
+function mexp(s) { let o = '', i = 0;
+  while (i < s.length) {
+    if (s.substr(i, 6) === '\\frac{') { const a = mgrp(s, i + 5);
+      if (s[a[1]] === '{') { const b = mgrp(s, a[1]);
+        o += '<span class="fr"><span class="fn">' + mexp(a[0]) + '</span>'
+           + '<span class="fd">' + mexp(b[0]) + '</span></span>'; i = b[1]; continue; } }
+    if (s.substr(i, 6) === '\\sqrt{') { const r = mgrp(s, i + 5);
+      o += '<span class="sq"><span class="sqr">\u221A</span><span class="sqb">'
+         + mexp(r[0]) + '</span></span>'; i = r[1]; continue; }
+    if (s[i] === '^' || s[i] === '_') { const t = s[i] === '^' ? 'sup' : 'sub';
+      if (s[i + 1] === '{') { const g = mgrp(s, i + 1);
+        o += '<' + t + '>' + mexp(g[0]) + '</' + t + '>'; i = g[1]; continue; }
+      if (i + 1 < s.length) { o += '<' + t + '>' + s[i + 1] + '</' + t + '>'; i += 2; continue; } }
+    o += s[i]; i++; }
+  return o; }
+function MATH(src) { let s = String(src)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  for (const k in MSYM) s = s.split(k).join(MSYM[k]);
+  return mexp(s); }
+const elm = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c;
+  if (x !== undefined) e.innerHTML = MATH(x); return e; };
+const clk = () => Math.round((now() - S.t0) / 1000);
+function log(type, q, v) { S.ev.push({ t: clk(), type, q, v }); }
+function mmss(s) { s = Math.max(0, Math.round(s));
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+function human(s) { s = Math.round(s); const m = Math.floor(s / 60);
+  return m ? m + 'm ' + (s % 60) + 's' : s + 's'; }
+function show(id) { document.querySelectorAll('.screen').forEach(e => e.classList.remove('on'));
+  $('#' + id).classList.add('on'); window.scrollTo(0, 0); }
+
+/* ---------------- gate ---------------- */
+const LSKEY = 'ims.cat26.' + CONFIG.PAPER_ID;
+const api = q => CONFIG.ENDPOINT + (CONFIG.ENDPOINT.includes('?') ? '&' : '?') + q;
+
+/* ---------------- crash recovery ----------------
+   The attempt in progress is written to localStorage every few seconds and on every answer,
+   so a dead tab, a shut laptop or a stray reload does not cost the student the paper.
+   Three rules hold it together:
+     - the clock is wall-clock. The snapshot carries the real start time, so the seconds
+       spent getting back are gone. Killing the tab cannot stop the timer.
+     - time inside an interruption belongs to no question. On resume the question that was
+       open is closed at the last snapshot and the break is logged as its own 'gap' event,
+       so the report shows it as an interruption band instead of quietly inflating one
+       question's time and poisoning the triage analysis.
+     - a snapshot is offered back only if it belongs to this paper AND to this exact
+       question set, because a rebuilt page can reorder the questions and the answers
+       would then land on the wrong ones. */
+const PKEY = 'ims_cat26_progress_' + CONFIG.PAPER_ID;
+let _sig = null;
+const paperSig = () => _sig || (_sig = hex(sha256sync(QS.map(q => q.id).join(','))).slice(0, 12));
+
+let saveTimer = null;
+function saveProgress() {
+  if (S.ended || !S.t0) return;
+  try {
+    localStorage.setItem(PKEY, JSON.stringify({
+      v: 2, paper: CONFIG.PAPER_ID, sig: paperSig(),
+      pin: S.pin, name: S.name, batch: S.batch, centre: S.centre,
+      practice: !!S.practice, offline: !!S.offline, prior: S.prior || null,
+      startedAt: S.startedAt, t0: S.t0, savedAt: now(), savedClk: clk(),
+      cur: S.cur, ans: S.ans, marked: S.marked, seen: S.seen, ev: S.ev,
+      gap: S.gap, resumes: S.resumes
+    }));
+  } catch (e) { /* private window, or the quota is full — the paper carries on regardless */ }
+}
+function clearProgress() { try { localStorage.removeItem(PKEY); } catch (e) {} }
+function readProgress() {
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch (e) { return null; }
+  if (!p || p.v !== 2 || p.paper !== CONFIG.PAPER_ID || p.sig !== paperSig()) return null;
+  if (!p.startedAt || !p.t0 || !Array.isArray(p.ans) || p.ans.length !== N) return null;
+  if (!(now() - p.savedAt < CONFIG.RESUME_MAX * 1000)) return null;
+  return p;
+}
+
+/* Shown on load when an unfinished attempt for this paper is sitting in this browser. */
+function offerResume() {
+  const p = readProgress();
+  if (!p) return;
+  const left = Math.max(0, CONFIG.DURATION - (now() - p.t0) / 1000);
+  const done = p.ans.filter(a => a !== null && a !== '').length;
+  const d = new Date(p.startedAt);
+  const who = (p.name || '').trim().split(/\s+/)[0];
+  $('#rsmeta').textContent = [
+    (who ? who + ' · ' : '') + p.pin,
+    'started ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
+    done + ' of ' + N + ' answered'
+  ].join('   ·   ');
+  $('#rsline').innerHTML = left > 0
+    ? 'Your answers and your place in the paper were saved on this computer. <b>' + mmss(left) +
+      '</b> is still on the clock — it has been running the whole time you were away, exactly ' +
+      'as it would in the hall.'
+    : '<b>The clock ran out while this paper was closed.</b> Continuing will submit it as it ' +
+      'stood and show you the full report.';
+  $('#rsgo').textContent = left > 0 ? 'Resume the paper →' : 'Submit it and see the report →';
+  $('#rsbox').hidden = false;
+  $('#gateform').hidden = true;
+
+  $('#rsdrop').onclick = () => {
+    if (!confirm('Discard the unfinished attempt?\n\nThe ' + done + ' answer(s) saved on this ' +
+      'computer will be deleted and the paper will start again from the beginning.')) return;
+    clearProgress();
+    $('#rsbox').hidden = true; $('#gateform').hidden = false; $('#pin').focus();
+  };
+  $('#rsgo').onclick = async () => {
+    const b = $('#rsgo');
+    b.disabled = true;
+    /* The snapshot is only as trustworthy as the browser it sat in, so the PIN goes back
+       through the same enrolment gate it passed the first time. */
+    if (PINS && PINS.length) {
+      b.innerHTML = '<span class="spin"></span> Checking&hellip;';
+      await new Promise(r => setTimeout(r, 0));
+      if (PINS.indexOf(pinHash(String(p.pin || '').toUpperCase())) < 0 &&
+          !(await serverKnows(String(p.pin || '').toUpperCase()))) {
+        clearProgress();
+        $('#rsbox').hidden = true; $('#gateform').hidden = false;
+        gateMsg('The saved attempt was for a PIN that is not on the enrolled list for this ' +
+          'paper, so it has been discarded. Enter your PIN to begin.');
+        return;
+      }
+    }
+    resumeAttempt(p);
+  };
+}
+
+function resumeAttempt(p) {
+  S.pin = p.pin; S.name = p.name || ''; S.batch = p.batch || ''; S.centre = p.centre || '';
+  S.practice = !!p.practice; S.offline = !!p.offline; S.prior = p.prior || null;
+  S.pending = false;
+  S.startedAt = p.startedAt; S.t0 = p.t0; S.ended = false; S.autoSub = false;
+  S.ans = p.ans.slice();
+  S.marked = Array.isArray(p.marked) && p.marked.length === N
+    ? p.marked.map(v => v === true ? 1 : (Number(v) || 0))   // older saves stored booleans
+    : Array(N).fill(0);
+  S.seen = Array.isArray(p.seen) && p.seen.length === N ? p.seen.slice() : Array(N).fill(false);
+  S.ev = Array.isArray(p.ev) ? p.ev.slice() : [];
+  S.resumes = (p.resumes || 0) + 1;
+
+  /* Close whichever question was open when the last snapshot was taken, then record the
+     break itself. The question is charged only up to the snapshot; the break stands alone. */
+  let open = null;
+  for (const e of S.ev) { if (e.type === 'enter') open = e; else if (e.type === 'leave') open = null; }
+  if (open) S.ev.push({ t: Math.max(open.t, p.savedClk), type: 'leave', q: open.q });
+  /* Clamped to the end of the paper: a break that outlasts the clock is only ever a
+     break for the minutes the paper still had. Without this the band overruns the
+     ribbon and the report claims more interruption than the paper was long. */
+  const away = Math.max(0, Math.min(clk(), CONFIG.DURATION) - p.savedClk);
+  if (away > 0) S.ev.push({ t: p.savedClk, type: 'gap', q: -1, v: away });
+  S.gap = (p.gap || 0) + away;
+
+  paintWelcome();
+  runTest(Math.max(0, Math.min(N - 1, p.cur | 0)));
+}
+
+function gateMsg(html, info) {
+  const w = $('#gatewarn');
+  w.innerHTML = html; w.classList.add('on'); w.classList.toggle('info', !!info);
+}
+function gateBusy(on) {
+  const b = $('#gatego');
+  b.disabled = on;
+  b.innerHTML = on ? '<span class="spin"></span> Checking…' : 'Verify PIN &rarr;';
+}
+
+const REASON = {
+  unknown: 'That PIN is not on the enrolled list for this paper. Check it against your IMS ' +
+    'record — if it is right, tell your centre and they will add you.',
+  inactive: 'That PIN is on the list but is not currently active. Please speak to your centre.',
+  not_assigned: 'That PIN is enrolled, but this paper has not been assigned to you. ' +
+    'Your centre can tell you which papers are open to you.',
+  bad_key: 'Access denied.',
+  missing: 'Something was missing from the request. Reload and try again.',
+  done: 'You have already sat this paper. It cannot be taken again — go back to Quest Summit ' +
+    'and use <b>Review</b> to see your report.',
+  closed: '<b>This paper is not open yet.</b> Your faculty opens it at the centre when the ' +
+    'session starts. It cannot be sat from home.',
+  bad_passcode: 'That passcode is not right. It is read out by your faculty at the start of ' +
+    'the session — ask them to repeat it.',
+  not_ready: 'This paper has not been released yet.',
+  not_released: 'Your report for this paper has not been released by your faculty yet. '
+    + 'Check back after the session.',
+  not_open: 'This paper was never unlocked for you, so the attempt cannot be recorded. ' +
+    'Tell your centre before you leave.',
+  no_paper: 'This paper is not set up on the IMS server. Please tell your centre.',
+  no_attempt: 'There is no completed attempt to review for this paper.',
+  no_report: 'That attempt was recorded before the review feature existed, so the full report ' +
+    'cannot be rebuilt. Your score is still on your Quest Summit page.'
+};
+
+/* ---------------- Quest Summit: hub hand-off, passcode, review ----------------
+   The passcode is verified on the server and is not present anywhere in this file. */
+const QP = new URLSearchParams(location.search);
+const REVIEW_MODE = QP.get('review') === '1';
+const HUBKEY = 'ims_quest_pin';
+let unlocked = false;
+
+function pcWarn(html, ok) {
+  const w = $('#pcwarn');
+  w.innerHTML = html;
+  w.className = 'pcwarn on' + (ok ? ' pcok' : '');
+}
+
+async function unlockPaper() {
+  const code = $('#passcode').value.trim();
+  $('#pcwarn').className = 'pcwarn';
+  if (!code) { pcWarn('Enter the passcode your faculty read out.'); return; }
+  /* Held by reference: on success the whole box is replaced, so this button is gone by
+     the time the finally block runs. */
+  const btn = $('#pcgo');
+  btn.disabled = true; btn.textContent = 'Checking…';
+  try {
+    const r = await fetch(api('action=unlock'), {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ pin: S.pin, paper: CONFIG.PAPER_ID, passcode: code })
+    });
+    const j = await r.json();
+    if (!j.ok) { pcWarn(REASON[j.reason] || 'The paper could not be unlocked.'); return; }
+    unlocked = true;
+    $('#pcbox').classList.add('pcok');
+    $('#pcbox').innerHTML = '<h4>Paper unlocked</h4>' +
+      '<p style="margin:0">Begin when you are ready. The clock starts the moment you press it.</p>';
+    $('#startrow').hidden = false;
+    $('#begin').focus();
+  } catch (e) {
+    pcWarn('Could not reach the IMS server, so the paper cannot be unlocked. Check the ' +
+      'connection and try again.');
+  } finally {
+    if (btn.isConnected) { btn.disabled = false; btn.textContent = 'Unlock paper'; }
+  }
+}
+
+/** Read-only replay of a finished attempt, rebuilt from the report stored at submission. */
+async function doReview(pin) {
+  S.pin = pin;
+  try {
+    const r = await fetch(api('action=review&pin=' + encodeURIComponent(pin) +
+      '&paper=' + encodeURIComponent(CONFIG.PAPER_ID)));
+    const j = await r.json();
+    if (!j.ok) {
+      gateMsg(REASON[j.reason] || 'That report could not be loaded.');
+      show('gate'); $('#gateform').hidden = false; $('#gatewelcome').hidden = true;
+      return;
+    }
+    S.name = j.name || '';
+    S.ended = true;                       // nothing here should try to save or submit
+    const d = j.received ? new Date(j.received) : null;
+    document.body.insertAdjacentHTML('afterbegin',
+      '<div class="revbar"><div class="wrap"><span><b>Reviewing a completed attempt</b>' +
+      (d ? ' &middot; sat on ' + d.toLocaleDateString('en-IN',
+        { day: 'numeric', month: 'long' }) : '') +
+      ' &middot; this paper cannot be taken again</span>' +
+      '<a href="../">&larr; Back to Quest Summit</a></div></div>');
+    render(j.report);
+    $('#res').classList.remove('scoreonly');   // reviewing: the whole report is open
+    $('#r-gate').hidden = true;
+    show('res');
+    applyRank();                      // rank has moved since they sat it
+    renderTriage(j.triage);           // present only once faculty has published it
+    const rt = $('#retry'); if (rt) rt.style.display = 'none';
+    const b = $('#r-banner');
+    if (b) b.innerHTML = '<div class="banner">This is the report from the attempt you have ' +
+      'already submitted. Nothing here is being re-recorded.</div>';
+  } catch (e) {
+    gateMsg('Could not reach the IMS server, so your report cannot be loaded right now.');
+    show('gate'); $('#gateform').hidden = false; $('#gatewelcome').hidden = true;
+  }
+}
+
+/* Salted, iterated SHA-256 of a PIN, truncated to 64 bits. The iteration count is what
+   makes recovering the enrolled PIN list from this file expensive rather than instant.
+   Must match the identical loop in build.py. */
+function pinHash(pin) {
+  let h = hex(sha256sync(CONFIG.PIN_SALT + '|' + pin));
+  for (let i = 0; i < CONFIG.PIN_ITER; i++) h = hex(sha256sync(h));
+  return h.slice(0, 16);
+}
+
+/* Does the worker's roster know this PIN for this paper? Consulted whenever the baked
+   list misses — which is every student enrolled after the paper was built. */
+async function serverKnows(v) {
+  if (!CONFIG.ENDPOINT) return false;
+  try {
+    const r = await fetch(api('action=who&paper=' + encodeURIComponent(CONFIG.PAPER_ID) +
+      '&pin=' + encodeURIComponent(v)));
+    const j = await r.json();
+    return !!(j && j.ok);
+  } catch (e) { return false; }
+}
+async function verifyPin() {
+  const v = $('#pin').value.trim().toUpperCase();
+  $('#gatewarn').classList.remove('on');
+  if (v.length < 4) { gateMsg('Enter your IMS PIN — at least four characters.'); return; }
+
+  /* ---- fast path: the baked enrolment list, no network ---- */
+  if (PINS && PINS.length) {
+    gateBusy(true);
+    await new Promise(r => setTimeout(r, 0));     // let the button paint before we block
+    const ok = PINS.indexOf(pinHash(v)) >= 0;
+    gateBusy(false);
+    if (ok) {
+      try { sessionStorage.setItem(HUBKEY, v); } catch (e) {}
+      if (REVIEW_MODE) return doReview(v);         // arrived here to look, not to sit
+      welcome(v, { pending: true });
+      fetchWho(v);                                 // greeting + prior notice, non-blocking
+      return;
+    }
+    /* A miss is not a refusal. This list is a snapshot frozen when the paper was built,
+       so anyone enrolled since is legitimately absent from it, and it is not the real
+       gate in any case: the worker re-checks the roster at unlock and again at submit.
+       Fall through and ask the server, which reads the roster the sheet keeps in sync. */
+  }
+
+  /* ---- fallback: no enrolment table was baked in, so ask the server ---- */
+  if (!CONFIG.ENDPOINT) {
+    if (!CONFIG.OFFLINE_FALLBACK) {
+      gateMsg('<b>This paper is not open yet.</b> It has not been connected to the IMS ' +
+        'enrolment list, so no one can sit it. Please tell your centre.');
+      return;
+    }
+    return welcome(v, { name: '', batch: '', centre: '', offline: true });
+  }
+
+  gateBusy(true);
+  try {
+    const r = await fetch(api('action=who&paper=' + encodeURIComponent(CONFIG.PAPER_ID) +
+      '&pin=' + encodeURIComponent(v)));
+    const j = await r.json();
+    gateBusy(false);
+    if (!j.ok) { gateMsg(REASON[j.reason] || 'That PIN could not be verified.'); return; }
+    try { sessionStorage.setItem(HUBKEY, v); } catch (e) {}
+    if (REVIEW_MODE) return doReview(v);
+    welcome(v, j);
+  } catch (e) {
+    gateBusy(false);
+    if (CONFIG.OFFLINE_FALLBACK) return welcome(v, { name: '', offline: true });
+    gateMsg('<b>Could not reach the IMS server</b>, so your PIN cannot be checked and the ' +
+      'paper will not open. Check your connection and press Verify again. If it keeps ' +
+      'failing, tell your centre before sitting the paper.');
+  }
+}
+
+/* The paper is already open by the time this runs. If it fails, nothing breaks —
+   the student simply sits the paper without a name on the header. */
+async function fetchWho(pin) {
+  if (!CONFIG.ENDPOINT) { S.pending = false; paintWelcome(); return; }
+  try {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 8000);
+    const r = await fetch(api('action=who&paper=' + encodeURIComponent(CONFIG.PAPER_ID) +
+      '&pin=' + encodeURIComponent(pin)), { signal: ctl.signal });
+    clearTimeout(t);
+    const j = await r.json();
+    if (S.pin !== pin) return;                     // student went back and changed the PIN
+    if (j && j.ok) {
+      S.name = j.name || ''; S.batch = j.batch || ''; S.centre = j.centre || '';
+      S.practice = !!j.attempted; S.prior = j.prior || null;
+    }
+  } catch (e) { /* nicety only */ }
+  S.pending = false;
+  paintWelcome();
+}
+
+function welcome(pin, j) {
+  j = j || {};
+  S.pin = pin; S.name = j.name || ''; S.batch = j.batch || ''; S.centre = j.centre || '';
+  S.practice = !!j.attempted; S.offline = !!j.offline; S.prior = j.prior || null;
+  S.pending = !!j.pending;
+  paintWelcome();
+  $('#gateform').hidden = true;
+  $('#gatewelcome').hidden = false;
+}
+
+function paintWelcome() {
+  const first = (S.name || '').trim().split(/\s+/)[0];
+  $('#welname').textContent = first ? 'Welcome, ' + first + '.'
+    : (S.pending ? 'PIN accepted.' : 'PIN accepted.');
+  const bits = [S.pin];
+  if (S.batch) bits.push(S.batch);
+  if (S.centre) bits.push(S.centre);
+  $('#welmeta').textContent = bits.join('   ·   ');
+
+  const w = $('#welwarn');
+  w.className = 'warnbox';
+  if (S.offline) {
+    w.innerHTML = 'Running without the enrolment check. Your attempt will not be recorded ' +
+      'and there is no batch comparison.';
+    w.classList.add('on');
+  } else if (S.practice) {
+    const d = S.prior && S.prior.date ? new Date(S.prior.date) : null;
+    w.innerHTML = '<b>You have already sat this paper</b>' +
+      (d ? ' on ' + d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '') +
+      (S.prior && S.prior.score !== '' && S.prior.score !== undefined
+        ? ', scoring ' + S.prior.score : '') +
+      '. You may sit it again, but this attempt will be marked <b>practice</b> and left ' +
+      'out of the batch comparison.';
+    w.classList.add('on');
+  }
+
+  $('#pinlbl').textContent = first ? first + ' · ' + S.pin : S.pin;
+  $('#pinlbl2').textContent = $('#pinlbl').textContent;
+}
+
+$('#gatego').onclick = verifyPin;
+$('#welgo').onclick = () => show('instr');
+$('#pcgo').onclick = unlockPaper;
+$('#passcode').addEventListener('keydown', e => { if (e.key === 'Enter') unlockPaper(); });
+
+/* Arriving from the Quest Summit page: the PIN travelled in this tab, so don't ask twice. */
+(() => {
+  let saved = null;
+  try { saved = sessionStorage.getItem(HUBKEY); } catch (e) {}
+  if (!saved) return;
+  const el = $('#pin');
+  if (el && !el.value) { el.value = saved; verifyPin(); }
+})();
+$('#welback').onclick = () => {
+  $('#gatewelcome').hidden = true; $('#gateform').hidden = false;
+  $('#pin').value = ''; $('#pin').focus();
+  S.pin = ''; S.name = ''; S.batch = ''; S.centre = '';
+  S.practice = false; S.prior = null; S.pending = false;
+};
+$('#pin').addEventListener('keydown', e => { if (e.key === 'Enter') verifyPin(); });
+
+/* ---------------- start ---------------- */
+$('#begin').onclick = () => {
+  /* Second lock, independent of CSS. The server refuses a submission with no `opens`
+     row, so a bypassed sitting could never be recorded — but the student would lose the
+     full 40 minutes discovering that. Refuse the start instead. */
+  if (!unlocked) {
+    $('#startrow').hidden = true;
+    pcWarn('Enter the passcode your faculty read out, then press Unlock paper. The test ' +
+      'cannot be started before that.');
+    $('#passcode').focus();
+    return;
+  }
+  S.startedAt = now(); S.t0 = now(); S.ended = false;
+  S.gap = 0; S.resumes = 0;
+  clearProgress();                  // a fresh sitting supersedes anything left on this machine
+  runTest(0);
+};
+
+/* The one way into the test screen — a fresh start and a resume both come through here. */
+function runTest(at) {
+  show('test'); buildPalette(); goTo(at, true); tick();
+  if (S.ended) return;              // resumed after the clock had already run out
+  if (timerId) clearInterval(timerId);
+  timerId = setInterval(tick, 250);
+  if (saveTimer) clearInterval(saveTimer);
+  saveTimer = setInterval(saveProgress, CONFIG.SAVE_EVERY * 1000);
+  lockNav();
+  window.addEventListener('beforeunload', beforeUnload);
+  window.addEventListener('pagehide', saveProgress);      // catches the tab being closed
+  document.addEventListener('visibilitychange', onHide);
+  saveProgress();
+}
+/* Once the paper is live the player is the only thing on screen. Back is made inert by
+   keeping a spare history entry in front of the page and re-pushing it on every popstate;
+   fullscreen is requested off the Begin click, which is a real user gesture. Neither of
+   these can stop a new tab or Cmd-Tab — no web page can — so both exits are logged and
+   reported instead. */
+function lockNav() {
+  try { history.pushState(null, '', location.href); } catch (e) {}
+  window.addEventListener('popstate', onPop);
+  const r = document.documentElement;
+  const go = r.requestFullscreen || r.webkitRequestFullscreen;
+  if (go) { try { go.call(r); } catch (e) {} }
+}
+function onPop() {
+  if (S.ended) return;                       // after submission Back behaves normally again
+  log('navback', S.cur);
+  try { history.pushState(null, '', location.href); } catch (e) {}
+}
+function onHide() { if (document.visibilityState === 'hidden') saveProgress(); }
+function beforeUnload(e) { if (!S.ended) { e.preventDefault(); e.returnValue = ''; } }
+
+/* ---------------- timer ---------------- */
+let timerId = null;
+function tick() {
+  const left = CONFIG.DURATION - (now() - S.t0) / 1000;
+  const t = $('#timer');
+  t.textContent = mmss(left);
+  t.classList.toggle('warn', left <= 300 && left > 60);
+  t.classList.toggle('crit', left <= 60);
+  if (left <= 0) { t.textContent = '00:00'; S.autoSub = true; finish(); }
+}
+
+/* ---------------- palette ---------------- */
+function buildPalette() {
+  const g = $('#palgrid'); g.innerHTML = '';
+  for (let i = 0; i < N; i++) {
+    const b = el('button', 'pb', String(i + 1));
+    b.onclick = () => goTo(i);
+    g.appendChild(b);
+  }
+  paint();
+}
+function paint() {
+  const gs = $('#palgrid').children;
+  let a = 0, m = 0, nv = 0;
+  for (let i = 0; i < N; i++) {
+    const b = gs[i]; b.className = 'pb';
+    const has = S.ans[i] !== null && S.ans[i] !== '';
+    const f = S.marked[i];
+    if (f === 1) b.classList.add(has ? 'ansmark' : 'mark');
+    else if (f === 2) b.classList.add(has ? 'ansleave' : 'leave');
+    else if (has) b.classList.add('ans');
+    else if (S.seen[i]) b.classList.add('seen');
+    if (i === S.cur) b.classList.add('cur');
+    if (has) a++; if (f === 1) m++; if (!S.seen[i]) nv++;
+  }
+  $('#s-ans').textContent = a; $('#s-mark').textContent = m; $('#s-nv').textContent = nv;
+  const cb = $('#a-come'), lv = $('#a-leave');
+  if (cb) cb.classList.toggle('on', S.marked[S.cur] === 1);
+  if (lv) lv.classList.toggle('on', S.marked[S.cur] === 2);
+}
+
+/* ---------------- question rendering ---------------- */
+function goTo(i, first) {
+  if (S.ended) return;
+  if (!first) log('leave', S.cur);
+  S.cur = Math.max(0, Math.min(N - 1, i));
+  S.seen[S.cur] = true;
+  S.enterT = clk();
+  log('enter', S.cur);
+  const q = QS[S.cur];
+  $('#qnum').textContent = 'Question ' + (S.cur + 1);
+  $('#qsub').textContent = q.sub;
+  const ty = $('#qtype'); ty.textContent = q.type === 'TITA' ? 'TITA · no negative' : 'MCQ · +3 / −1';
+  ty.className = 'chip' + (q.type === 'TITA' ? ' tita' : '');
+  $('#qtext').innerHTML = MATH(q.q);
+  const body = $('#qbody'); body.innerHTML = '';
+  if (q.type === 'MCQ') {
+    const wrap = el('div', 'opts');
+    q.opts.forEach((o, j) => {
+      const b = el('button', 'opt' + (S.ans[S.cur] === j + 1 ? ' sel' : ''));
+      b.appendChild(el('span', 'optn', '(' + (j + 1) + ')'));
+      b.appendChild(elm('span', 'optv', o));
+      b.onclick = () => pick(j + 1);
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+  } else {
+    const w = el('div', 'titabox');
+    const inp = el('input');
+    inp.type = 'text'; inp.readOnly = true; inp.inputMode = 'none';
+    inp.autocomplete = 'off'; inp.spellcheck = false;
+    inp.placeholder = 'Tap here to enter your answer';
+    inp.value = S.ans[S.cur] === null ? '' : S.ans[S.cur];
+    const pad = buildKeypad(inp);
+    inp.onclick = () => { pad.hidden = !pad.hidden; };
+    w.appendChild(inp);
+    w.appendChild(el('p', 'titanote',
+      'Digits only. Use the on-screen keypad \u2014 the physical keyboard does not type here.'));
+    w.appendChild(pad);
+    body.appendChild(w);
+  }
+  paint();
+  saveProgress();
+}
+/* The answer box is read-only, so every digit arrives through here. */
+function setTita(inp, v) {
+  v = String(v).replace(/[^0-9]/g, '').slice(0, 9);
+  inp.value = v;
+  S.ans[S.cur] = v === '' ? null : v;
+  log('type', S.cur, v); paint(); saveProgress();
+}
+function buildKeypad(inp) {
+  const pad = el('div', 'vkey'); pad.hidden = true;
+  ['7','8','9','4','5','6','1','2','3','0','back','clear'].forEach(k => {
+    const fn = (k === 'back' || k === 'clear');
+    const b = el('button', 'vk' + (fn ? ' vk-fn' : ''));
+    b.type = 'button';
+    b.textContent = k === 'back' ? '\u232B' : k === 'clear' ? 'Clear' : k;
+    b.onclick = ev => {
+      ev.stopPropagation();
+      if (k === 'back') setTita(inp, inp.value.slice(0, -1));
+      else if (k === 'clear') setTita(inp, '');
+      else setTita(inp, inp.value + k);
+    };
+    pad.appendChild(b);
+  });
+  return pad;
+}
+function pick(k) {
+  S.ans[S.cur] = k; log('select', S.cur, k);
+  document.querySelectorAll('.opt').forEach((b, j) => b.classList.toggle('sel', j + 1 === k));
+  paint();
+  saveProgress();
+}
+$('#a-next').onclick = () => { if (S.cur < N - 1) goTo(S.cur + 1); else goTo(0); };
+$('#a-prev').onclick = () => goTo(S.cur > 0 ? S.cur - 1 : N - 1);
+$('#a-clear').onclick = () => { S.ans[S.cur] = null; log('clear', S.cur); goTo(S.cur, false); };
+/* Two-pass method: on the single Q1->Q22 pass every question you do not solve outright is
+   either one you will return to, or one you are done with. Recording which is which is what
+   makes the triage analysis readable — a single "marked" flag meant opposite things for a
+   strong and a weak candidate. */
+function flag(v) {
+  S.marked[S.cur] = (S.marked[S.cur] === v) ? 0 : v;
+  const f = S.marked[S.cur];
+  log(f === 1 ? 'come' : f === 2 ? 'leave' : 'unflag', S.cur);
+  if (f && S.cur < N - 1) goTo(S.cur + 1); else paint();
+  saveProgress();
+}
+$('#a-come').onclick = () => flag(1);
+$('#a-leave').onclick = () => flag(2);
+$('#submitbtn').onclick = () => {
+  const unans = S.ans.filter(a => a === null || a === '').length;
+  if (confirm('Submit the paper?\n\n' + (N - unans) + ' answered, ' + unans +
+    ' left blank.\n' + mmss(CONFIG.DURATION - (now() - S.t0) / 1000) + ' still on the clock.')) finish();
+};
+document.addEventListener('keydown', e => {
+  if (!$('#test').classList.contains('on')) return;
+  /* Calculator open: the exam's is mouse-only, so the keyboard does nothing at all.
+     Without this, a student typing 5 into the calculator would silently answer the
+     question with option 5 — worse than nothing happening. */
+  if (CALC.open) { log('calckey', S.cur, e.key); return; }
+  if (e.target.tagName === 'INPUT' && !['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  if (e.key >= '1' && e.key <= '4' && QS[S.cur].type === 'MCQ') { pick(+e.key); e.preventDefault(); }
+  else if (e.key === 'Enter') { $('#a-next').click(); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') { $('#a-next').click(); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft') { $('#a-prev').click(); e.preventDefault(); }
+  else if (e.key.toLowerCase() === 'm') { $('#a-come').click(); e.preventDefault(); }
+  else if (e.key.toLowerCase() === 'l') { $('#a-leave').click(); e.preventDefault(); }
+});
+
+/* ---------------- on-screen calculator ----------------
+   Windows-Standard semantics, cloned including the parts students dislike. Mouse only:
+   there is no key handler here, deliberately. Every press is logged against the question
+   that was open, so the report can say what a student reached for and what it cost. */
+const CALC = {
+  open: false, acc: null, pending: null, cur: '0', fresh: true,
+  mem: 0, hasMem: false, lastOp: null, lastArg: null, err: false,
+  x: null, y: null, opens: 0
+};
+const CALC_MAX = 16;
+
+function calcFmt(n) {
+  if (!isFinite(n)) return 'Cannot divide by zero';
+  if (n === 0) return '0';
+  const a = Math.abs(n);
+  if (a >= 1e16 || a < 1e-15) return n.toExponential(9).replace('e', 'e');
+  let s = String(parseFloat(n.toPrecision(15)));
+  return s;
+}
+function calcPaint() {
+  $('#calcdisp').textContent = CALC.err ? CALC.err : (CALC.cur === '' ? '0' : CALC.cur);
+  $('#calcexpr').textContent = CALC.err ? ''
+    : (CALC.acc !== null && CALC.pending ? calcFmt(CALC.acc) + ' ' + CALC.pending : '');
+  $('#calcmem').textContent = CALC.hasMem ? 'M' : '';
+  $('#calc').classList.toggle('err', !!CALC.err);
+}
+function calcApply(a, b, op) {
+  if (op === '+') return a + b;
+  if (op === '-') return a - b;
+  if (op === '*') return a * b;
+  if (op === '/') return b === 0 ? NaN : a / b;
+  return b;
+}
+function calcVal() { return parseFloat(CALC.cur) || 0; }
+function calcSet(n) {
+  if (!isFinite(n)) { CALC.err = 'Cannot divide by zero'; CALC.cur = '0'; return; }
+  CALC.cur = calcFmt(n);
+}
+function calcReset() {
+  CALC.acc = null; CALC.pending = null; CALC.cur = '0'; CALC.fresh = true;
+  CALC.lastOp = null; CALC.lastArg = null; CALC.err = false;
+}
+
+function calcPress(k) {
+  log('calc', S.cur, k);                     // telemetry: every press, against this question
+
+  /* Once the display is an error only C brings it back — same as the exam. */
+  if (CALC.err && k !== 'C') { calcPaint(); return; }
+
+  if (k >= '0' && k <= '9') {
+    if (CALC.fresh) { CALC.cur = k; CALC.fresh = false; }
+    else if (CALC.cur.replace(/[-.]/g, '').length < CALC_MAX) {
+      CALC.cur = CALC.cur === '0' ? k : CALC.cur + k;
+    }
+  } else if (k === '.') {
+    if (CALC.fresh) { CALC.cur = '0.'; CALC.fresh = false; }
+    else if (CALC.cur.indexOf('.') < 0) CALC.cur += '.';
+  } else if (k === '+' || k === '-' || k === '*' || k === '/') {
+    if (CALC.pending !== null && !CALC.fresh) {
+      const r = calcApply(CALC.acc, calcVal(), CALC.pending);
+      calcSet(r); CALC.acc = CALC.err ? null : r;
+    } else {
+      CALC.acc = calcVal();
+    }
+    CALC.pending = k; CALC.fresh = true; CALC.lastOp = null;
+  } else if (k === '=') {
+    if (CALC.pending !== null) {
+      CALC.lastOp = CALC.pending; CALC.lastArg = calcVal();
+      calcSet(calcApply(CALC.acc, CALC.lastArg, CALC.pending));
+      CALC.pending = null; CALC.acc = null;
+    } else if (CALC.lastOp) {                 // pressing = again repeats the last operation
+      calcSet(calcApply(calcVal(), CALC.lastArg, CALC.lastOp));
+    }
+    CALC.fresh = true;
+  } else if (k === 'C') {
+    calcReset();
+  } else if (k === 'back') {
+    if (!CALC.fresh) {
+      CALC.cur = CALC.cur.length > 1 ? CALC.cur.slice(0, -1) : '0';
+      if (CALC.cur === '-' || CALC.cur === '') CALC.cur = '0';
+    }
+  } else if (k === 'neg') {
+    if (CALC.cur !== '0') CALC.cur = CALC.cur.charAt(0) === '-'
+      ? CALC.cur.slice(1) : '-' + CALC.cur;
+  } else if (k === 'sqrt') {
+    const v = calcVal();
+    if (v < 0) { CALC.err = 'Invalid input'; } else { calcSet(Math.sqrt(v)); }
+    CALC.fresh = true;
+  } else if (k === 'inv') {
+    const v = calcVal();
+    if (v === 0) { CALC.err = 'Cannot divide by zero'; } else { calcSet(1 / v); }
+    CALC.fresh = true;
+  } else if (k === 'pct') {
+    /* Windows behaviour, quirk and all: after + or - the percentage is taken OF the
+       running total; after * or / it is just a division by a hundred. */
+    const v = calcVal();
+    if (CALC.pending === '+' || CALC.pending === '-') calcSet(CALC.acc * v / 100);
+    else calcSet(v / 100);
+    CALC.fresh = true;
+  } else if (k === 'MC') { CALC.mem = 0; CALC.hasMem = false; }
+  else if (k === 'MR') { CALC.cur = calcFmt(CALC.mem); CALC.fresh = true; }
+  else if (k === 'MS') { CALC.mem = calcVal(); CALC.hasMem = true; CALC.fresh = true; }
+  else if (k === 'M+') { CALC.mem += calcVal(); CALC.hasMem = true; CALC.fresh = true; }
+  else if (k === 'M-') { CALC.mem -= calcVal(); CALC.hasMem = true; CALC.fresh = true; }
+
+  calcPaint();
+}
+
+function calcShow(on) {
+  CALC.open = on;
+  const el = $('#calc');
+  el.classList.toggle('on', on);
+  $('#calcbtn').classList.toggle('live', on);
+  if (on) {
+    CALC.opens++;
+    if (CALC.x === null) {
+      /* First open: bottom-left of the question pane. Clear of the palette and the Submit
+         button on the right, and clear of the action bar below. The student can drag it
+         anywhere from there, and it stays where they put it for the rest of the paper. */
+      const h = el.offsetHeight || 451;
+      CALC.x = 24;
+      CALC.y = Math.max(70, window.innerHeight - h - 78);
+    }
+    calcMove(CALC.x, CALC.y);
+    calcPaint();
+  }
+  log(on ? 'calcopen' : 'calcclose', S.cur);
+}
+function calcMove(x, y) {
+  const el = $('#calc');
+  const w = el.offsetWidth || 290, h = el.offsetHeight || 430;
+  CALC.x = Math.min(Math.max(4, x), Math.max(4, window.innerWidth - w - 4));
+  CALC.y = Math.min(Math.max(4, y), Math.max(4, window.innerHeight - h - 4));
+  el.style.left = CALC.x + 'px';
+  el.style.top = CALC.y + 'px';
+}
+
+$('#calcpad').addEventListener('click', e => {
+  const b = e.target.closest('button[data-k]');
+  if (b) calcPress(b.getAttribute('data-k'));
+});
+$('#calcbtn').onclick = () => calcShow(!CALC.open);
+$('#calcclose').onclick = () => calcShow(false);
+
+/* drag by the title bar */
+(() => {
+  const bar = $('#calcdrag');
+  let dx = 0, dy = 0, dragging = false;
+  bar.addEventListener('pointerdown', e => {
+    if (e.target.closest('#calcclose')) return;
+    dragging = true;
+    dx = e.clientX - CALC.x; dy = e.clientY - CALC.y;
+    bar.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  bar.addEventListener('pointermove', e => {
+    if (dragging) calcMove(e.clientX - dx, e.clientY - dy);
+  });
+  const stop = e => {
+    if (!dragging) return;
+    dragging = false;
+    try { bar.releasePointerCapture(e.pointerId); } catch (x) {}
+  };
+  bar.addEventListener('pointerup', stop);
+  bar.addEventListener('pointercancel', stop);
+})();
+window.addEventListener('resize', () => { if (CALC.open) calcMove(CALC.x, CALC.y); });
+
+/* ---------------- grading ---------------- */
+const keyCache = {};
+function unveil(b64, key) {
+  const kb = keyCache[key] || (keyCache[key] = sha256sync(key));
+  const raw = atob(b64), out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i) ^ kb[i % kb.length];
+  return new TextDecoder().decode(out);
+}
+/* synchronous SHA-256 — used to unveil solutions, and as the digest fallback
+   wherever crypto.subtle is unavailable */
+function sha256sync(msg) {
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const b = new TextEncoder().encode(msg), bits = b.length * 8;
+  const pad = new Uint8Array((((b.length + 9) >> 6) + 1) << 6);
+  pad.set(b); pad[b.length] = 0x80;
+  const dv = new DataView(pad.buffer);
+  dv.setUint32(pad.length - 4, bits >>> 0, false);
+  dv.setUint32(pad.length - 8, Math.floor(bits / 4294967296), false);
+  const w = new Uint32Array(64);
+  const rr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let i = 0; i < pad.length; i += 64) {
+    for (let t = 0; t < 16; t++) w[t] = dv.getUint32(i + t * 4, false);
+    for (let t = 16; t < 64; t++) {
+      const s0 = rr(w[t-15],7) ^ rr(w[t-15],18) ^ (w[t-15] >>> 3);
+      const s1 = rr(w[t-2],17) ^ rr(w[t-2],19) ^ (w[t-2] >>> 10);
+      w[t] = (w[t-16] + s0 + w[t-7] + s1) >>> 0;
+    }
+    let a = H[0], bb = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (let t = 0; t < 64; t++) {
+      const S1 = rr(e,6) ^ rr(e,11) ^ rr(e,25), ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[t] + w[t]) >>> 0;
+      const S0 = rr(a,2) ^ rr(a,13) ^ rr(a,22), mj = (a & bb) ^ (a & c) ^ (bb & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = bb; bb = a; a = (t1 + t2) >>> 0;
+    }
+    const add = [a,bb,c,d,e,f,g,h];
+    for (let j = 0; j < 8; j++) H[j] = (H[j] + add[j]) >>> 0;
+  }
+  const o = new Uint8Array(32);
+  H.forEach((v, i) => { o[i*4]=v>>>24; o[i*4+1]=(v>>>16)&255; o[i*4+2]=(v>>>8)&255; o[i*4+3]=v&255; });
+  return o;
+}
+const hex = u8 => [...u8].map(x => x.toString(16).padStart(2, '0')).join('');
+async function sha(s) {
+  /* crypto.subtle exists only in a secure context (https / localhost). Opening the
+     file straight off the disk is file:// — not secure — so fall back to the
+     built-in implementation rather than failing to grade. */
+  if (self.crypto && self.crypto.subtle) {
+    try { return hex(new Uint8Array(
+      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))); } catch (e) {}
+  }
+  return hex(sha256sync(s));
+}
+async function grade() {
+  const out = [];
+  for (let i = 0; i < N; i++) {
+    const q = QS[i]; const a = S.ans[i];
+    let correct = false, given = null;
+    if (a !== null && a !== '') {
+      given = q.type === 'TITA' ? String(parseInt(a, 10)) : String(a);
+      if (given !== 'NaN') correct = (await sha(CONFIG.SALT + '|' + q.id + '|' + given)) === q.k;
+    }
+    out.push({ correct, given });
+  }
+  return out;
+}
+
+/* ---------------- per-question time from the event log ---------------- */
+function timeline() {
+  const segs = [];      // {q, from, to}
+  let open = null;
+  for (const e of S.ev) {
+    if (e.type === 'enter') { open = { q: e.q, from: e.t }; }
+    else if (e.type === 'leave' && open) { segs.push({ q: open.q, from: open.from, to: e.t }); open = null; }
+    else if (e.type === 'gap') { segs.push({ q: -1, from: e.t, to: e.t + e.v }); }   // interruption
+  }
+  if (open) segs.push({ q: open.q, from: open.from, to: S.endT });
+  return segs.filter(s => s.to > s.from).sort((a, b) => a.from - b.from);
+}
+
+/* ---------------- finish ---------------- */
+async function finish() {
+  if (S.ended) return;
+  S.ended = true;
+  clearInterval(timerId);
+  clearInterval(saveTimer);
+  clearProgress();                  // the attempt is finished; there is nothing to resume
+  window.removeEventListener('beforeunload', beforeUnload);
+  window.removeEventListener('pagehide', saveProgress);
+  document.removeEventListener('visibilitychange', onHide);
+  if (CALC.open) calcShow(false);   // don't leave it floating over the report
+  log('leave', S.cur);
+  S.endT = clk();
+  const g = await grade();
+  const segs = timeline();
+  const A = analyse(g, segs);
+  try {
+    localStorage.setItem(LSKEY, JSON.stringify(
+      { pin: S.pin, startedAt: S.startedAt, score: A.score }));
+  } catch (e) {}
+  render(A);
+  /* Straight after submitting, a candidate sees their score and nothing else. */
+  $('#res').classList.add('scoreonly');
+  $('#r-gate').hidden = false;
+  show('res');
+  sendAttempt(A);
+}
+
+/* ---------------- analysis ---------------- */
+function analyse(g, segs) {
+  const per = QS.map((q, i) => ({
+    n: i + 1, id: q.id, sub: q.sub, rate: q.rate, type: q.type, bench: q.bench,
+    t: 0, visits: 0, correct: g[i].correct, given: g[i].given,
+    answered: g[i].given !== null, marked: S.marked[i],
+    method: unveil(q.m, CONFIG.SALT + '|' + q.id),
+    key: unveil(q.a, CONFIG.SALT + '|A|' + q.id),
+    firstAnsAt: null, changes: 0, hadRight: false,
+    calcOpens: 0, calcKeys: 0, calcSecs: 0, calcTyped: 0
+  }));
+
+  /* Calculator usage, per question. calcSecs is time with the panel open while this
+     question was on screen — the honest cost of reaching for it. The panel can stay open
+     across question changes, so time is charged to whichever question was in front. */
+  {
+    let curQ = null, isOpen = false, since = 0;
+    const charge = t => {
+      if (isOpen && curQ !== null && per[curQ]) {
+        per[curQ].calcSecs += Math.max(0, t - since);
+      }
+    };
+    for (const e of S.ev) {
+      switch (e.type) {
+        case 'enter':     curQ = e.q; since = e.t; break;
+        case 'leave':     charge(e.t); curQ = null; break;
+        case 'gap':       charge(e.t); isOpen = false; break;   // away; the panel is gone
+        case 'calcopen':  charge(e.t); isOpen = true; since = e.t;
+                          if (per[e.q]) per[e.q].calcOpens++; break;
+        case 'calcclose': charge(e.t); isOpen = false; break;
+        case 'calc':      if (per[e.q]) per[e.q].calcKeys++; break;
+        case 'calckey':   if (per[e.q]) per[e.q].calcTyped++; break;
+      }
+    }
+    charge(S.endT);
+    per.forEach(p => { p.calcSecs = Math.round(p.calcSecs); });
+  }
+  segs.forEach(s => { if (s.q < 0) return;          // an interruption is charged to no question
+    per[s.q].t += (s.to - s.from); per[s.q].visits++; });
+
+  // selection history → changes, first-answer time
+  const sel = {};
+  const isEdit = (a, b) => { a = String(a); b = String(b);
+    return a.startsWith(b) || b.startsWith(a); };   // typing forward or backspacing
+  S.ev.forEach(e => {
+    if (e.type === 'select' || e.type === 'type') {
+      const p = per[e.q];
+      if (e.v === '' || e.v === null) return;
+      if (p.firstAnsAt === null) p.firstAnsAt = e.t;
+      if (!(e.q in sel)) sel[e.q] = [];
+      const arr = sel[e.q], last = arr[arr.length - 1];
+      if (last === undefined) { arr.push(e.v); return; }
+      if (String(last) === String(e.v)) return;
+      if (e.type === 'type' && isEdit(last, e.v)) { arr[arr.length - 1] = e.v; return; }
+      arr.push(e.v); p.changes++;
+    }
+    if (e.type === 'clear') { per[e.q].firstAnsAt = null; }
+  });
+
+  per.forEach(p => {
+    if (!p.answered) p.cls = p.t >= CONFIG.BLEED_AFTER ? 'bleed' : (p.t > 0 ? 'scan' : 'unseen');
+    else if (p.correct) p.cls = p.t <= p.bench ? 'eff' : (p.t > p.bench * 1.5 ? 'slow' : 'pace');
+    else p.cls = p.t >= CONFIG.SUNK_AFTER ? 'sunk' : 'wrong';
+  });
+
+  const sum = f => per.filter(f).reduce((a, p) => a + p.t, 0);
+  const cnt = f => per.filter(f).length;
+  const correct = cnt(p => p.correct);
+  const wrongMCQ = cnt(p => p.answered && !p.correct && p.type === 'MCQ');
+  const wrongTITA = cnt(p => p.answered && !p.correct && p.type === 'TITA');
+  const score = correct * 3 - wrongMCQ;
+  const attempted = cnt(p => p.answered);
+
+  const tProd = sum(p => p.correct);
+  const tNeg = sum(p => p.answered && !p.correct);
+  const tBleed = sum(p => p.cls === 'bleed');
+  const tScan = sum(p => p.cls === 'scan');
+  const wasted = tNeg + tBleed;
+
+  // counterfactual: cheapest questions never attempted
+  const untouched = per.filter(p => !p.answered).sort((a, b) => a.rate - b.rate || a.bench - b.bench);
+  const cheap = untouched.slice(0, 4);
+  const avgBench = cheap.length ? cheap.reduce((a, p) => a + p.bench, 0) / cheap.length : 0;
+  const couldBuy = avgBench ? Math.floor(wasted / avgBench) : 0;
+
+  // triage: rank correlation between answer order and difficulty
+  const ordered = per.filter(p => p.firstAnsAt !== null).sort((a, b) => a.firstAnsAt - b.firstAnsAt);
+  ordered.forEach((p, i) => p.ansOrder = i + 1);
+  let rho = null;
+  if (ordered.length >= 5) {
+    const rk = [...ordered].sort((a, b) => a.rate - b.rate);
+    const rankOf = {}; let i = 0;
+    while (i < rk.length) { let j = i; while (j + 1 < rk.length && rk[j + 1].rate === rk[i].rate) j++;
+      const r = (i + j) / 2 + 1; for (let k = i; k <= j; k++) rankOf[rk[k].n] = r; i = j + 1; }
+    const nn = ordered.length;
+    const mx = (nn + 1) / 2;
+    let sxy = 0, sxx = 0, syy = 0;
+    ordered.forEach(p => { const x = p.ansOrder - mx, y = rankOf[p.n] - mx;
+      sxy += x * y; sxx += x * x; syy += y * y; });
+    rho = sxx && syy ? sxy / Math.sqrt(sxx * syy) : 0;
+  }
+  const hardEarly = per.filter(p => p.rate >= 7 && p.firstAnsAt !== null && p.firstAnsAt <= 600).length;
+  const flipHurt = per.filter(p => p.changes > 0 && !p.correct && p.answered).length;
+  const flips = per.filter(p => p.changes > 0).length;
+
+  return { per, score, correct, wrongMCQ, wrongTITA, attempted, tProd, tNeg, tBleed, tScan,
+    wasted, cheap, couldBuy, rho, hardEarly, flips, flipHurt,
+    used: Math.min(S.endT, CONFIG.DURATION), auto: S.autoSub,
+    gap: Math.min(S.gap, CONFIG.DURATION), resumes: S.resumes,
+    maxScore: N * 3, benchTotal: QS.reduce((a, q) => a + q.bench, 0),
+    /* Stored so a later review can redraw the ribbon. It used to be rebuilt from the
+       in-memory event log, which is empty on a fresh page, so review showed a blank bar. */
+    segs };
+}
+
+/* ---------------- palette for outcomes ---------------- */
+const CL = {
+  eff:   { c: '#1B5E3F', l: 'Efficient — correct, inside the pace benchmark' },
+  pace:  { c: '#3E8C66', l: 'On pace — correct, close to the benchmark' },
+  slow:  { c: '#B07D2B', l: 'Slow correct — the mark cost you more than half again the benchmark' },
+  wrong: { c: '#C00000', l: 'Error — wrong inside two minutes' },
+  sunk:  { c: '#7A1518', l: 'Sunk — wrong after two minutes or more' },
+  bleed: { c: '#8C7A55', l: 'Bleed — left blank after ' + CONFIG.BLEED_AFTER + " seconds' work" },
+  scan:  { c: '#CFC7B6', l: 'Scanned — looked at and correctly left alone' },
+  unseen:{ c: '#EFEAE0', l: 'Never opened' }
+};
+
+/* ---------------- render ---------------- */
+function render(A) {
+  const d = new Date(S.startedAt);
+  $('#r-sub').textContent = (S.name ? S.name + '  ·  ' : '') + S.pin + '  ·  ' +
+    d.toLocaleDateString('en-IN',
+    { day: 'numeric', month: 'long', year: 'numeric' }) + '  ·  ' +
+    d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) +
+    (A.auto ? '  ·  submitted by the clock' : '  ·  submitted early') +
+    (A.resumes ? '  ·  interrupted and resumed, ' + human(A.gap) + ' off the clock' : '');
+
+  /* score row */
+  const sr = $('#scorerow'); sr.innerHTML = '';
+  const acc = A.attempted ? Math.round(A.correct / A.attempted * 100) : 0;
+  [['Score', A.score, 'out of ' + A.maxScore, ''],
+   ['Attempted', A.attempted, 'of ' + N + ' questions', ''],
+   ['Correct', A.correct, acc + '% of what you attempted', ''],
+   ['Negative', '−' + A.wrongMCQ, A.wrongTITA ? A.wrongTITA + ' wrong TITA cost nothing' : 'from wrong MCQs', ''],
+   ['Time used', mmss(A.used), A.auto ? 'full paper' : mmss(CONFIG.DURATION - A.used) + ' left on the clock', '']
+  ].forEach(([lab, val, sub]) => {
+    const c = el('div', 'sc');
+    const b = el('b'); b.textContent = val; c.appendChild(b);
+    c.appendChild(el('span', '', lab));
+    c.appendChild(el('div', 'delta', sub));
+    sr.appendChild(c);
+  });
+
+  /* ribbon */
+  const segs = (A.segs && A.segs.length) ? A.segs : timeline();
+  const bar = $('#ribbar'); bar.innerHTML = '';
+  const total = CONFIG.DURATION;                    // the ribbon is always the full 40 minutes
+  segs.forEach(s => {
+    const dur = s.to - s.from;
+    if (s.q < 0) {                                   // the paper was closed and reopened here
+      const gp = el('div', 'rseg gapseg');
+      gp.style.flex = dur + ' 0 0';
+      if (dur / total > .06) gp.appendChild(el('span', '', 'interrupted · ' + human(dur)));
+      gp.onmousemove = ev => { const t = $('#ribtip');
+        t.innerHTML = '<b>Interrupted</b><br><span class="t">' + human(dur) + '</span><br>' +
+          'The paper was closed and reopened. The clock kept running, but this time is ' +
+          'charged to no question.';
+        t.style.display = 'block';
+        t.style.left = Math.min(ev.clientX + 14, innerWidth - 268) + 'px';
+        t.style.top = (ev.clientY + 16) + 'px'; };
+      gp.onmouseleave = () => $('#ribtip').style.display = 'none';
+      bar.appendChild(gp);
+      return;
+    }
+    const p = A.per[s.q];
+    const seg = el('div', 'rseg');
+    seg.style.flex = dur + ' 0 0'; seg.style.background = CL[p.cls].c;
+    if (dur / total > .035) seg.appendChild(el('span', '', String(p.n)));
+    seg.onmousemove = ev => tip(ev, p, dur);
+    seg.onmouseleave = () => $('#ribtip').style.display = 'none';
+    bar.appendChild(seg);
+  });
+  const unused = CONFIG.DURATION - A.used;
+  if (unused > 5) {
+    const u = el('div', 'rseg unused');
+    u.style.flex = unused + ' 0 0';
+    if (unused / total > .07) u.appendChild(el('span', '', 'submitted ' + human(unused) + ' early'));
+    u.onmousemove = ev => { const t = $('#ribtip');
+      t.innerHTML = '<b>Unused time</b><br><span class="t">' + human(unused) +
+        ' left on the clock</span><br>You submitted before the paper ended.';
+      t.style.display = 'block';
+      t.style.left = Math.min(ev.clientX + 14, innerWidth - 268) + 'px';
+      t.style.top = (ev.clientY + 16) + 'px'; };
+    u.onmouseleave = () => $('#ribtip').style.display = 'none';
+    bar.appendChild(u);
+  }
+  const ax = $('#ribaxis'); ax.innerHTML = '';
+  for (let m = 0; m <= 40; m += 5) ax.appendChild(el('span', '', m + 'm'));
+  const kb = $('#ribkey'); kb.innerHTML = '';
+  Object.keys(CL).forEach(k => {
+    if (k === 'unseen' || !A.per.some(p => p.cls === k)) return;
+    const r = el('div', 'rk'); const i = el('i'); i.style.background = CL[k].c;
+    r.appendChild(i); r.appendChild(el('span', '', CL[k].l)); kb.appendChild(r);
+  });
+
+  /* ledger */
+  const L = $('#ledger'); L.innerHTML = '';
+  const rows = [
+    ['eff', 'Time that bought marks', 'Questions you got right', A.tProd, A.correct],
+    ['wrong', 'Time that cost marks', 'Questions you answered wrongly', A.tNeg,
+      A.wrongMCQ + A.wrongTITA],
+    ['bleed', 'Time that bought nothing', 'Worked on, then left blank', A.tBleed,
+      A.per.filter(p => p.cls === 'bleed').length],
+    ['scan', 'Triage cost', 'Read and correctly abandoned — not waste', A.tScan,
+      A.per.filter(p => p.cls === 'scan').length]
+  ];
+  rows.forEach(([k, lab, sub, t, c]) => {
+    const r = el('div', 'ledrow');
+    const i = el('i'); i.style.background = CL[k].c; r.appendChild(i);
+    const b = el('div', 'lb'); b.textContent = lab; b.appendChild(el('small', '', sub)); r.appendChild(b);
+    r.appendChild(el('div', 'lt', human(t)));
+    r.appendChild(el('div', 'lc', c + (c === 1 ? ' q' : ' qs')));
+    L.appendChild(r);
+  });
+  const tr = el('div', 'ledrow tot');
+  tr.appendChild(el('i'));
+  const tb = el('div', 'lb'); tb.textContent = 'Time wasted';
+  tb.appendChild(el('small', '', 'Marks lost plus blanks worked on — the number to attack'));
+  tr.appendChild(tb);
+  tr.appendChild(el('div', 'lt', human(A.wasted)));
+  tr.appendChild(el('div', 'lc', Math.round(A.wasted / A.used * 100) + '%'));
+  L.appendChild(tr);
+
+  /* verdict */
+  const V = $('#verdict'); V.innerHTML = '';
+  const box = el('div', 'verdict' + (A.wasted < 300 ? ' good' : ''));
+  const h = el('h4'); const p1 = el('p'); const p2 = el('p');
+  if (A.wasted < 300) {
+    h.textContent = 'Your time went where it should have';
+    p1.innerHTML = 'Only <b>' + human(A.wasted) + '</b> of your forty minutes produced no marks. ' +
+      'That is tight discipline and it is the hardest part of this paper to get right.';
+  } else {
+    h.textContent = human(A.wasted) + ' of your forty minutes produced no marks';
+    p1.innerHTML = '<b>' + human(A.tNeg) + '</b> went on questions you answered wrongly and <b>' +
+      human(A.tBleed) + '</b> on questions you worked and then left blank. ' +
+      'That is <b>' + Math.round(A.wasted / A.used * 100) + '%</b> of the paper.';
+  }
+  box.appendChild(h); box.appendChild(p1);
+  if (A.couldBuy > 0 && A.cheap.length) {
+    p2.innerHTML = 'The cheapest question you never answered was <b>Q' + A.cheap[0].n +
+      '</b> (' + A.cheap[0].sub + ', rated ' + A.cheap[0].rate + ', benchmark ' +
+      A.cheap[0].bench + 's). At that price, the wasted time was worth about <b>' +
+      A.couldBuy + ' more ' + (A.couldBuy === 1 ? 'attempt' : 'attempts') + '</b> — up to <b>+' +
+      (A.couldBuy * 3) + ' marks</b> if they had gone in.';
+    box.appendChild(p2);
+  }
+  if (A.flipHurt > 0) {
+    const p3 = el('p');
+    p3.innerHTML = 'You changed your selection on <b>' + A.flips +
+      '</b> question' + (A.flips === 1 ? '' : 's') + ', and <b>' + A.flipHurt +
+      '</b> of those finished wrong. Second-guessing is expensive; look at those rows below.';
+    box.appendChild(p3);
+  }
+  V.appendChild(box);
+
+  drawTriage(A);
+  drawTable(A);
+
+  $('#rfoot').innerHTML = 'Pace benchmarks start from each question\'s authored difficulty and ' +
+    'are corrected by what the batch actually did on it, so they tighten as more students sit ' +
+    'the paper. The 22 benchmarks sum to ' + Math.round(A.benchTotal / 60) + ' minutes against a ' +
+    '40-minute clock, so a complete attempt is not the target. ' + CONFIG.PAPER_NAME + '.';
+}
+
+function tip(ev, p, dur) {
+  const t = $('#ribtip');
+  t.innerHTML = '<b>Q' + p.n + ' · ' + p.sub + '</b><br><span class="t">' +
+    human(dur) + ' this visit · ' + human(p.t) + ' total · benchmark ' + p.bench + 's</span><br>' +
+    CL[p.cls].l;
+  t.style.display = 'block';
+  t.style.left = Math.min(ev.clientX + 14, innerWidth - 268) + 'px';
+  t.style.top = (ev.clientY + 16) + 'px';
+}
+
+/* Triage is published by faculty once the batch has finished, so it is deliberately
+   absent until then rather than computed off the first handful of finishers. */
+/* Review stays shut until the paper is released. Nothing here is a security boundary —
+   the backend refuses an unreleased review outright — this only keeps the button honest. */
+function openReviewButton() {
+  const b = $('#r-review');
+  if (!b) return;
+  b.disabled = false;
+  b.textContent = 'Review this paper \u2192';
+  b.onclick = () => { location.href = location.pathname + '?review=1'; };
+  const m = $('#r-gatemsg');
+  if (m) m.textContent = 'Your detailed report has been released \u2014 every question, where ' +
+    'the time went, and your triage.';
+}
+
+function renderTriage(tri) {
+  const box = $('#triagepanel');
+  if (!box) return;
+  if (!tri || typeof tri.score !== 'number') {
+    box.innerHTML = '<div class="trilock"><b>Your triage report unlocks when the batch ' +
+      'completes.</b> It scores every decision you made against what the rest of the batch ' +
+      'did on the same question, so it cannot be worked out until they have all sat the ' +
+      'paper. Everything else on this page is final now.</div>';
+    return;
+  }
+  const band = tri.score >= 80 ? 'Sharp' : tri.score >= 65 ? 'Solid'
+             : tri.score >= 50 ? 'Leaky' : 'Costly';
+  const d = tri.detail || {}, T = tri.clock || 2400;
+  const pc = x => Math.max(0, Math.min(100, (x / T) * 100));
+  const get = k => (tri.buckets || []).find(b => b.key === k) || { spent: 0, credited: 0, n: 0 };
+  const c = get('correct'), w = get('wrong'), l = get('left');
+
+  const rows = [
+    ['Questions you got right', c,
+      c.n ? c.n + ' correct in ' + human(c.spent) +
+        (d.overpaid ? ', of which ' + human(d.overpaid) + ' was over what the batch needs'
+                    : ', all inside what the batch needs')
+        : 'nothing was answered correctly'],
+    ['Questions you got wrong', w,
+      w.n ? w.n + ' wrong, costing ' + human(w.spent) : 'no marks lost to wrong answers'],
+    ['Questions you left, and the clock you never used', l,
+      (l.n ? l.n + ' read and left in ' + human(d.deciding + d.bled) : 'nothing read and left') +
+      (d.idle ? ' · ' + human(d.idle) + ' never used, ' +
+        (d.forgiven ? d.forgiven + '% of it forgiven because you had gone after ' +
+           tri.coverage + '% of the reachable marks'
+         : 'none of it forgiven — ' + (100 - tri.coverage) +
+           '% of the marks the batch reached were still on the table')
+        : '')],
+  ];
+
+  box.innerHTML =
+    '<div class="trihead">' +
+      '<div><div class="triband">' + band + '</div>' +
+      '<div class="triscore">' + tri.score + '<small>/100</small></div></div>' +
+      '<p class="trisum">Your forty minutes is an account. Every second went to a question ' +
+      'you got right, a question you got wrong, or a question you decided not to try &mdash; ' +
+      'and the clock you never spent belongs to that last one too. This is the share of it ' +
+      'that bought you something.</p>' +
+    '</div>' +
+    '<div class="tribars">' + rows.map(r =>
+      '<div class="tribar"><div class="tl">' +
+        '<span class="tn">' + r[0] + '</span>' +
+        '<span class="tv">' + human(r[1].spent) + '</span></div>' +
+        '<div class="tt">' +
+          '<div class="tf" style="width:' + pc(r[1].credited) + '%"></div>' +
+          '<div class="tw" style="width:' + pc(r[1].spent - r[1].credited) + '%"></div>' +
+        '</div>' +
+        '<div class="td">' + r[2] + '</div></div>').join('') +
+    '</div>' +
+    '<p class="trikey"><span class="sw sw-f"></span>bought you something' +
+      '<span class="sw sw-w"></span>did not' +
+      '<span class="trirest">bar widths are shares of the full ' +
+      Math.round(T / 60) + ' minutes</span></p>' +
+    '<p class="triprov">The bands are provisional while the first cohorts sit these papers.</p>';
+}
+
+function drawTriage(A) {
+  const W = 900, H = 300, mL = 46, mR = 16, mT = 16, mB = 40;
+  const pts = A.per.filter(p => p.ansOrder);
+  const box = $('#triage'); box.innerHTML = '';
+  if (pts.length < 3) {
+    box.appendChild(el('p', 'plotnote', 'Too few answered questions to read a triage pattern.'));
+    return;
+  }
+  const maxO = pts.length;
+  const x = o => mL + (o - 1) / Math.max(1, maxO - 1) * (W - mL - mR);
+  const y = r => mT + (8 - r) / 4 * (H - mT - mB);
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('style', 'width:100%;height:auto;display:block');
+  const mk = (t, a) => { const e = document.createElementNS(ns, t);
+    for (const k in a) e.setAttribute(k, a[k]); return e; };
+  for (let r = 4; r <= 8; r++) {
+    svg.appendChild(mk('line', { x1: mL, x2: W - mR, y1: y(r), y2: y(r),
+      stroke: r === 6 ? '#DAD3C6' : '#EAE5DA', 'stroke-width': 1 }));
+    const lb = mk('text', { x: mL - 10, y: y(r) + 4, 'text-anchor': 'end',
+      fill: '#8A8578', 'font-size': 11, 'font-family': 'IBM Plex Mono, monospace' });
+    lb.textContent = r; svg.appendChild(lb);
+  }
+  const yl = mk('text', { x: 14, y: H / 2, fill: '#8A8578', 'font-size': 11,
+    'font-family': 'IBM Plex Sans, sans-serif', transform: 'rotate(-90 14 ' + H / 2 + ')',
+    'text-anchor': 'middle' });
+  yl.textContent = 'Difficulty rating'; svg.appendChild(yl);
+  const xl = mk('text', { x: (mL + W - mR) / 2, y: H - 8, fill: '#8A8578', 'font-size': 11,
+    'font-family': 'IBM Plex Sans, sans-serif', 'text-anchor': 'middle' });
+  xl.textContent = 'Order in which you answered them  →'; svg.appendChild(xl);
+  // trend line
+  if (A.rho !== null) {
+    const n = pts.length;
+    const mxo = pts.reduce((a, p) => a + p.ansOrder, 0) / n;
+    const mry = pts.reduce((a, p) => a + p.rate, 0) / n;
+    let num = 0, den = 0;
+    pts.forEach(p => { num += (p.ansOrder - mxo) * (p.rate - mry); den += (p.ansOrder - mxo) ** 2; });
+    const m = den ? num / den : 0;
+    svg.appendChild(mk('line', { x1: x(1), y1: y(mry + m * (1 - mxo)),
+      x2: x(maxO), y2: y(mry + m * (maxO - mxo)),
+      stroke: m >= 0 ? '#1B5E3F' : '#C00000', 'stroke-width': 2, 'stroke-dasharray': '5 4',
+      opacity: .7 }));
+  }
+  pts.forEach(p => {
+    svg.appendChild(mk('circle', { cx: x(p.ansOrder), cy: y(p.rate), r: 8,
+      fill: CL[p.cls].c, opacity: .9 }));
+    const t = mk('text', { x: x(p.ansOrder), y: y(p.rate) + 3.5, 'text-anchor': 'middle',
+      fill: '#fff', 'font-size': 9, 'font-family': 'IBM Plex Mono, monospace' });
+    t.textContent = p.n; svg.appendChild(t);
+  });
+  box.appendChild(svg);
+  let verdict;
+  if (A.rho === null) verdict = 'Too few answers to read a sequence from.';
+  else if (A.rho > .35) verdict = 'Strong order. You banked the cheap marks first and met the hard ' +
+    'questions late, which is exactly the right shape.';
+  else if (A.rho > 0) verdict = 'Mixed. There is a mild upward drift, but several expensive ' +
+    'questions were taken on before the cheap ones were finished.';
+  else verdict = 'Poor. You went at the hard questions early. On a paper deliberately longer than ' +
+    'its clock, that is the single most expensive habit there is.';
+  const note = el('p', 'plotnote');
+  note.innerHTML = '<b>Sequence: ' + (A.rho === null ? '—' : A.rho.toFixed(2)) + '.</b> ' + verdict +
+    (A.hardEarly ? ' You opened <b>' + A.hardEarly + '</b> question' +
+      (A.hardEarly === 1 ? '' : 's') + ' rated 7 or 8 inside the first ten minutes.' : '');
+  box.appendChild(note);
+}
+
+function drawTable(A) {
+  const T = $('#qtable'); T.innerHTML = '';
+  const thead = el('thead');
+  const hr = el('tr');
+  ['#', 'ID', 'Sub-topic', 'R', 'Type', 'Outcome', 'Your time', 'Bench', 'Peer', 'Solved in',
+   'Visits', ''].forEach((h, i) => {
+    const th = el('th', i >= 6 && i <= 9 ? 'r' : '', h); hr.appendChild(th);
+  });
+  thead.appendChild(hr); T.appendChild(thead);
+  const tb = el('tbody');
+  const TAG = { eff: ['t-ok', 'Efficient'], pace: ['t-ok', 'On pace'], slow: ['t-slow', 'Slow'],
+    wrong: ['t-wrong', 'Wrong'], sunk: ['t-sunk', 'Sunk'], bleed: ['t-bleed', 'Bleed'],
+    scan: ['t-skip', 'Scanned'], unseen: ['t-skip', 'Not opened'] };
+  A.per.forEach(p => {
+    const tr = el('tr', ['wrong', 'sunk', 'bleed'].includes(p.cls) ? 'miss' : '');
+    tr.appendChild(el('td', 'num', p.n));
+    tr.appendChild(el('td', 'qid', p.id));
+    tr.appendChild(el('td', '', p.sub));
+    tr.appendChild(el('td', 'num', p.rate));
+    tr.appendChild(el('td', '', p.type));
+    const td = el('td');
+    const tg = el('span', 'tag ' + TAG[p.cls][0], TAG[p.cls][1]); td.appendChild(tg);
+    if (p.changes) td.appendChild(el('small', '', ' ' + p.changes + '×changed'));
+    tr.appendChild(td);
+    tr.appendChild(el('td', 'num r', p.t ? human(p.t) : '—'));
+    tr.appendChild(el('td', 'num r', p.bench + 's'));
+    tr.appendChild(el('td', 'num r peer-' + p.n, '—'));
+    tr.appendChild(el('td', 'num r pcor-' + p.n, '—'));
+    tr.appendChild(el('td', 'num r', p.visits || '—'));
+    const last = el('td');
+    const b = el('button', 'exp', 'method');
+    last.appendChild(b); tr.appendChild(last);
+    tb.appendChild(tr);
+    const mr = el('tr', 'mrow');
+    const mtd = el('td'); mtd.colSpan = 12;
+    const mv = el('div', 'meth');
+    const ka = el('b'); ka.innerHTML = 'Answer: ' + MATH(p.key) + '.  ';
+    ka.style.color = 'var(--ok)';
+    mv.appendChild(ka); mv.appendChild(elm('span', '', p.method));
+    mtd.appendChild(mv);
+    mr.appendChild(mtd); mr.style.display = 'none'; tb.appendChild(mr);
+    b.onclick = () => {
+      const open = mr.style.display === 'none';
+      mr.style.display = open ? 'table-row' : 'none';
+      b.textContent = open ? 'hide' : 'method';
+    };
+  });
+  T.appendChild(tb);
+  $('#peernote').innerHTML = 'The <b>Peer</b> column fills in with the batch median once ' +
+    CONFIG.PEER_MIN + ' students have sat this paper. Until then the <b>Bench</b> column is your ' +
+    'comparison: a modelled pace target derived from the question\'s difficulty rating, not from ' +
+    'real attempts. <b>Solved in</b> is the median time of the students who got that question ' +
+    'right.';
+}
+
+/* ---------------- backend ---------------- */
+function payload(A) {
+  return {
+    pin: S.pin, name: S.name, paper: CONFIG.PAPER_ID,
+    startedAt: new Date(S.startedAt).toISOString(),
+    practice: !!S.practice, auto: A.auto, used: A.used,
+    /* The full paper clock. Triage is scored against this, not against how long the
+       candidate chose to stay — the minutes they left unused are part of the account. */
+    clock: CONFIG.DURATION,
+    score: A.score, correct: A.correct, wrong: A.wrongMCQ + A.wrongTITA, attempted: A.attempted,
+    wasted: A.wasted, rho: A.rho, gap: A.gap, resumes: A.resumes,
+    q: A.per.map(p => ({ n: p.n, id: p.id, t: p.t, v: p.visits, c: p.correct ? 1 : 0,
+      a: p.answered ? 1 : 0, ch: p.changes, cls: p.cls,
+      /* f: 0 none, 1 come back to this, 2 leave this one. r and b are the authored
+         difficulty and pace benchmark — carried so the backend can blend its observed
+         estimates toward them without holding a copy of the question bank. */
+      f: p.marked || 0, r: p.rate, b: p.bench, ty: (QS[p.n - 1] || {}).type,
+      co: p.calcOpens, ck: p.calcKeys, cs: p.calcSecs, ct: p.calcTyped })),
+    calcOpens: A.per.reduce((s, p) => s + p.calcOpens, 0),
+    calcSecs: A.per.reduce((s, p) => s + p.calcSecs, 0),
+    /* The whole analysis, stored so the student can review this report later. The event
+       log it was derived from dies with this tab; this is what survives. */
+    report: A,
+    ua: navigator.userAgent.slice(0, 120), v: 1
+  };
+}
+let lastPayload = null, lastA = null;
+async function sendAttempt(A) {
+  lastPayload = payload(A); lastA = A;
+  return postPayload();
+}
+/* Attempts that could not be sent are parked here and re-sent the next time this paper
+   is opened on this machine. The backend de-duplicates on pin|paper|startedAt, so a
+   payload arriving twice can never become two rows. */
+const QKEY = 'ims_cat26_queue_' + CONFIG.PAPER_ID;
+function park(p) {
+  try {
+    const q = JSON.parse(localStorage.getItem(QKEY) || '[]');
+    if (!q.some(x => x.startedAt === p.startedAt && x.pin === p.pin)) q.push(p);
+    localStorage.setItem(QKEY, JSON.stringify(q.slice(-20)));
+  } catch (e) {}
+}
+function unpark(p) {
+  try {
+    const q = JSON.parse(localStorage.getItem(QKEY) || '[]');
+    localStorage.setItem(QKEY, JSON.stringify(
+      q.filter(x => !(x.startedAt === p.startedAt && x.pin === p.pin))));
+  } catch (e) {}
+}
+async function flushParked() {
+  if (!CONFIG.ENDPOINT) return;
+  let q = [];
+  try { q = JSON.parse(localStorage.getItem(QKEY) || '[]'); } catch (e) { return; }
+  for (const p of q) {
+    try {
+      const r = await fetch(CONFIG.ENDPOINT, { method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(p) });
+      const j = await r.json();
+      if (j && j.ok) unpark(p);
+    } catch (e) { return; }        // still offline; leave the rest parked
+  }
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function postPayload(manual) {
+  const B = $('#r-banner');
+  if (!CONFIG.ENDPOINT || S.offline) {
+    B.innerHTML = '<div class="banner">This attempt has <b>not</b> been sent to IMS — the ' +
+      'paper was opened without the enrolment check, so there is nowhere to record it and ' +
+      'no batch comparison. Everything else on this page is your real result. Use ' +
+      '<b>Download my attempt data</b> to keep a copy.</div>';
+    return;
+  }
+
+  /* On an auto-submit every student in the room finishes in the same second. A short
+     random wait spreads the burst; nobody notices it, because the full report is already
+     on screen while this runs. A manual submit goes straight out. */
+  let jitter = 0;
+  if (S.autoSub && !manual && CONFIG.SEND_JITTER > 0) {
+    jitter = Math.floor(Math.random() * CONFIG.SEND_JITTER * 1000);
+  }
+  B.innerHTML = '<div class="banner">Sending your attempt to IMS…</div>';
+  if (jitter) await sleep(jitter);
+
+  let lastReason = '';
+  for (let attempt = 1; attempt <= CONFIG.SEND_TRIES; attempt++) {
+    try {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 20000);
+      const r = await fetch(CONFIG.ENDPOINT, { method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(lastPayload), signal: ctl.signal });
+      clearTimeout(t);
+      const j = await r.json();
+
+      if (j && j.ok) {
+        unpark(lastPayload);
+        B.innerHTML = '<div class="banner" style="background:#EFF6F1;border-color:#B5D6C2;' +
+          'color:#1B5E3F">Recorded' + (j.practice
+            ? ' as a practice attempt — excluded from the batch comparison.' : '.') +
+          (j.n ? ' ' + j.n + ' student' + (j.n === 1 ? ' has' : 's have') +
+            ' now sat this paper.' : '') + '</div>';
+        applyRank();                               // its own call — see the note there
+        /* If faculty released the paper before this candidate finished, the backend has
+           already scored them on the way in and Review can open immediately. */
+        if (j.triageReady) openReviewButton();
+        renderTriage(null);                        // shown in full behind Review, not here
+        if (j.peer && j.n >= CONFIG.PEER_MIN) applyPeer(j, lastA);
+        $('#retry').style.display = 'none';
+        return;
+      }
+
+      /* A refusal is a decision, not a glitch — the roster said no. Retrying cannot
+         change the answer, so stop. */
+      lastReason = REASON[j && j.reason] || (j && j.reason) || 'unknown reason';
+      B.innerHTML = '<div class="banner err">IMS did not accept this attempt (' +
+        lastReason + ') Your result below is complete, but it has not been recorded. ' +
+        'Tell your centre before you leave.</div>';
+      $('#retry').style.display = '';
+      return;
+
+    } catch (e) {
+      lastReason = 'the server could not be reached';
+      if (attempt < CONFIG.SEND_TRIES) {
+        const wait = Math.round((Math.pow(2, attempt) * 1000) + Math.random() * 1000);
+        B.innerHTML = '<div class="banner">Sending your attempt to IMS… ' +
+          '(attempt ' + (attempt + 1) + ' of ' + CONFIG.SEND_TRIES + ')</div>';
+        await sleep(wait);
+      }
+    }
+  }
+
+  /* Out of tries. Park it — it will go the next time this paper is opened here. */
+  park(lastPayload);
+  B.innerHTML = '<div class="banner err">Could not reach the IMS server, so this attempt ' +
+    'is <b>saved on this computer</b> and will be sent automatically the next time this ' +
+    'paper is opened here. Your result below is complete and correct. You can also press ' +
+    '<b>Retry</b> now.</div>';
+  $('#retry').style.display = '';
+}
+$('#retry').onclick = () => { if (lastPayload) postPayload(true); };
+
+/* Rank comes from its own uncached call, never from the peer blob: that blob is filled
+   before this attempt is written, so during a big simultaneous sitting it would rank a
+   student against a cohort that does not include them. Ties share a rank. */
+async function applyRank() {
+  if (!CONFIG.ENDPOINT) return;
+  let j;
+  try {
+    const r = await fetch(api('action=rank&pin=' + encodeURIComponent(S.pin) +
+      '&paper=' + encodeURIComponent(CONFIG.PAPER_ID)));
+    j = await r.json();
+  } catch (e) { return; }                       // a missing rank is not worth an error
+  if (!j || !j.ok || !j.of) return;
+  const rank = j.rank;
+  $('#r-rank').innerHTML =
+    '<div class="rankbox">' +
+      '<div><div class="rlab">Cohort Rank</div>' +
+        '<div class="rk">' + rank + '<small>of ' + j.of + '</small></div></div>' +
+      '<p class="rnote">Across everyone who has sat this paper so far. It will move as more ' +
+      'students sit it &mdash; the field grows, your paper does not change.</p>' +
+    '</div>';
+}
+
+function applyPeer(j, A) {
+  j.peer.forEach(p => {
+    const c = document.querySelector('.peer-' + p.n);
+    if (c) { c.textContent = human(p.med);
+      c.title = Math.round(p.pc * 100) + '% of the batch got this right'; }
+    /* What the question actually costs someone who cracks it — the comparison that
+       matters, since a median over everybody is dragged up by those who never got there. */
+    const d = document.querySelector('.pcor-' + p.n);
+    if (d && p.nCor) { d.textContent = human(p.medCor);
+      d.title = p.nCor + ' student' + (p.nCor === 1 ? '' : 's') + ' answered this correctly; ' +
+        Math.round(p.acc * 100) + '% of those who attempted it got it right'; }
+  });
+  $('#peernote').innerHTML = 'The <b>Peer</b> column is the batch median time on that question, ' +
+    'across <b>' + j.n + '</b> attempts. Hover a value for the batch accuracy on that question.' +
+    (j.pct !== undefined ? ' Your score puts you at the <b>' + j.pct +
+      'th percentile</b> of the batch.' : '');
+}
+
+/* Anything stranded by a dead connection on a previous sitting goes out now, quietly. */
+flushParked();
+
+/* An attempt left unfinished on this machine — a crash, a reboot, a closed tab. */
+offerResume();
+
+</script>
+</body>
+</html>

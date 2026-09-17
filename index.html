@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quest Summit · IMS CAT 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FAF8F4; --card:#FFFFFF; --ink:#1B1F27; --muted:#6E6A63; --rule:#E2DCD1;
+  --navy:#1F3864; --navy-soft:#EAEFF8; --red:#C00000; --green:#1B5E3F; --green-soft:#EAF2ED;
+  --amber:#8A5A00; --amber-soft:#FBF1DE; --w:1080px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--w);margin:0 auto;padding-inline:24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------- top bar ---------- */
+.top{background:var(--navy);color:#fff;padding:14px 0}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:700;letter-spacing:.22em;font-size:13px}
+.brand small{display:block;font-weight:400;letter-spacing:.1em;font-size:10px;opacity:.72;margin-top:2px}
+.whoami{font-size:13px;opacity:.9;text-align:right}
+.whoami b{display:block;font-weight:600;opacity:1}
+.signout{background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:4px;
+  padding:5px 11px;font:inherit;font-size:12.5px;cursor:pointer;margin-left:12px}
+.signout:hover{background:rgba(255,255,255,.12)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:64px 40px;display:grid;grid-template-columns:1.25fr 380px;gap:56px;align-items:start}
+h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(34px,5.2vw,52px);
+  line-height:1.06;margin:0;letter-spacing:-.015em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--navy)}
+.lede{margin:20px 0 0;font-size:18px;color:var(--muted);max-width:34ch}
+.pitch{margin:26px 0 0;padding-left:16px;border-left:3px solid var(--rule);color:var(--muted);
+  font-size:15px;max-width:44ch}
+
+/* ---------- pin card ---------- */
+.pincard{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:28px 26px;
+  box-shadow:0 10px 30px rgba(28,34,48,.06)}
+.pincard h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:21px;margin:0 0 6px}
+.pincard p{margin:0 0 18px;font-size:14px;color:var(--muted)}
+label{display:block;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:7px}
+input[type=text]{width:100%;padding:14px 15px;border:1.5px solid var(--rule);border-radius:7px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:17px;letter-spacing:.06em;
+  background:#fff;color:var(--ink)}
+input[type=text]:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px var(--navy-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;
+  border-radius:7px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;
+  font:inherit;font-weight:600;font-size:15px;cursor:pointer;transition:filter .12s}
+.btn:hover{filter:brightness(1.12)}
+.btn:disabled{opacity:.55;cursor:default;filter:none}
+.btn-ghost{background:transparent;color:var(--navy)}
+.btn-ghost:hover{background:var(--navy-soft);filter:none}
+.btn-wide{width:100%;margin-top:16px}
+.warn{margin-top:14px;padding:12px 14px;border-radius:7px;background:#FDECEA;
+  border:1px solid #F0BDB6;color:#8A2318;font-size:14px;display:none}
+.warn.on{display:block}
+
+/* ---------- tiles ---------- */
+.papers{padding-block:8px 80px}
+.papers h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:26px;margin:0 0 6px}
+.papers .sub{margin:0 0 26px;color:var(--muted);font-size:15px}
+.tiles{display:flex;flex-direction:column;gap:12px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:11px;
+  padding:20px 22px;display:grid;grid-template-columns:34px 1fr auto;gap:18px;align-items:center}
+.tile .no{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;color:var(--muted);
+  background:var(--paper);border:1px solid var(--rule);border-radius:6px;
+  height:30px;display:grid;place-items:center}
+.tile .nm{font-family:Fraunces,Georgia,serif;font-size:20px;font-weight:600;line-height:1.2}
+.tile .meta{font-size:13.5px;color:var(--muted);margin-top:3px}
+.tile.done{background:var(--green-soft);border-color:#BFD9CA}
+.tile.soon{opacity:.62}
+.chip{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;padding:3px 9px;border-radius:20px;margin-left:9px;vertical-align:2px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace}
+.chip.open{background:var(--green-soft);color:var(--green)}
+.chip.shut{background:var(--amber-soft);color:var(--amber)}
+.chip.dn{background:#fff;color:var(--green);border:1px solid #BFD9CA}
+.foot{border-top:1px solid var(--rule);padding-block:22px 60px;color:var(--muted);font-size:13.5px}
+
+#gate.off,#list.off{display:none}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:34px;padding-block:40px 28px}
+  .tile{grid-template-columns:1fr;gap:12px}
+  .tile .act{justify-self:stretch}
+  .tile .act .btn{width:100%}
+}
+
+.rank{display:block;margin-top:7px;font-family:var(--f-mono,ui-monospace,monospace);
+  font-size:12px;letter-spacing:.04em;color:var(--navy,#1F3864)}
+.rank b{font-size:15px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <div class="brand">IMS<small>TRUSTED FOR SUCCESS</small></div>
+  <div style="display:flex;align-items:center">
+    <div class="whoami" id="whoami" hidden><b id="wname"></b><span id="wmeta" class="mono"></span></div>
+    <button class="signout" id="signout" hidden>Sign out</button>
+  </div>
+</div></div>
+
+<!-- ================= GATE ================= -->
+<section id="gate"><div class="wrap hero">
+  <div>
+    <h1>Welcome to <em>Quest Summit</em> — the best practice you can have for CAT 2026.</h1>
+    <p class="lede">Five sectional papers, sat under exam conditions, each one reported back
+      to you in the detail a mock never gives you.</p>
+    <p class="pitch">Every paper here is longer than its clock. That is deliberate: what these
+      tests measure is not whether you know the mathematics, but which questions you choose
+      and which you let go.</p>
+  </div>
+  <div class="pincard">
+    <h2>Enter your IMS PIN</h2>
+    <p>The PIN on your IMS record. It identifies you and pulls up your papers.</p>
+    <label for="pin">IMS PIN</label>
+    <input type="text" id="pin" autocomplete="off" autocapitalize="characters"
+           spellcheck="false" placeholder="IMS0000000000">
+    <button class="btn btn-wide" id="go">Continue</button>
+    <div class="warn" id="warn"></div>
+  </div>
+</div></section>
+
+<!-- ================= PAPERS ================= -->
+<section id="list" class="off"><div class="wrap papers">
+  <h2 id="greet">Your papers</h2>
+  <p class="sub" id="greetsub">Pick a paper to sit. Your faculty will give you the passcode at the centre.</p>
+  <div class="tiles" id="tiles"></div>
+</div>
+<div class="wrap foot" id="foot"></div>
+</section>
+
+<script>
+const CONFIG = { ENDPOINT: "https://ims-cat26.vipul-tg.workers.dev" };
+
+const $ = s => document.querySelector(s);
+const api = q => CONFIG.ENDPOINT + (CONFIG.ENDPOINT.includes('?') ? '&' : '?') + q;
+const KEY = 'ims_quest_pin';
+
+const REASON = {
+  unknown: 'That PIN is not on the IMS enrolment list. Check it against your record — if it ' +
+           'is right, tell your centre and they will add you.',
+  inactive: 'That PIN is no longer active. Please speak to your centre.',
+  missing: 'Enter your IMS PIN to continue.'
+};
+
+function warn(msg) { const w = $('#warn'); w.textContent = msg; w.classList.add('on'); }
+function clearWarn() { $('#warn').classList.remove('on'); }
+
+async function signIn(pin, silent) {
+  clearWarn();
+  if (!pin || pin.length < 4) { if (!silent) warn(REASON.missing); return false; }
+  $('#go').disabled = true; $('#go').textContent = 'Checking…';
+  try {
+    const r = await fetch(api('action=hub&pin=' + encodeURIComponent(pin)));
+    const j = await r.json();
+    if (!j.ok) { if (!silent) warn(REASON[j.reason] || 'That PIN could not be verified.'); return false; }
+    try { sessionStorage.setItem(KEY, pin); } catch (e) {}
+    render(pin, j);
+    return true;
+  } catch (e) {
+    if (!silent) warn('Could not reach the IMS server. Check your connection and try again.');
+    return false;
+  } finally {
+    $('#go').disabled = false; $('#go').textContent = 'Continue';
+  }
+}
+
+function render(pin, j) {
+  const first = (j.name || '').trim().split(/\s+/)[0] || '';
+  $('#whoami').hidden = false; $('#signout').hidden = false;
+  $('#wname').textContent = j.name || pin;
+  $('#wmeta').textContent = [pin, j.batch].filter(Boolean).join('  ·  ');
+  $('#greet').textContent = first ? first + ', here are your papers.' : 'Your papers';
+
+  const done = j.papers.filter(p => p.state === 'done').length;
+  const ready = j.papers.filter(p => p.state !== 'soon').length;
+  $('#greetsub').textContent = done
+    ? done + ' of ' + ready + ' sat. Your faculty gives you the passcode at the centre.'
+    : 'Pick a paper to sit. Your faculty will give you the passcode at the centre.';
+
+  $('#tiles').innerHTML = '';
+  j.papers.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'tile' + (p.state === 'done' ? ' done' : p.state === 'soon' ? ' soon' : '');
+
+    let chip = '', meta = '', act = '';
+    if (p.state === 'done') {
+      const d = p.date ? new Date(p.date) : null;
+      chip = '<span class="chip dn">Completed</span>';
+      /* Cohort Rank on the tile, not only inside the review. It moves as more students sit
+         the paper, so a student who has not re-opened their report still sees it change. */
+      const rk = (p.rank && p.of)
+        ? '<span class="rank">Cohort Rank <b>' + p.rank + '</b> of ' + p.of + '</span>' : '';
+      /* Triage appears only once faculty has published it for the paper. */
+      const t = p.triage;
+      const band = !t ? '' : t.score >= 80 ? 'Sharp' : t.score >= 65 ? 'Solid'
+                 : t.score >= 50 ? 'Leaky' : 'Costly';
+      const tri = t ? '<span class="rank">Triage <b>' + t.score + '</b> / 100 · ' + band +
+        '</span>' : '';
+      meta = 'Scored <b>' + p.score + '</b>' +
+             (d ? ' on ' + d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '') +
+             ' · you cannot sit this paper again' + rk + tri;
+      /* Review carries the whole answer key, so the tile matches the backend: shut until
+         faculty releases the paper. */
+      act = p.triageReady
+        ? '<button class="btn btn-ghost" data-go="' + p.href + '" data-review="1">Review</button>'
+        : '<button class="btn btn-ghost" disabled title="Released by your faculty after the '
+          + 'session">Not released yet</button>';
+    } else if (p.state === 'soon') {
+      meta = 'Not released yet';
+      act = '<button class="btn btn-ghost" disabled>Coming soon</button>';
+    } else {
+      chip = p.openNow ? '<span class="chip open">Open now</span>'
+                       : '<span class="chip shut">Not open</span>';
+      meta = p.openNow ? '22 questions · 40 minutes · passcode required'
+                       : 'Opens when your faculty starts the session at the centre';
+      /* A paper that is not open yet must not offer a live button. The worker refuses the
+         attempt anyway, so a clickable Start test only sends students into a dead end and
+         generates invigilation noise at the centre. */
+      act = p.openNow
+        ? '<button class="btn" data-go="' + p.href + '">Start test</button>'
+        : '<button class="btn btn-ghost" disabled title="Your faculty opens this at the '
+          + 'centre when the session starts">Start test</button>';
+    }
+
+    el.innerHTML =
+      '<div class="no">' + (i + 1) + '</div>' +
+      '<div><div class="nm">' + p.name + chip + '</div><div class="meta">' + meta + '</div></div>' +
+      '<div class="act">' + act + '</div>';
+    $('#tiles').appendChild(el);
+  });
+
+  $('#foot').textContent =
+    'Sat a paper already? Review shows the same report you saw when you finished it — every ' +
+    'question, every second, and where the marks went — it opens once your faculty releases ' +
+    'the paper. Papers cannot be re-sat. Your Cohort Rank keeps moving as more of the batch ' +
+    'sits each paper.';
+
+  $('#gate').classList.add('off');
+  $('#list').classList.remove('off');
+}
+
+$('#tiles').addEventListener('click', e => {
+  const b = e.target.closest('button[data-go]');
+  if (!b) return;
+  const href = b.getAttribute('data-go');
+  location.href = href + (b.getAttribute('data-review') ? '?review=1' : '');
+});
+
+$('#go').onclick = () => signIn($('#pin').value.trim().toUpperCase());
+$('#pin').addEventListener('keydown', e => { if (e.key === 'Enter') $('#go').click(); });
+$('#signout').onclick = () => {
+  try { sessionStorage.removeItem(KEY); } catch (e) {}
+  location.reload();
+};
+
+/* Coming back from a paper: the PIN is still in this tab, so go straight to the list. */
+(() => {
+  let saved = null;
+  try { saved = sessionStorage.getItem(KEY); } catch (e) {}
+  if (saved) { $('#pin').value = saved; signIn(saved, true); }
+  else $('#pin').focus();
+})();
+</script>
+</body>
+</html>

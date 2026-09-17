@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshops · IMS CAT 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FAF8F4; --card:#FFFFFF; --ink:#1B1F27; --muted:#6E6A63; --rule:#E2DCD1;
+  --navy:#1F3864; --navy-soft:#EAEFF8; --red:#C00000; --green:#1B5E3F; --green-soft:#EAF2ED;
+  --amber:#8A5A00; --amber-soft:#FBF1DE; --w:1080px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--w);margin:0 auto;padding-inline:24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.top{background:var(--navy);color:#fff;padding:14px 0}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:700;letter-spacing:.22em;font-size:13px}
+.brand small{display:block;font-weight:400;letter-spacing:.1em;font-size:10px;opacity:.72;margin-top:2px}
+.back{color:#fff;text-decoration:none;font-size:13px;opacity:.9;border:1px solid rgba(255,255,255,.4);
+  border-radius:4px;padding:5px 11px}
+.back:hover{background:rgba(255,255,255,.12)}
+.hero{padding-block:64px 24px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(34px,5.2vw,52px);
+  line-height:1.06;margin:0;letter-spacing:-.015em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--navy)}
+.lede{margin:20px 0 0;font-size:18px;color:var(--muted);max-width:46ch}
+.papers{padding-block:14px 80px}
+.papers h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:26px;margin:0 0 6px}
+.papers .sub{margin:0 0 26px;color:var(--muted);font-size:15px}
+.tiles{display:flex;flex-direction:column;gap:12px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:11px;
+  padding:20px 22px;display:grid;grid-template-columns:34px 1fr auto;gap:18px;align-items:center;opacity:.72}
+.tile .no{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;color:var(--muted);
+  background:var(--paper);border:1px solid var(--rule);border-radius:6px;
+  height:30px;display:grid;place-items:center}
+.tile .nm{font-family:Fraunces,Georgia,serif;font-size:20px;font-weight:600;line-height:1.2}
+.tile .meta{font-size:13.5px;color:var(--muted);margin-top:3px}
+.chip{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;padding:3px 9px;border-radius:20px;margin-left:9px;vertical-align:2px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;background:var(--amber-soft);color:var(--amber)}
+.foot{border-top:1px solid var(--rule);padding-block:22px 60px;color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <div class="brand">IMS<small>TRUSTED FOR SUCCESS</small></div>
+  <a class="back" href="../">← Sectionals</a>
+</div></div>
+
+<section><div class="wrap hero">
+  <h1>CAT 2026 <em>Workshops</em></h1>
+  <p class="lede">The home for workshop material — session decks, drills, and take-home
+    practice, sat under the same roof as the sectionals.</p>
+</div></section>
+
+<section><div class="wrap papers">
+  <h2>Sessions</h2>
+  <p class="sub">This area is set up and waiting for content. Each workshop will appear here as a tile.</p>
+  <div class="tiles">
+    <div class="tile">
+      <div class="no">1</div>
+      <div><div class="nm">Workshop placeholder<span class="chip">Coming soon</span></div>
+      <div class="meta">Add your first workshop here.</div></div>
+    </div>
+  </div>
+</div>
+<div class="wrap foot">Workshops share the same design and, if you choose, the same backend as the
+  sectionals. Tell your faculty lead what each session should contain and it gets built out here.</div>
+</section>
+
+</body>
+</html>

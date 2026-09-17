@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMS · CAT 2026 Sectional — Arithmetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF8F4; --paper-2:#F2EEE6; --card:#FFFFFF;
+  --ink:#14203A; --ink-2:#4A5568; --ink-3:#8A8578;
+  --navy:#1F3864; --navy-lt:#2E4E86; --red:#C00000; --red-lt:#E23B3B;
+  --rule:#DAD3C6; --rule-2:#EAE5DA;
+  --ok:#1B5E3F; --ok-lt:#3E8C66;
+  --warn:#B07D2B; --bleed:#8C7A55; --sunk:#7A1518;
+  --f-disp:'Fraunces',Georgia,serif;
+  --f-ui:'IBM Plex Sans',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --w:1180px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+.screen{display:none}
+.screen:not(.on){display:none!important}
+.screen.on{display:block}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------------- GATE ---------------- */
+#gate.on{display:grid}
+#gate{min-height:100vh;place-items:center;background:var(--navy);
+   background-image:radial-gradient(900px 520px at 12% -12%, rgba(255,255,255,.09), transparent 62%);
+   padding:32px 20px}
+#gate::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:22px 22px;opacity:.6}
+.gatewrap{position:relative;width:100%;max-width:960px;display:grid;grid-template-columns:1.15fr .85fr;
+  gap:0;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03)}
+.gateleft{padding:52px 48px;color:#EDE9E0}
+.gate-brand{font-family:var(--f-ui);font-weight:700;letter-spacing:.24em;font-size:12px;color:#fff;opacity:.85}
+.gate-tag{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
+.gateleft h1{font-family:var(--f-disp);font-weight:600;font-size:clamp(34px,4.6vw,52px);line-height:1.02;
+  margin:38px 0 0;letter-spacing:-.02em}
+.gateleft h1 em{font-style:normal;color:#F0B8B8}
+.gate-sub{margin-top:18px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.72);max-width:44ch}
+.gate-facts{margin-top:34px;display:flex;gap:0;border-top:1px solid rgba(255,255,255,.16)}
+.gate-fact{flex:1;padding:16px 0 0;border-right:1px solid rgba(255,255,255,.12)}
+.gate-fact:last-child{border-right:0}
+.gate-fact b{display:block;font-family:var(--f-mono);font-size:23px;font-weight:500;color:#fff}
+.gate-fact span{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-top:3px}
+.gateright{background:var(--paper);padding:52px 42px;display:flex;flex-direction:column;justify-content:center}
+.gateright label{display:block;font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin-bottom:9px}
+#pin{width:100%;padding:14px 15px;border:1.5px solid var(--rule);background:#fff;font-family:var(--f-mono);
+  font-size:19px;letter-spacing:.09em;color:var(--ink);outline:none;text-transform:uppercase}
+#pin:focus{border-color:var(--navy)}
+.hint{font-size:12.5px;color:var(--ink-2);margin-top:10px;line-height:1.5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;
+  background:var(--navy);color:#fff;border:none;font-weight:600;font-size:14.5px;letter-spacing:.02em;
+  transition:background .15s}
+.btn:hover{background:var(--navy-lt)}
+.btn:disabled{background:#B9B3A6;cursor:not-allowed}
+.btn-red{background:var(--red)} .btn-red:hover{background:var(--red-lt)}
+.btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--rule);font-weight:600}
+.btn-ghost:hover{background:var(--paper-2)}
+.gateright .btn{margin-top:22px;width:100%}
+.warnbox{margin-top:18px;border-left:3px solid var(--red);background:#FBF0EF;padding:11px 13px;
+  font-size:12.5px;color:#6E1B1B;display:none}
+.warnbox.on{display:block}
+.warnbox.info{border-color:var(--navy);background:#EEF2F9;color:#1F3864}
+.wel-eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ok)}
+.wel-name{font-family:var(--f-disp);font-size:34px;font-weight:600;letter-spacing:-.02em;
+  margin:8px 0 0;line-height:1.05}
+.wel-meta{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-3);margin:9px 0 0;line-height:1.6}
+.btn-link{background:none;border:0;color:var(--ink-3);font-size:12.5px;padding:12px 0 0;
+  text-decoration:underline;text-underline-offset:3px;width:100%}
+.btn-link:hover{color:var(--navy)}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.35);
+  border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---------------- SHELL ---------------- */
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:40}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:18px}
+.tb-l{display:flex;align-items:baseline;gap:14px;min-width:0}
+.tb-brand{font-weight:700;letter-spacing:.2em;font-size:12px}
+.tb-title{font-size:13px;color:rgba(255,255,255,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-r{display:flex;align-items:center;gap:20px}
+.tb-pin{font-family:var(--f-mono);font-size:12.5px;color:rgba(255,255,255,.7)}
+.timer{font-family:var(--f-mono);font-size:22px;font-weight:500;letter-spacing:.02em;
+  padding:3px 12px;border:1px solid rgba(255,255,255,.28);min-width:104px;text-align:center}
+.timer.warn{border-color:#F2A0A0;color:#FFD9D9}
+.timer.crit{background:var(--red);border-color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.62}}
+
+/* ---------------- INSTRUCTIONS ---------------- */
+#instr .wrap{padding-top:44px;padding-bottom:80px;max-width:860px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2.disp{font-family:var(--f-disp);font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.08;
+  margin:10px 0 0;letter-spacing:-.015em}
+.lead{font-size:15.5px;color:var(--ink-2);margin-top:14px;max-width:62ch;line-height:1.65}
+.rulegrid{margin-top:34px;border-top:1px solid var(--rule)}
+.rulerow{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:15px 0;border-bottom:1px solid var(--rule-2)}
+.rulerow dt{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600;
+  padding-top:3px}
+.rulerow dd{margin:0;font-size:14.5px;line-height:1.6}
+.rulerow dd b{color:var(--navy)}
+.callout{margin-top:30px;border:1px solid var(--rule);border-left:3px solid var(--navy);
+  background:var(--card);padding:18px 20px}
+.callout h4{margin:0 0 7px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+.callout p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.62}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+.lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.sw{width:20px;height:20px;border:1px solid var(--rule);display:inline-block}
+.startrow{margin-top:38px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.startrow .btn{padding:16px 34px;font-size:15px}
+.startnote{font-size:12.5px;color:var(--ink-3);max-width:40ch}
+
+/* ---------------- TEST ---------------- */
+#test .layout{display:grid;grid-template-columns:1fr 268px;gap:0;min-height:calc(100vh - 58px)}
+.qpane{padding:30px 34px 120px 0;border-right:1px solid var(--rule)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.qnum{font-family:var(--f-disp);font-size:22px;font-weight:600}
+.qmeta{display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.chip{border:1px solid var(--rule);padding:3px 9px;background:var(--card)}
+.chip.tita{border-color:var(--navy);color:var(--navy)}
+.qtext{font-size:17px;line-height:1.72;margin:26px 0 30px;max-width:70ch}
+.opts{display:grid;gap:10px;max-width:640px}
+.opt{display:flex;align-items:flex-start;gap:13px;padding:13px 16px;border:1.5px solid var(--rule);
+  background:var(--card);text-align:left;transition:border-color .12s,background .12s;width:100%}
+.opt:hover{border-color:var(--navy-lt);background:var(--paper-2)}
+.opt.sel{border-color:var(--navy);background:#EEF2F9;box-shadow:inset 0 0 0 1px var(--navy)}
+.optn{font-family:var(--f-mono);font-size:13px;color:var(--ink-3);font-weight:600;padding-top:2px;min-width:20px}
+.opt.sel .optn{color:var(--navy)}
+.optv{font-size:16px}
+.titabox{max-width:340px}
+.titabox input{width:100%;padding:15px 16px;border:1.5px solid var(--rule);background:var(--card);
+  font-family:var(--f-mono);font-size:20px;color:var(--ink);outline:none}
+.titabox input:focus{border-color:var(--navy)}
+.titanote{font-size:12.5px;color:var(--ink-3);margin-top:9px}
+.qactions{position:fixed;bottom:0;left:0;right:0;background:var(--paper);
+  border-top:1px solid var(--rule);z-index:30}
+.qactions .inner{max-width:var(--w);margin:0 auto;padding:13px 292px 13px 24px;
+  display:flex;gap:11px;align-items:center}
+.qactions .sp{flex:1}
+.qactions .btn{padding:11px 18px;font-size:13.5px}
+
+.pal{padding:26px 0 26px 22px;position:sticky;top:58px;align-self:start;max-height:calc(100vh - 58px);
+  overflow:auto}
+.pal h5{margin:0 0 12px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700}
+.palgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pb{aspect-ratio:1;border:1.5px solid var(--rule);background:var(--card);font-family:var(--f-mono);
+  font-size:13px;font-weight:500;color:var(--ink-2);display:grid;place-items:center;position:relative}
+.pb:hover{border-color:var(--navy)}
+.pb.cur{outline:2px solid var(--navy);outline-offset:1px}
+.pb.seen{background:#EDE9E0;color:var(--ink-2)}
+.pb.ans{background:var(--ok);border-color:var(--ok);color:#fff}
+.pb.mark{background:#6B3FA0;border-color:#6B3FA0;color:#fff}
+.pb.ansmark{background:#6B3FA0;border-color:#6B3FA0;color:#fff}
+.pb.ansmark::after{content:'';position:absolute;right:2px;bottom:2px;width:7px;height:7px;
+  background:var(--ok-lt);border-radius:50%}
+.palstat{margin-top:18px;border-top:1px solid var(--rule);padding-top:14px;display:grid;gap:6px;
+  font-size:12px;color:var(--ink-2)}
+.palstat div{display:flex;justify-content:space-between}
+.palstat b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+.pal .btn{width:100%;margin-top:18px;padding:12px}
+
+/* ---------------- RESULTS ---------------- */
+#res .wrap{padding-top:0;padding-bottom:90px}
+.rhero{background:var(--navy);color:#fff;padding:46px 0 40px;margin-bottom:0}
+.rhero .wrap{padding-top:0;padding-bottom:0}
+.rhero .eyebrow{color:#F0B8B8}
+.rhero h2{font-family:var(--f-disp);font-weight:600;font-size:clamp(30px,4vw,44px);margin:10px 0 0;
+  letter-spacing:-.02em}
+.rhero .sub{color:rgba(255,255,255,.65);font-size:14px;margin-top:8px}
+.scorerow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:34px;
+  border-top:1px solid rgba(255,255,255,.2)}
+.sc{padding:18px 22px 4px 0;border-right:1px solid rgba(255,255,255,.14)}
+.sc:last-child{border-right:0}
+.sc b{display:block;font-family:var(--f-disp);font-size:38px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.sc b small{font-family:var(--f-mono);font-size:15px;font-weight:400;color:rgba(255,255,255,.5);
+  letter-spacing:0}
+.sc span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-top:8px}
+.sc .delta{font-family:var(--f-mono);font-size:12px;letter-spacing:0;text-transform:none;margin-top:5px;
+  color:rgba(255,255,255,.75)}
+
+section.blk{padding:44px 0 6px;border-bottom:1px solid var(--rule)}
+section.blk:last-of-type{border-bottom:0}
+.blkhead{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.blkhead h3{font-family:var(--f-disp);font-size:26px;font-weight:600;margin:0;letter-spacing:-.015em}
+.blkhead p{margin:0;font-size:13px;color:var(--ink-3);max-width:46ch;text-align:right}
+.blkintro{font-size:14.5px;color:var(--ink-2);line-height:1.65;max-width:66ch;margin:14px 0 0}
+
+/* ribbon */
+.ribbon{margin-top:26px;border:1px solid var(--rule);background:var(--card);padding:20px 20px 14px}
+.ribbar{display:flex;height:62px;width:100%;border:1px solid var(--rule);overflow:hidden}
+.rseg{position:relative;min-width:2px;transition:filter .12s}
+.rseg:hover{filter:brightness(1.18)}
+.rseg span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-mono);
+  font-size:10px;color:rgba(255,255,255,.92);pointer-events:none;white-space:nowrap}
+.rseg.unused{background:repeating-linear-gradient(45deg,#F2EEE6 0 6px,#E7E1D4 6px 12px)}
+.rseg.unused span{color:var(--ink-3)}
+.ribaxis{display:flex;justify-content:space-between;margin-top:7px;font-family:var(--f-mono);
+  font-size:10.5px;color:var(--ink-3)}
+.ribkey{display:flex;flex-wrap:wrap;gap:7px 18px;margin-top:14px;padding-top:13px;border-top:1px solid var(--rule-2)}
+.rk{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2)}
+.rk i{width:13px;height:13px;display:inline-block}
+#ribtip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;padding:8px 11px;
+  font-size:12px;line-height:1.45;max-width:250px;z-index:99;display:none;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+#ribtip b{color:#fff}
+#ribtip .t{font-family:var(--f-mono);color:#B9C6E0}
+
+/* ledger */
+.ledger{margin-top:24px;border:1px solid var(--rule);background:var(--card)}
+.ledrow{display:grid;grid-template-columns:16px 1fr 92px 62px;gap:14px;align-items:center;
+  padding:12px 18px;border-bottom:1px solid var(--rule-2)}
+.ledrow:last-child{border-bottom:0}
+.ledrow.tot{background:var(--paper-2);font-weight:600}
+.ledrow i{width:12px;height:12px;display:block}
+.ledrow .lb{font-size:13.5px}
+.ledrow .lb small{display:block;color:var(--ink-3);font-size:12px;font-weight:400;margin-top:1px}
+.ledrow .lt,.ledrow .lc{font-family:var(--f-mono);font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums}
+
+.verdict{margin-top:26px;border-left:3px solid var(--red);background:#FBF0EF;padding:20px 22px}
+.verdict h4{margin:0 0 9px;font-family:var(--f-disp);font-size:20px;font-weight:600;color:#6E1B1B}
+.verdict p{margin:0 0 9px;font-size:14.5px;line-height:1.65;color:#5A2422}
+.verdict p:last-child{margin-bottom:0}
+.verdict b{color:#6E1B1B}
+.verdict.good{border-color:var(--ok);background:#EFF6F1}
+.verdict.good h4{color:var(--ok)} .verdict.good p{color:#20452F} .verdict.good b{color:var(--ok)}
+
+/* triage plot */
+.plot{margin-top:24px;border:1px solid var(--rule);background:var(--card);padding:22px 22px 14px}
+.plotnote{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.55}
+
+/* table */
+.qtable{margin-top:24px;width:100%;border-collapse:collapse;font-size:13.5px}
+.qtable th{text-align:left;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;padding:0 10px 9px 0;border-bottom:1px solid var(--rule)}
+.qtable th.r,.qtable td.r{text-align:right}
+.qtable td{padding:10px 10px 10px 0;border-bottom:1px solid var(--rule-2);vertical-align:top}
+.qtable tr.miss td{background:#FDF7F6}
+.qtable .qid{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+.qtable .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+  padding:2px 7px;border:1px solid currentColor}
+.t-ok{color:var(--ok)} .t-slow{color:var(--warn)} .t-wrong{color:var(--red)}
+.t-sunk{color:var(--sunk)} .t-bleed{color:var(--bleed)} .t-skip{color:var(--ink-3)}
+.qtable .meth{font-size:13px;color:var(--ink-2);line-height:1.6;padding:2px 0 14px;max-width:80ch}
+.qtable tr.mrow td{border-bottom:1px solid var(--rule-2);padding-top:0}
+.exp{background:none;border:0;color:var(--navy);font-family:var(--f-mono);font-size:11.5px;padding:0;
+  text-decoration:underline;text-underline-offset:3px}
+
+.peernote{margin-top:18px;font-size:12.5px;color:var(--ink-3);line-height:1.6;border-top:1px solid var(--rule-2);
+  padding-top:14px}
+.footer{padding:40px 0 60px;font-size:12px;color:var(--ink-3);line-height:1.6}
+.actionbar{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}
+.banner{background:#FFF6E5;border:1px solid #E8CE95;color:#6B4E12;padding:11px 16px;font-size:13px;
+  margin:14px 0 0}
+.banner.err{background:#FBF0EF;border-color:#E5B5B5;color:#6E1B1B}
+
+@media(max-width:900px){
+  #gate .gatewrap{grid-template-columns:1fr}
+  .gateleft{padding:38px 30px} .gateright{padding:34px 30px}
+  #test .layout{grid-template-columns:1fr}
+  .qpane{padding:22px 0 200px;border-right:0}
+  .pal{position:static;padding:0 0 30px;border-top:1px solid var(--rule);padding-top:20px}
+  .qactions .inner{padding-right:24px}
+  .blkhead p{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ GATE ============ -->
+<div id="gate" class="screen on">
+  <div class="gatewrap">
+    <div class="gateleft">
+      <div class="gate-brand">IMS</div>
+      <div class="gate-tag">Trusted for Success</div>
+      <h1>Most Expected<br>CAT 2026<br><em>Arithmetic</em></h1>
+      <p class="gate-sub">Twenty-two questions built against the CAT 2022&ndash;2025 papers only.
+        Forty minutes. The paper is deliberately longer than the clock &mdash; what it measures is
+        which questions you choose, not only which you can solve.</p>
+      <div class="gate-facts">
+        <div class="gate-fact"><b>22</b><span>Questions</span></div>
+        <div class="gate-fact"><b>40:00</b><span>Minutes</span></div>
+        <div class="gate-fact"><b>5.86</b><span>Mean difficulty</span></div>
+        <div class="gate-fact"><b>+3/&minus;1</b><span>Marking</span></div>
+      </div>
+    </div>
+    <div class="gateright">
+      <div id="gateform">
+        <label for="pin">IMS PIN</label>
+        <input id="pin" autocomplete="off" spellcheck="false" placeholder="e.g. AHM26QA001">
+        <p class="hint">Enter your PIN exactly as it appears on your IMS record. It is checked
+          against the enrolled list before the paper opens.</p>
+        <div class="warnbox" id="gatewarn"></div>
+        <button class="btn" id="gatego">Verify PIN &rarr;</button>
+      </div>
+      <div id="gatewelcome" hidden>
+        <div class="wel-eyebrow">Verified</div>
+        <h3 class="wel-name" id="welname"></h3>
+        <p class="wel-meta" id="welmeta"></p>
+        <div class="warnbox" id="welwarn"></div>
+        <button class="btn" id="welgo">Continue to instructions &rarr;</button>
+        <button class="btn-link" id="welback">Not you? Use a different PIN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INSTRUCTIONS ============ -->
+<div id="instr" class="screen">
+  <div class="topbar"><div class="wrap">
+    <div class="tb-l"><span class="tb-brand">IMS</span>
+      <span class="tb-title">Most Expected CAT 2026 — Recalibrated Set &middot; Arithmetic Sectional</span></div>
+    <div class="tb-r"><span class="tb-pin" id="pinlbl2"></span></div>
+  </div></div>
+  <div class="wrap">
+    <div class="eyebrow">General instructions</div>
+    <h2 class="disp">Read this once. The clock starts when you press Begin.</h2>
+    <p class="lead">This is a sectional paper, not a full mock. It behaves like one section of the
+      real exam and it is scored the same way.</p>
+
+    <dl class="rulegrid">
+      <div class="rulerow"><dt>Duration</dt><dd><b>40 minutes</b>, counted down on screen. When it reaches
+        zero the paper submits itself &mdash; whatever is on screen at that moment is recorded.</dd></div>
+      <div class="rulerow"><dt>Questions</dt><dd><b>22</b>, shown one at a time. You may move between them
+        freely using the palette on the right, in any order, as often as you like.</dd></div>
+      <div class="rulerow"><dt>Marking</dt><dd>Multiple choice: <b>+3</b> correct, <b>&minus;1</b> wrong.
+        TITA questions carry <b>no negative marking</b> &mdash; every TITA answer is a whole number, so
+        enter digits only.</dd></div>
+      <div class="rulerow"><dt>Navigation</dt><dd><b>Save &amp; Next</b> records your answer and moves on.
+        <b>Mark for Review</b> flags a question you intend to return to; a marked question is still
+        graded if it carries an answer. <b>Clear Response</b> empties it.</dd></div>
+      <div class="rulerow"><dt>Keyboard</dt><dd><span class="mono">1&ndash;4</span> select an option,
+        <span class="mono">Enter</span> save and next, <span class="mono">&larr; &rarr;</span> move between
+        questions, <span class="mono">M</span> mark for review.</dd></div>
+      <div class="rulerow"><dt>What is recorded</dt><dd>Time on every question, every visit, and every
+        option you select or change. That is what the analysis at the end is built from, and it is
+        worthless if you look anything up. Sit it as an exam.</dd></div>
+    </dl>
+
+    <div class="callout">
+      <h4>The paper is longer than the clock, on purpose</h4>
+      <p>At a strong candidate's pace these 22 questions need about 43 minutes. You have 40.
+        Nobody is expected to attempt all of them. The report you get at the end spends as much
+        space on the questions you should have left alone as on the ones you got wrong.</p>
+    </div>
+
+    <div style="margin-top:26px">
+      <div class="eyebrow" style="color:var(--ink-3)">Palette colours</div>
+      <div class="legend">
+        <span class="lg"><i class="sw" style="background:#fff"></i> Not visited</span>
+        <span class="lg"><i class="sw" style="background:#EDE9E0"></i> Seen, not answered</span>
+        <span class="lg"><i class="sw" style="background:var(--ok);border-color:var(--ok)"></i> Answered</span>
+        <span class="lg"><i class="sw" style="background:#6B3FA0;border-color:#6B3FA0"></i> Marked for review</span>
+      </div>
+    </div>
+
+    <div class="startrow">
+      <button class="btn btn-red" id="begin">Begin test &rarr;</button>
+      <p class="startnote">Once you begin, leaving or reloading this page ends the attempt.
+        Make sure you have 40 uninterrupted minutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEST ============ -->
+<div id="test" class="screen">
+  <div class="topbar"><div class="wrap">
+    <div class="tb-l"><span class="tb-brand">IMS</span>
+      <span class="tb-title">Arithmetic Sectional &middot; Most Expected CAT 2026 — Recalibrated Set</span></div>
+    <div class="tb-r">
+      <span class="tb-pin" id="pinlbl"></span>
+      <span class="timer mono" id="timer">40:00</span>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="layout">
+    <div class="qpane">
+      <div class="qhead">
+        <div class="qnum" id="qnum">Question 1</div>
+        <div class="qmeta"><span class="chip" id="qsub"></span><span class="chip" id="qtype"></span></div>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div id="qbody"></div>
+    </div>
+    <aside class="pal">
+      <h5>Question palette</h5>
+      <div class="palgrid" id="palgrid"></div>
+      <div class="palstat">
+        <div><span>Answered</span><b id="s-ans">0</b></div>
+        <div><span>Marked</span><b id="s-mark">0</b></div>
+        <div><span>Not visited</span><b id="s-nv">22</b></div>
+      </div>
+      <button class="btn btn-red" id="submitbtn">Submit test</button>
+    </aside>
+  </div></div>
+  <div class="qactions"><div class="inner">
+    <button class="btn btn-ghost" id="a-clear">Clear response</button>
+    <button class="btn btn-ghost" id="a-mark">Mark for review &amp; next</button>
+    <span class="sp"></span>
+    <button class="btn btn-ghost" id="a-prev">&larr; Previous</button>
+    <button class="btn" id="a-next">Save &amp; next &rarr;</button>
+  </div></div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="res" class="screen">
+  <div class="rhero"><div class="wrap">
+    <div class="eyebrow">Attempt report</div>
+    <h2 id="r-title">Arithmetic Sectional</h2>
+    <div class="sub" id="r-sub"></div>
+    <div class="scorerow" id="scorerow"></div>
+  </div></div>
+  <div class="wrap">
+    <div id="r-banner"></div>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Where the forty minutes went</h3>
+        <p>Every block is one visit to one question. Width is time; colour is what that time bought.</p></div>
+      <div class="ribbon">
+        <div class="ribbar" id="ribbar"></div>
+        <div class="ribaxis" id="ribaxis"></div>
+        <div class="ribkey" id="ribkey"></div>
+      </div>
+      <div class="ledger" id="ledger"></div>
+      <div id="verdict"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Triage</h3>
+        <p>The order you answered questions in, against how hard each one is.</p></div>
+      <p class="blkintro">A candidate who triages well answers cheap questions early and expensive ones
+        late, so the dots drift upward. Dots high on the left are the expensive habit: hard questions
+        taken on before the easy marks were banked.</p>
+      <div class="plot" id="triage"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blkhead"><h3>Question by question</h3>
+        <p>Your time against the pace benchmark for a question of that difficulty.</p></div>
+      <table class="qtable" id="qtable"></table>
+      <div class="peernote" id="peernote"></div>
+    </section>
+
+    <div class="actionbar">
+      <button class="btn btn-ghost" id="dl">Download my attempt data</button>
+      <button class="btn btn-ghost" id="retry" style="display:none">Retry sending to IMS</button>
+    </div>
+    <div class="footer" id="rfoot"></div>
+  </div>
+</div>
+
+<div id="ribtip"></div>
+
+<script>
+/* ============================================================
+   IMS · CAT 2026 sectional test player
+   Static build — deploy anywhere. Peer data via optional endpoint.
+   ============================================================ */
+const CONFIG = {
+  /* REQUIRED. The Apps Script Web App /exec URL. Without it no one can sit the paper,
+     because the PIN is checked against the enrolled list on the server. */
+  ENDPOINT: "",
+  /* Deliberate downgrade for a centre with no working connection: set true and the paper
+     opens for any PIN of four characters or more, with no name and no batch data.
+     Leave false in normal use. */
+  OFFLINE_FALLBACK: false,
+  PAPER_ID: "REC-AR-01",
+  PAPER_NAME: "Arithmetic — Most Expected CAT 2026 — Recalibrated Set",
+  DURATION: 40 * 60,
+  SALT: "IMSGJ-CAT26-REC-AR-01",
+  PEER_MIN: 30,          // real peer data replaces the model at this many attempts
+  BLEED_AFTER: 45,       // seconds on a blank question before it counts as bleed
+  SUNK_AFTER: 120        // seconds on a wrong question before it counts as sunk
+};
+
+const QS = [
+ {
+  "n": 1,
+  "id": "AR-M21",
+  "sub": "Percentages",
+  "rate": 7,
+  "type": "TITA",
+  "q": "A shopkeeper buys pens at Rs 40 each and notebooks at Rs 60 each, buying at least one of each and spending exactly Rs 4800 in all. He marks up every pen by 25% and every notebook by 20%, and then sells everything at a discount of 10% on the marked price. His total profit is Rs 546. How many pens did he buy?",
+  "opts": null,
+  "bench": 150,
+  "k": "14f61ec3eac46920c262d64ec69357709b1e9c0df19ad4548f3997b647e9c6cd",
+  "m": "dz8AJc5J2n5wGRkxJtkgay15KrnComQPIXGyI/aiYJZWfgYsjVGffj8UFTYl0jhreHdi5Y2TZA9pPuAzs6Iq2ARuDW3TGYsoYFBcdD7VNms8KzWtxLAtGG5wsGq3626WEjkKO4tKnyF+WAB0d51ifX55O63ZoX9bcmu2cLfrdY1GNwwjwhnefjRAGTo+2DQ5LTUzv9TkYh0hcPRlrPBinUF+E23TGYYgcBcZICKdPWtxeWj7gw==",
+  "a": "VVg="
+ },
+ {
+  "n": 2,
+  "id": "AR-M11",
+  "sub": "Mixtures & Alligation",
+  "rate": 5,
+  "type": "MCQ",
+  "q": "Solution A contains 25% alcohol and solution B contains 40% alcohol. They are mixed in the ratio 2 : 3 and the mixture is then diluted by adding an equal volume of water. What percentage of the final solution is alcohol?",
+  "opts": [
+   "15%",
+   "17%",
+   "34%",
+   "20%"
+  ],
+  "bench": 95,
+  "k": "472f56f56219079565f17ce50cc86df5469a1d325a37bd02a36f2cbee6d775ab",
+  "m": "deie2FPdi0xk9/6CjbMjgndQq3iqtLYvo4XWxKflEE5ZoMjREYHTBTG2r4fEoW/JKBb2Iabs93PnjoKc7PFFH1Thl9hI259NfOC7zYLgdMszG+tt4q36a+bd1p39/w==",
+  "a": "dsgK"
+ },
+ {
+  "n": 3,
+  "id": "AR-M18",
+  "sub": "Profit, Loss & Discount",
+  "rate": 4,
+  "type": "MCQ",
+  "q": "A trader buys pens in packs of 13, paying Rs 144 for each pack. One pen in every pack is defective and is thrown away. He sells each of the remaining pens for Rs 15. What is his profit percentage?",
+  "opts": [
+   "15%",
+   "30%",
+   "25%",
+   "20%"
+  ],
+  "bench": 75,
+  "k": "c0548b59a4620932741cbc0dfa845aa7f469c2b64749e48cd8e78a0a08447342",
+  "m": "ZYyLDODFDGNbPvxcH8tykj6ug3ewCILlufpuSwUQ78YSzZsFrNAMYlx7v0MJ0XKSafXFd+Be1ung8itXEwypnlTNhwLghlsgX3C/AliLLw==",
+  "a": "qNMu"
+ },
+ {
+  "n": 4,
+  "id": "AR-M01",
+  "sub": "Averages",
+  "rate": 7,
+  "type": "TITA",
+  "q": "In a class of 25 students the average score is 68. The average score of the 10 girls in the class is more than 72, and the average score of the 15 boys is more than 60. How many integer values can the total score of the girls take?",
+  "opts": null,
+  "bench": 150,
+  "k": "650036e46df3841bbe1beaa32a7a441bfa48e6ddfc6cdfadfa7f4961b1871547",
+  "m": "+zBWdF6kZkrDlwA/xR8cOhgHnKM4ra4sLwjF1xcoPs2IeEc7SalrGdXPFzXUGgNpDwSbvyji4BxnGY3VXjg9x9x/EyBSvGZVkNIMM9QbFCBWUYuqOLOuGyYdlpAKMjeeyDFBOE7vJ03fwxU8kRwVJVdBi6s4s6BYEwWAkBc0JtvIPUEnHa51Vt2XQ2KAXgQmGAGSqijt+xUlCJeQSWN8",
+  "a": "OMw="
+ },
+ {
+  "n": 5,
+  "id": "AR-M07",
+  "sub": "Time, Speed & Distance",
+  "rate": 5,
+  "type": "MCQ",
+  "q": "Two cars leave a junction at the same moment, one travelling due north and the other due east. After 2 hours they are 100 km apart. If the eastbound car is 10 km/h faster than the northbound one, what is the speed of the eastbound car?",
+  "opts": [
+   "35 km/h",
+   "40 km/h",
+   "30 km/h",
+   "45 km/h"
+  ],
+  "bench": 95,
+  "k": "4d520366161b37ca3018a97a75a0440f63f69ad9c77f9be2441d45ddf85f88e1",
+  "m": "jCMVC4zDpcC4FmfsR1yQDT6ODXgdxY5hCudXyjC2NRioLgYcht+g2vsMZa1BFIFfK48HNA+Fh2Ua5lfHLeURALIlAgjFjabArQpl6hUKxAwujQlmWMzPegPhBINs4EVK/HdXUsnesNy6EW7pFRmVCj6USGBSiN0/X6Rbgzf5RRf8e0dI2Y2gx79Df+VQXIEeLIwKe0jGiyoM9QWDNuMLEvwnE1vdne8=",
+  "a": "wBixPyVlaw=="
+ },
+ {
+  "n": 6,
+  "id": "AR-M19",
+  "sub": "Simple & Compound Interest",
+  "rate": 4,
+  "type": "MCQ",
+  "q": "A sum of Rs 15000 is divided into three parts and lent for one year at simple interest at 5%, 8% and 12% per annum respectively. The total interest earned is Rs 1290, and the part lent at 12% is twice the part lent at 5%. What is the part lent at 8%, in rupees?",
+  "opts": [
+   "9000",
+   "9600",
+   "10200",
+   "8400"
+  ],
+  "bench": 75,
+  "k": "e0aafa268c29423b2e3b1b95f6b3bac9de3ddda430cc14bf8d4812faba135150",
+  "m": "FuYY359HuB1LYza9mPEu/wqO21tks73wwzc+Su0WRY4g/Ribn0e4HUtqIbjI4D35XsfcDDzl6OCHf3ZK60tL3hL6DsTLWqQNHztq/5joIfkRjttEaPCxvsM6KQ+rR0WbMPoNw9ZcvlgMO3L9y6F/o06b1www8OHgm38oBfhLRcNhvlSHjxOxFg9ycPDdoXeoXt7OXnnwsaOXZm1a6B0=",
+  "a": "1NHRww=="
+ },
+ {
+  "n": 7,
+  "id": "AR-M03",
+  "sub": "Averages",
+  "rate": 6,
+  "type": "TITA",
+  "q": "The average age of the 9 members of a committee is 42 years. A member aged 65 retires and is replaced by a new member, after which the average age is an integer smaller than 42. If the new member's age is a positive integer, how many values can it take?",
+  "opts": null,
+  "bench": 120,
+  "k": "61d0f77deefdea952f971562b54cc1059fe3d38c00a3415a24e8971dc913557c",
+  "m": "4+n4ciEC0XEeFJcFj9EjxTdQV6kz8EEcUhpnw4FmniXAofw1KkuGJgISgAzDnD/FY0ME/zPkRB9ISXrJiCPQIs6hpHIuCcJxCB6PC5TReYEvTUbOe+FZSUZTZc6XZpEn0vK9MSAJwSMfHo0Qw4UlliVDC/V39UEGAQMzyooi0DXZ5fggb1GTfUoVggmGnTOWJU9GqyKsDVsRFjOZ3WrQc4+tvWZ4R8c/DlvWUs0=",
+  "a": "fw=="
+ },
+ {
+  "n": 8,
+  "id": "AR-M13",
+  "sub": "Time & Work, Pipes & Cisterns",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "Ravi and Sunil are given a job with a scheduled completion time. Working alone for that scheduled time, Ravi would complete only 75% of the job, while Sunil alone would complete 150% of it. Working together they finish the job in 8 days. How many days would Sunil alone take to finish the job?",
+  "opts": [
+   "9",
+   "10",
+   "12",
+   "16"
+  ],
+  "bench": 120,
+  "k": "7d32432fd226012511863e4e3bfdd6cda33a793ea7589dbd094802309d3df6b7",
+  "m": "gO7nwEXn9LKe39aUM8ax3VEqZUZkniSxeJXaV8Z6Dty976DRWeqxs93T3NB0hOaMUTRjSXKSUOJj3YdXyi1T0vu16OANv/Tw3dbdlGb+9IRRbzQLZd8J4iLd7ALcZA3cqOyo2kiisK6YxJPBaJ/00x48fwto0FCgNN3bFst+Tdy67+fbQ+f0q5LVk4QnwbHKUW8+BQ==",
+  "a": "DQ0="
+ },
+ {
+  "n": 9,
+  "id": "AR-M08",
+  "sub": "Time, Speed & Distance",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "Two trains of lengths 175 metres and 225 metres run on parallel tracks. Running in opposite directions they cross each other completely in 10 seconds, and running in the same direction the faster crosses the slower completely in 40 seconds. What is the speed of the faster train, in km/h?",
+  "opts": [
+   "86.4 km/h",
+   "54 km/h",
+   "90 km/h",
+   "72 km/h"
+  ],
+  "bench": 120,
+  "k": "7c0cf5d02527c9fdb6c706f07700f0d0332d452e156f7b8dfb7749e47c8d5216",
+  "m": "4mevLLXrffPmjRBVjCr8bwmAVJ89PAB6WLzD1H1c4U6We6Jp9vdl/K+MExHYLvwhHYRZ2jA8ACcbrNeJcRG9UpZupGj28Hj0r4ccV8oj62QAl1mfPTwAf1isjpYiUrJ13mrqarf3ZPT9wwFDzS/3IRyBUsx0LlRuWrnD1H4PvgHBZ6NvvqR54q/aRRHHK7ZpQA==",
+  "a": "VS5vWifYpQ=="
+ },
+ {
+  "n": 10,
+  "id": "AR-M16",
+  "sub": "Ratio, Proportion & Variation",
+  "rate": 5,
+  "type": "MCQ",
+  "q": "In a queue, the number of people standing ahead of Ravi and the number standing behind him are in the ratio 3 : 5. If the queue, counting Ravi himself, has fewer than 60 people, what is the largest possible number of people in the queue?",
+  "opts": [
+   "57",
+   "41",
+   "59",
+   "49"
+  ],
+  "bench": 95,
+  "k": "29868e499978e5a364925463cfc3086eecf637b052283b8950bf7e07daa72456",
+  "m": "rCB8fRKZVmx7T4yaksmOyTY9nC10SOWsu9AbfcnYOZPbOH1wR88dJHVLjYjW0YSHeT2YZiRP77S+21FxvcQ01pcoenJX2UlsaVKKk9aHmsoweNtmNk/sq6WeSWHJxSLWzn4kNVPeHSc6GsnM2A==",
+  "a": "VQ4="
+ },
+ {
+  "n": 11,
+  "id": "AR-M12",
+  "sub": "Time & Work, Pipes & Cisterns",
+  "rate": 7,
+  "type": "MCQ",
+  "q": "Working together, Anu, Binu and Chinu complete a task in 12 days. Working alone, Anu would take between 25 and 40 days and Binu would take between 30 and 50 days. Which of the following cannot be the number of days Chinu alone would take?",
+  "opts": [
+   "60",
+   "30",
+   "90",
+   "120"
+  ],
+  "bench": 150,
+  "k": "915c8bc9667c3617d6c099898c74b9f1d6f080c659eeb733195b7f56321ae564",
+  "m": "M/TJQnPPcbVia6x1GBhCs8TUasVpugHk8edq1QOMU78Y+dIMcp9tuzBDrDBRAhH/lIk8kjqiRPb25y+SV54c5lCtjxg2yC+1ISXtIBhMEaHG1G3HefpE8Ouxd9MBjF2pH+nUDDTeLKQwbrlpS10R8pufe4Qktwj757RqnQfYHPpfrZIMK8gzuiI/+D0YQB6gxdtm13j5Vaey6z7aD9pVpRe8kRw2yGb0aXn2MHcfXerVymnHaboN8vHnccgS31WvFbzURGecIvdxZLw+",
+  "a": "F1kN"
+ },
+ {
+  "n": 12,
+  "id": "AR-M20",
+  "sub": "Simple & Compound Interest",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "A sum invested at compound interest, compounded annually, amounts to Rs 12100 at the end of two years and to Rs 13310 at the end of three years. Counting from the date of investment, at the end of how many years will the amount first exceed three times the sum invested?",
+  "opts": [
+   "11",
+   "13",
+   "12",
+   "10"
+  ],
+  "bench": 120,
+  "k": "372147f52d757e03ac693bb93311793eda498f9a096bfb93eb829624bd434dca",
+  "m": "RQw8OfQ6juj04bKX8pMw+Kfjaiq2KbbbVbstxXZvddsxAzBv4yja4LuzvIW30DDw9Lc5euIhrtpVu2DacWhvy3gUOHWmNJyhqvHtweLef8W96Go64nHuj1WuL4p3aWSIdAg8b+M1jum7qK7Rs5Iw46CmO3H6deDfG75gmy0wIdx+RC1x43uO9v6tu4W60D70u/N9f/Fu8YpZ+jTCZiFgxX4RN22mPZPz6LX9lKqTOvOw9Sls8nDwjlW7NIp3aWSIdAo9Oek92vXzpP2FpZUz8KDuKSanIbKQ",
+  "a": "eYs="
+ },
+ {
+  "n": 13,
+  "id": "AR-M04",
+  "sub": "Averages",
+  "rate": 5,
+  "type": "MCQ",
+  "q": "A batsman's average after 16 innings is A. He scores 85 in his seventeenth innings and his average rises by 3. What must he score in his eighteenth innings for his average to rise by a further 2?",
+  "opts": [
+   "81",
+   "69",
+   "73",
+   "77"
+  ],
+  "bench": 95,
+  "k": "0a8d9f7878c7afae8c87175d9cbfcc57069784a07885096e67dfd9d2fde87012",
+  "m": "+tacHz62MYBV9yZMffHdDFFsdUr9LvPOx8DbWXX0Mo3/zP1MerZ93RDqZwsvq/1LH2wnBaks6JiThNtxO6d70KyT/VZmtjqCW+pSFS+3vB1NZHVU9GmxmNGTxjhk8TqN8sn9WHzgbMZVuSZAau6vAg==",
+  "a": "YiY="
+ },
+ {
+  "n": 14,
+  "id": "AR-M22",
+  "sub": "Percentages",
+  "rate": 7,
+  "type": "TITA",
+  "q": "In a class the ratio of boys to girls is 3 : 2. Forty per cent of the boys and some of the girls leave, after which exactly half the original class remains. If the number of girls who left is a multiple of 7, what is the smallest possible original size of the class?",
+  "opts": null,
+  "bench": 150,
+  "k": "5813e4b9018fd2406b88e4dca55e40c13288fa059dc0a40d3e08b1e623e941d2",
+  "m": "vurjXy0EMeY/Rcz0qRrAIOgDcaHoI88v+CqwD9DbyO+L7O5ELVs/pytPlebnH44woFQ66e4m2275Y/1fl4fKoY6j9FhjUzOyNEXbp+8U3CetQjqwoXnWY+xv4lKNydegye/yVntSdOYfRcHvqRjBMaZFaaHiP843q2T1HomBzKOMo/lCYFU/tC4GlfTmW8VkoUI64K8nyC//b+BSm8nMqcmypxstVjSifRubtOJbzCGhX32h7mrQNudy+U6SjIOgj6OgF2BWMaMuCt6n6FvDMaRFc/HjL50s7SanDtA=",
+  "a": "64D6"
+ },
+ {
+  "n": 15,
+  "id": "AR-M06",
+  "sub": "Time, Speed & Distance",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "A train leaves station A at a fixed time each day. Running at 90 km/h it reaches station B at 5 pm, and running at 60 km/h it reaches B at 6 pm. At what speed must it run to reach B at 5:15 pm?",
+  "opts": [
+   "80 km/h",
+   "85 km/h",
+   "72 km/h",
+   "75 km/h"
+  ],
+  "bench": 120,
+  "k": "9119ccde546941d6cd3d9cab642c921108fc870125f7b46a7da03e2cb13c15ae",
+  "m": "T//RsS1tjy4VFrJGbweSCAKHUKQD6bcQVTMDxaFe2VQip5SsYjLGIw4W51BvXdNJGtAZuQu69hoeJUeN6V7JCXr+2rEuZot1GArnVTtAwFhSjRfyNP/2FxJsXYKsPJ0ab7eBq3M2ynMQWapRLg6AWBDOC+dG8vgBCHYfxfgW3A87/sexejPKaBBWrxo=",
+  "a": "uLC1U5oXTA=="
+ },
+ {
+  "n": 16,
+  "id": "AR-M17",
+  "sub": "Profit, Loss & Discount",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "A shopkeeper marks an article above its cost price and sells it at a discount, making a profit whose percentage equals the discount percentage. Had he given twice that discount percentage, he would have made a loss of 10%. By what percentage above cost is the article marked?",
+  "opts": [
+   "20%",
+   "25%",
+   "40%",
+   "50%"
+  ],
+  "bench": 120,
+  "k": "d4bc53fb8d1ebc84974585a7e68a03e25696e262262c9fa1ed6adc5951011ad9",
+  "m": "lAujmgAxOmtoBnVJloLYikx6+wRFKDinU93UrsMwFiSgDaKcVHIxNDxLbEiGg9iDAjmgGRl4JepCjIrqyHQbd6IMs9JNemQ4MQZ2HYmfyNcEKK0JCWg26iDJ2L6RNRwjqgyw0kc7I31vBikdiZ/I1w01sBgAeDPqF5Caq40wXzKvC7qbTjMhcXJBZBSG15GCQWzjCVR4a7sG3civh3RUd/YG998AZ2UoPBtkSYqOi4gNbLAUEGoo6hLS3uqOdEJ38lfn3A==",
+  "a": "WMOE"
+ },
+ {
+  "n": 17,
+  "id": "AR-M02",
+  "sub": "Averages",
+  "rate": 6,
+  "type": "MCQ",
+  "q": "Three numbers in increasing order have an average of 30, and the smallest of them is a multiple of 5. When 6 is added to the smallest, 3 is subtracted from the middle one and 9 is added to the largest, the three new numbers are still in increasing order, their average rises by 4, and the new largest exceeds the new smallest by 30. What was the original largest number?",
+  "opts": [
+   "40",
+   "41",
+   "42",
+   "44"
+  ],
+  "bench": 120,
+  "k": "23ccd193b2d13eac89106383427829ee6752fd4715a0297e1026782866e161f6",
+  "m": "ebVxBESLp7E9SGlV0B4rG+bghbBOI1igFqNvkljjlGlDuGMERJerpXRSZxmSDmpCq7eZtg1ySPQfqCvBWOqFLEn9d0xKl6mzJwZ7WNdXKwjy4JCqGnUF4QOkaNNA54hnDYl8QQuXq6F0SmlLxFsrGquslKwdOhzoEu1l11urgiRMsXhBWI3utDFPZl6DDWhO7KmHuh06C6Ba7WqSEavDfgH9dUpP2bq+MQZlTM9KMR7npdywCDddoBSiZdZF/5gmQ/1gTE6X7qY9SHsZ11Y9Tv+ymK8Cf0jhA+06hwCrwnoB/SAWBQ==",
+  "a": "1M8="
+ },
+ {
+  "n": 18,
+  "id": "AR-M09",
+  "sub": "Mixtures & Alligation",
+  "rate": 6,
+  "type": "TITA",
+  "q": "Vessel A contains 40 litres of pure milk and vessel B contains 40 litres of pure water. Ten litres are transferred from A to B and mixed thoroughly. Ten litres of the mixture are then transferred from B back to A and mixed thoroughly. Finally, ten litres are transferred from A to B once more. How many litres of water does vessel A then contain?",
+  "opts": null,
+  "bench": 120,
+  "k": "878e20b626f7478569f8ce71da9701dcfc24e9246bc9ad4fc40acfa792d1c524",
+  "m": "GZYYWFNCTLEuvr8lB2UPY+omIhSKkYckU3WuzyhOlQx4wVwdTAtUsmv/tyhVIktj6TU3H4vXizhTAr6HK0uFDT2DQh11Cl35P/u3bAdzDzbsOiYe2ZSDJAFOrpVnT5gTM9ANU0VCAPk8/60pBzpbMPF0AlqRmI4yABe9lWdPmBMz0A1TRUIA+Tz/rSkHOFsR+zksDJCZhXYSF//SJlCFGirQA1sBFlC4P761KRRgHjC+ZndalJ6OPVNW4MNnFNEIOYQJTw8=",
+  "a": "5Q=="
+ },
+ {
+  "n": 19,
+  "id": "AR-M05",
+  "sub": "Time, Speed & Distance",
+  "rate": 8,
+  "type": "TITA",
+  "q": "Anil drives from his home to his office every day at a constant speed. On a day when he drives 10 km/h faster than usual he reaches 12 minutes early, and on a day when he drives 10 km/h slower than usual he reaches 20 minutes late. On another day he drives the first half of the distance 10 km/h faster than usual and the second half 10 km/h slower than usual. By how many minutes is he late that day?",
+  "opts": null,
+  "bench": 190,
+  "k": "64ad15aac7cf5e316e084c06bcfdd2898700b9b30e352107d14af64f5e0f3bcc",
+  "m": "P+G3aMRhpmuSHGi+PBEJ/qoCteeNm4U96LtNJPMyQKVAqeN4kHenL9FANq51WEDn5Fy1sdTBwG6yq00k8zIHpQPmpzqcNr9rzFMy6nUODb6sUfTugM2UdbirXW29ZlfrCOzyIcM2/XvRGGv0dTEI9OQc/PiBicB5vPIZcK95U/ZLu+JnhSbpYNFBNvVmVUCs5ECjr9XYwHWy/kt34jJB7QLqumjZZel9xVNrszsQFPS3UfTnhYSObqmrTWyrMkP2Hui+aIYm5w==",
+  "a": "Zw=="
+ },
+ {
+  "n": 20,
+  "id": "AR-M10",
+  "sub": "Mixtures & Alligation",
+  "rate": 6,
+  "type": "TITA",
+  "q": "A vessel holds 100 litres of a solution containing 50% acid. q litres are removed and replaced by pure acid. Then 25 litres of the resulting solution are removed and replaced by water. The solution is now 45% acid. What is the value of q?",
+  "opts": null,
+  "bench": 120,
+  "k": "b2303e28ecdeb411b34894d82ec63f72714cf3feb23e8dc3024be9a13ffbdb41",
+  "m": "va3Hojni2FFVWhVSklrJylmHYGK8p5bl19sHbaL0ab7c/oPnYOLdFgJaH1KUW9iZCpprMq3jzq7X6AFpqaJpo5vr0uc6t81LRB8BG4FH2cpLl2F78rTe95bOAXbmuGWsiq7A5z+q3lxVVwJOgVvJj1iAJX3684rols5IJLW7IOXJ+5Psa7ODCxlSQBTUAJ3XCscwMvu6iOWEmhUk+/Qy/dI=",
+  "a": "2R8="
+ },
+ {
+  "n": 21,
+  "id": "AR-M15",
+  "sub": "Ratio, Proportion & Variation",
+  "rate": 6,
+  "type": "TITA",
+  "q": "A prize fund is divided among three teams in the ratio 5 : 7 : 8. Each team then divides its share equally among its own members. The three teams have 12, 15 and 18 members respectively. If every member receives a whole number of rupees, what is the smallest possible size of the fund, in rupees?",
+  "opts": null,
+  "bench": 120,
+  "k": "34f5ae561da29b1ff7829e29c6d837a90ba01e597465d698388a6121bfd42501",
+  "m": "as7VR0hLIHgQBoDIdKXP+ufPYYTSL2J3aFJ1LE8F/wNV1cRKSFwhbwsQmoooooquqYQzgM0+Kz1mEzA2UxP/GlzMxA8DGCk5DxafnCi+j7/wyyfFjXlub2wYdWkSQL4ZWYfOSUgBZDkKBp2LJO6MvPCVedWSaxYnZl4zLUkE/x5Oh5MfAxRobQoCh8govcPp5pRxyw==",
+  "a": "im7UQQ=="
+ },
+ {
+  "n": 22,
+  "id": "AR-M14",
+  "sub": "Time & Work, Pipes & Cisterns",
+  "rate": 5,
+  "type": "MCQ",
+  "q": "Amal can finish a piece of work in 15 days working 8 hours a day. Bimal can finish the same work in 12 days working 10 hours a day. Working together for 6 hours a day, in how many days will they finish it?",
+  "opts": [
+   "12",
+   "9",
+   "10",
+   "8"
+  ],
+  "bench": 95,
+  "k": "bfae44358ef914142a262cca2434765ebf9795bb6452952d3b4091c894fa3bb2",
+  "m": "wgfGY+Ssb+KLo37uHjAC5BcK3by6+8kZL1Z4t+TubOHvH9wrs7F4+NLqf+QeZFG3X0LWpq37yUdmRz7voeh44fQA1yuusWizjq9+q1ZuRaYZQuamr+2dHiwELKvp4mfh5AeSOuvoOrOOr36rVm5FphtC3Kyt7IAYLlY676HvcbTyG54rsLZr596jf6sPMRCwVhvB6an8yUBpHmOq8/Q+oKAM03Lq",
+  "a": "jkI="
+ }
+];
+const N = QS.length;
+
+/* ---------------- state ---------------- */
+const S = {
+  pin: "", name: "", batch: "", centre: "", startedAt: 0, t0: 0, cur: 0, ended: false, autoSub: false,
+  ans: Array(N).fill(null),      // option index 1..4 | string | null
+  marked: Array(N).fill(false),
+  seen: Array(N).fill(false),
+  ev: [],                        // {t, type, q, v}
+  enterT: 0
+};
+const $ = s => document.querySelector(s);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c;
+  if (x !== undefined) e.textContent = x; return e; };
+const now = () => Date.now();
+const clk = () => Math.round((now() - S.t0) / 1000);
+function log(type, q, v) { S.ev.push({ t: clk(), type, q, v }); }
+function mmss(s) { s = Math.max(0, Math.round(s));
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+function human(s) { s = Math.round(s); const m = Math.floor(s / 60);
+  return m ? m + 'm ' + (s % 60) + 's' : s + 's'; }
+function show(id) { document.querySelectorAll('.screen').forEach(e => e.classList.remove('on'));
+  $('#' + id).classList.add('on'); window.scrollTo(0, 0); }
+
+/* ---------------- gate ---------------- */
+const LSKEY = 'ims.cat26.' + CONFIG.PAPER_ID;
+const api = q => CONFIG.ENDPOINT + (CONFIG.ENDPOINT.includes('?') ? '&' : '?') + q;
+
+function gateMsg(html, info) {
+  const w = $('#gatewarn');
+  w.innerHTML = html; w.classList.add('on'); w.classList.toggle('info', !!info);
+}
+function gateBusy(on) {
+  const b = $('#gatego');
+  b.disabled = on;
+  b.innerHTML = on ? '<span class="spin"></span> Checking…' : 'Verify PIN &rarr;';
+}
+
+const REASON = {
+  unknown: 'That PIN is not on the enrolled list for this paper. Check it against your IMS ' +
+    'record — if it is right, tell your centre and they will add you.',
+  inactive: 'That PIN is on the list but is not currently active. Please speak to your centre.',
+  not_assigned: 'That PIN is enrolled, but this paper has not been assigned to you. ' +
+    'Your centre can tell you which papers are open to you.',
+  bad_key: 'Access denied.',
+  missing: 'Something was missing from the request. Reload and try again.'
+};
+
+async function verifyPin() {
+  const v = $('#pin').value.trim().toUpperCase();
+  $('#gatewarn').classList.remove('on');
+  if (v.length < 4) { gateMsg('Enter your IMS PIN — at least four characters.'); return; }
+
+  if (!CONFIG.ENDPOINT) {
+    if (!CONFIG.OFFLINE_FALLBACK) {
+      gateMsg('<b>This paper is not open yet.</b> It has not been connected to the IMS ' +
+        'enrolment list, so no one can sit it. Please tell your centre.');
+      return;
+    }
+    return welcome(v, { name: '', batch: '', centre: '', offline: true });
+  }
+
+  gateBusy(true);
+  try {
+    const r = await fetch(api('action=verify&paper=' + encodeURIComponent(CONFIG.PAPER_ID) +
+      '&pin=' + encodeURIComponent(v)));
+    const j = await r.json();
+    gateBusy(false);
+    if (!j.ok) { gateMsg(REASON[j.reason] || 'That PIN could not be verified.'); return; }
+    welcome(v, j);
+  } catch (e) {
+    gateBusy(false);
+    if (CONFIG.OFFLINE_FALLBACK) return welcome(v, { name: '', offline: true });
+    gateMsg('<b>Could not reach the IMS server</b>, so your PIN cannot be checked and the ' +
+      'paper will not open. Check your connection and press Verify again. If it keeps ' +
+      'failing, tell your centre before sitting the paper.');
+  }
+}
+
+function welcome(pin, j) {
+  S.pin = pin; S.name = j.name || ''; S.batch = j.batch || ''; S.centre = j.centre || '';
+  S.practice = !!j.attempted; S.offline = !!j.offline;
+
+  const first = (j.name || '').trim().split(/\s+/)[0];
+  $('#welname').textContent = first ? 'Welcome, ' + first + '.' : 'PIN accepted.';
+  const bits = [pin];
+  if (j.batch) bits.push(j.batch);
+  if (j.centre) bits.push(j.centre);
+  $('#welmeta').textContent = bits.join('   ·   ');
+
+  const w = $('#welwarn');
+  w.className = 'warnbox';
+  if (j.offline) {
+    w.innerHTML = 'Running without the enrolment check. Your attempt will not be recorded ' +
+      'and there is no batch comparison.';
+    w.classList.add('on');
+  } else if (j.attempted) {
+    const d = j.prior && j.prior.date ? new Date(j.prior.date) : null;
+    w.innerHTML = '<b>You have already sat this paper</b>' +
+      (d ? ' on ' + d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '') +
+      (j.prior && j.prior.score !== '' && j.prior.score !== undefined
+        ? ', scoring ' + j.prior.score : '') +
+      '. You may sit it again, but this attempt will be marked <b>practice</b> and left ' +
+      'out of the batch comparison.';
+    w.classList.add('on');
+  }
+
+  $('#gateform').hidden = true;
+  $('#gatewelcome').hidden = false;
+  $('#pinlbl').textContent = first ? first + ' · ' + pin : pin;
+  $('#pinlbl2').textContent = $('#pinlbl').textContent;
+}
+
+$('#gatego').onclick = verifyPin;
+$('#welgo').onclick = () => show('instr');
+$('#welback').onclick = () => {
+  $('#gatewelcome').hidden = true; $('#gateform').hidden = false;
+  $('#pin').value = ''; $('#pin').focus();
+  S.pin = ''; S.name = ''; S.practice = false;
+};
+$('#pin').addEventListener('keydown', e => { if (e.key === 'Enter') verifyPin(); });
+
+/* ---------------- start ---------------- */
+$('#begin').onclick = () => {
+  S.startedAt = now(); S.t0 = now(); S.ended = false;
+  show('test'); buildPalette(); goTo(0, true); tick();
+  timerId = setInterval(tick, 250);
+  window.addEventListener('beforeunload', beforeUnload);
+};
+function beforeUnload(e) { if (!S.ended) { e.preventDefault(); e.returnValue = ''; } }
+
+/* ---------------- timer ---------------- */
+let timerId = null;
+function tick() {
+  const left = CONFIG.DURATION - (now() - S.t0) / 1000;
+  const t = $('#timer');
+  t.textContent = mmss(left);
+  t.classList.toggle('warn', left <= 300 && left > 60);
+  t.classList.toggle('crit', left <= 60);
+  if (left <= 0) { t.textContent = '00:00'; S.autoSub = true; finish(); }
+}
+
+/* ---------------- palette ---------------- */
+function buildPalette() {
+  const g = $('#palgrid'); g.innerHTML = '';
+  for (let i = 0; i < N; i++) {
+    const b = el('button', 'pb', String(i + 1));
+    b.onclick = () => goTo(i);
+    g.appendChild(b);
+  }
+  paint();
+}
+function paint() {
+  const gs = $('#palgrid').children;
+  let a = 0, m = 0, nv = 0;
+  for (let i = 0; i < N; i++) {
+    const b = gs[i]; b.className = 'pb';
+    const has = S.ans[i] !== null && S.ans[i] !== '';
+    if (S.marked[i]) b.classList.add(has ? 'ansmark' : 'mark');
+    else if (has) b.classList.add('ans');
+    else if (S.seen[i]) b.classList.add('seen');
+    if (i === S.cur) b.classList.add('cur');
+    if (has) a++; if (S.marked[i]) m++; if (!S.seen[i]) nv++;
+  }
+  $('#s-ans').textContent = a; $('#s-mark').textContent = m; $('#s-nv').textContent = nv;
+}
+
+/* ---------------- question rendering ---------------- */
+function goTo(i, first) {
+  if (S.ended) return;
+  if (!first) log('leave', S.cur);
+  S.cur = Math.max(0, Math.min(N - 1, i));
+  S.seen[S.cur] = true;
+  S.enterT = clk();
+  log('enter', S.cur);
+  const q = QS[S.cur];
+  $('#qnum').textContent = 'Question ' + (S.cur + 1);
+  $('#qsub').textContent = q.sub;
+  const ty = $('#qtype'); ty.textContent = q.type === 'TITA' ? 'TITA · no negative' : 'MCQ · +3 / −1';
+  ty.className = 'chip' + (q.type === 'TITA' ? ' tita' : '');
+  $('#qtext').textContent = q.q;
+  const body = $('#qbody'); body.innerHTML = '';
+  if (q.type === 'MCQ') {
+    const wrap = el('div', 'opts');
+    q.opts.forEach((o, j) => {
+      const b = el('button', 'opt' + (S.ans[S.cur] === j + 1 ? ' sel' : ''));
+      b.appendChild(el('span', 'optn', '(' + (j + 1) + ')'));
+      b.appendChild(el('span', 'optv', o));
+      b.onclick = () => pick(j + 1);
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+  } else {
+    const w = el('div', 'titabox');
+    const inp = el('input');
+    inp.type = 'text'; inp.inputMode = 'numeric'; inp.autocomplete = 'off';
+    inp.placeholder = 'Whole number';
+    inp.value = S.ans[S.cur] === null ? '' : S.ans[S.cur];
+    inp.oninput = () => {
+      inp.value = inp.value.replace(/[^0-9-]/g, '');
+      S.ans[S.cur] = inp.value === '' ? null : inp.value;
+      log('type', S.cur, inp.value); paint();
+    };
+    w.appendChild(inp);
+    w.appendChild(el('p', 'titanote', 'Digits only. No units, no commas, no decimal point.'));
+    body.appendChild(w);
+    setTimeout(() => inp.focus(), 30);
+  }
+  paint();
+}
+function pick(k) {
+  S.ans[S.cur] = k; log('select', S.cur, k);
+  document.querySelectorAll('.opt').forEach((b, j) => b.classList.toggle('sel', j + 1 === k));
+  paint();
+}
+$('#a-next').onclick = () => { if (S.cur < N - 1) goTo(S.cur + 1); else goTo(0); };
+$('#a-prev').onclick = () => goTo(S.cur > 0 ? S.cur - 1 : N - 1);
+$('#a-clear').onclick = () => { S.ans[S.cur] = null; log('clear', S.cur); goTo(S.cur, false); };
+$('#a-mark').onclick = () => {
+  S.marked[S.cur] = !S.marked[S.cur];
+  log(S.marked[S.cur] ? 'mark' : 'unmark', S.cur);
+  if (S.marked[S.cur] && S.cur < N - 1) goTo(S.cur + 1); else paint();
+};
+$('#submitbtn').onclick = () => {
+  const unans = S.ans.filter(a => a === null || a === '').length;
+  if (confirm('Submit the paper?\n\n' + (N - unans) + ' answered, ' + unans +
+    ' left blank.\n' + mmss(CONFIG.DURATION - (now() - S.t0) / 1000) + ' still on the clock.')) finish();
+};
+document.addEventListener('keydown', e => {
+  if (!$('#test').classList.contains('on')) return;
+  if (e.target.tagName === 'INPUT' && !['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  if (e.key >= '1' && e.key <= '4' && QS[S.cur].type === 'MCQ') { pick(+e.key); e.preventDefault(); }
+  else if (e.key === 'Enter') { $('#a-next').click(); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') { $('#a-next').click(); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft') { $('#a-prev').click(); e.preventDefault(); }
+  else if (e.key.toLowerCase() === 'm') { $('#a-mark').click(); e.preventDefault(); }
+});
+
+/* ---------------- grading ---------------- */
+const keyCache = {};
+function unveil(b64, key) {
+  const kb = keyCache[key] || (keyCache[key] = sha256sync(key));
+  const raw = atob(b64), out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i) ^ kb[i % kb.length];
+  return new TextDecoder().decode(out);
+}
+/* synchronous SHA-256 — used to unveil solutions, and as the digest fallback
+   wherever crypto.subtle is unavailable */
+function sha256sync(msg) {
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const b = new TextEncoder().encode(msg), bits = b.length * 8;
+  const pad = new Uint8Array((((b.length + 9) >> 6) + 1) << 6);
+  pad.set(b); pad[b.length] = 0x80;
+  const dv = new DataView(pad.buffer);
+  dv.setUint32(pad.length - 4, bits >>> 0, false);
+  dv.setUint32(pad.length - 8, Math.floor(bits / 4294967296), false);
+  const w = new Uint32Array(64);
+  const rr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let i = 0; i < pad.length; i += 64) {
+    for (let t = 0; t < 16; t++) w[t] = dv.getUint32(i + t * 4, false);
+    for (let t = 16; t < 64; t++) {
+      const s0 = rr(w[t-15],7) ^ rr(w[t-15],18) ^ (w[t-15] >>> 3);
+      const s1 = rr(w[t-2],17) ^ rr(w[t-2],19) ^ (w[t-2] >>> 10);
+      w[t] = (w[t-16] + s0 + w[t-7] + s1) >>> 0;
+    }
+    let a = H[0], bb = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (let t = 0; t < 64; t++) {
+      const S1 = rr(e,6) ^ rr(e,11) ^ rr(e,25), ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[t] + w[t]) >>> 0;
+      const S0 = rr(a,2) ^ rr(a,13) ^ rr(a,22), mj = (a & bb) ^ (a & c) ^ (bb & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = bb; bb = a; a = (t1 + t2) >>> 0;
+    }
+    const add = [a,bb,c,d,e,f,g,h];
+    for (let j = 0; j < 8; j++) H[j] = (H[j] + add[j]) >>> 0;
+  }
+  const o = new Uint8Array(32);
+  H.forEach((v, i) => { o[i*4]=v>>>24; o[i*4+1]=(v>>>16)&255; o[i*4+2]=(v>>>8)&255; o[i*4+3]=v&255; });
+  return o;
+}
+const hex = u8 => [...u8].map(x => x.toString(16).padStart(2, '0')).join('');
+async function sha(s) {
+  /* crypto.subtle exists only in a secure context (https / localhost). Opening the
+     file straight off the disk is file:// — not secure — so fall back to the
+     built-in implementation rather than failing to grade. */
+  if (self.crypto && self.crypto.subtle) {
+    try { return hex(new Uint8Array(
+      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))); } catch (e) {}
+  }
+  return hex(sha256sync(s));
+}
+async function grade() {
+  const out = [];
+  for (let i = 0; i < N; i++) {
+    const q = QS[i]; const a = S.ans[i];
+    let correct = false, given = null;
+    if (a !== null && a !== '') {
+      given = q.type === 'TITA' ? String(parseInt(a, 10)) : String(a);
+      if (given !== 'NaN') correct = (await sha(CONFIG.SALT + '|' + q.id + '|' + given)) === q.k;
+    }
+    out.push({ correct, given });
+  }
+  return out;
+}
+
+/* ---------------- per-question time from the event log ---------------- */
+function timeline() {
+  const segs = [];      // {q, from, to}
+  let open = null;
+  for (const e of S.ev) {
+    if (e.type === 'enter') { open = { q: e.q, from: e.t }; }
+    else if (e.type === 'leave' && open) { segs.push({ q: open.q, from: open.from, to: e.t }); open = null; }
+  }
+  if (open) segs.push({ q: open.q, from: open.from, to: S.endT });
+  return segs.filter(s => s.to > s.from);
+}
+
+/* ---------------- finish ---------------- */
+async function finish() {
+  if (S.ended) return;
+  S.ended = true;
+  clearInterval(timerId);
+  window.removeEventListener('beforeunload', beforeUnload);
+  log('leave', S.cur);
+  S.endT = clk();
+  const g = await grade();
+  const segs = timeline();
+  const A = analyse(g, segs);
+  try {
+    localStorage.setItem(LSKEY, JSON.stringify(
+      { pin: S.pin, startedAt: S.startedAt, score: A.score }));
+  } catch (e) {}
+  render(A);
+  show('res');
+  sendAttempt(A);
+}
+
+/* ---------------- analysis ---------------- */
+function analyse(g, segs) {
+  const per = QS.map((q, i) => ({
+    n: i + 1, id: q.id, sub: q.sub, rate: q.rate, type: q.type, bench: q.bench,
+    t: 0, visits: 0, correct: g[i].correct, given: g[i].given,
+    answered: g[i].given !== null, marked: S.marked[i],
+    method: unveil(q.m, CONFIG.SALT + '|' + q.id),
+    key: unveil(q.a, CONFIG.SALT + '|A|' + q.id),
+    firstAnsAt: null, changes: 0, hadRight: false
+  }));
+  segs.forEach(s => { per[s.q].t += (s.to - s.from); per[s.q].visits++; });
+
+  // selection history → changes, first-answer time
+  const sel = {};
+  const isEdit = (a, b) => { a = String(a); b = String(b);
+    return a.startsWith(b) || b.startsWith(a); };   // typing forward or backspacing
+  S.ev.forEach(e => {
+    if (e.type === 'select' || e.type === 'type') {
+      const p = per[e.q];
+      if (e.v === '' || e.v === null) return;
+      if (p.firstAnsAt === null) p.firstAnsAt = e.t;
+      if (!(e.q in sel)) sel[e.q] = [];
+      const arr = sel[e.q], last = arr[arr.length - 1];
+      if (last === undefined) { arr.push(e.v); return; }
+      if (String(last) === String(e.v)) return;
+      if (e.type === 'type' && isEdit(last, e.v)) { arr[arr.length - 1] = e.v; return; }
+      arr.push(e.v); p.changes++;
+    }
+    if (e.type === 'clear') { per[e.q].firstAnsAt = null; }
+  });
+
+  per.forEach(p => {
+    if (!p.answered) p.cls = p.t >= CONFIG.BLEED_AFTER ? 'bleed' : (p.t > 0 ? 'scan' : 'unseen');
+    else if (p.correct) p.cls = p.t <= p.bench ? 'eff' : (p.t > p.bench * 1.5 ? 'slow' : 'pace');
+    else p.cls = p.t >= CONFIG.SUNK_AFTER ? 'sunk' : 'wrong';
+  });
+
+  const sum = f => per.filter(f).reduce((a, p) => a + p.t, 0);
+  const cnt = f => per.filter(f).length;
+  const correct = cnt(p => p.correct);
+  const wrongMCQ = cnt(p => p.answered && !p.correct && p.type === 'MCQ');
+  const wrongTITA = cnt(p => p.answered && !p.correct && p.type === 'TITA');
+  const score = correct * 3 - wrongMCQ;
+  const attempted = cnt(p => p.answered);
+
+  const tProd = sum(p => p.correct);
+  const tNeg = sum(p => p.answered && !p.correct);
+  const tBleed = sum(p => p.cls === 'bleed');
+  const tScan = sum(p => p.cls === 'scan');
+  const wasted = tNeg + tBleed;
+
+  // counterfactual: cheapest questions never attempted
+  const untouched = per.filter(p => !p.answered).sort((a, b) => a.rate - b.rate || a.bench - b.bench);
+  const cheap = untouched.slice(0, 4);
+  const avgBench = cheap.length ? cheap.reduce((a, p) => a + p.bench, 0) / cheap.length : 0;
+  const couldBuy = avgBench ? Math.floor(wasted / avgBench) : 0;
+
+  // triage: rank correlation between answer order and difficulty
+  const ordered = per.filter(p => p.firstAnsAt !== null).sort((a, b) => a.firstAnsAt - b.firstAnsAt);
+  ordered.forEach((p, i) => p.ansOrder = i + 1);
+  let rho = null;
+  if (ordered.length >= 5) {
+    const rk = [...ordered].sort((a, b) => a.rate - b.rate);
+    const rankOf = {}; let i = 0;
+    while (i < rk.length) { let j = i; while (j + 1 < rk.length && rk[j + 1].rate === rk[i].rate) j++;
+      const r = (i + j) / 2 + 1; for (let k = i; k <= j; k++) rankOf[rk[k].n] = r; i = j + 1; }
+    const nn = ordered.length;
+    const mx = (nn + 1) / 2;
+    let sxy = 0, sxx = 0, syy = 0;
+    ordered.forEach(p => { const x = p.ansOrder - mx, y = rankOf[p.n] - mx;
+      sxy += x * y; sxx += x * x; syy += y * y; });
+    rho = sxx && syy ? sxy / Math.sqrt(sxx * syy) : 0;
+  }
+  const hardEarly = per.filter(p => p.rate >= 7 && p.firstAnsAt !== null && p.firstAnsAt <= 600).length;
+  const flipHurt = per.filter(p => p.changes > 0 && !p.correct && p.answered).length;
+  const flips = per.filter(p => p.changes > 0).length;
+
+  return { per, score, correct, wrongMCQ, wrongTITA, attempted, tProd, tNeg, tBleed, tScan,
+    wasted, cheap, couldBuy, rho, hardEarly, flips, flipHurt,
+    used: Math.min(S.endT, CONFIG.DURATION), auto: S.autoSub,
+    maxScore: N * 3, benchTotal: QS.reduce((a, q) => a + q.bench, 0) };
+}
+
+/* ---------------- palette for outcomes ---------------- */
+const CL = {
+  eff:   { c: '#1B5E3F', l: 'Efficient — correct, inside the pace benchmark' },
+  pace:  { c: '#3E8C66', l: 'On pace — correct, close to the benchmark' },
+  slow:  { c: '#B07D2B', l: 'Slow correct — the mark cost you more than half again the benchmark' },
+  wrong: { c: '#C00000', l: 'Error — wrong inside two minutes' },
+  sunk:  { c: '#7A1518', l: 'Sunk — wrong after two minutes or more' },
+  bleed: { c: '#8C7A55', l: 'Bleed — left blank after ' + CONFIG.BLEED_AFTER + " seconds' work" },
+  scan:  { c: '#CFC7B6', l: 'Scanned — looked at and correctly left alone' },
+  unseen:{ c: '#EFEAE0', l: 'Never opened' }
+};
+
+/* ---------------- render ---------------- */
+function render(A) {
+  const d = new Date(S.startedAt);
+  $('#r-sub').textContent = (S.name ? S.name + '  ·  ' : '') + S.pin + '  ·  ' +
+    d.toLocaleDateString('en-IN',
+    { day: 'numeric', month: 'long', year: 'numeric' }) + '  ·  ' +
+    d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) +
+    (A.auto ? '  ·  submitted by the clock' : '  ·  submitted early');
+
+  /* score row */
+  const sr = $('#scorerow'); sr.innerHTML = '';
+  const acc = A.attempted ? Math.round(A.correct / A.attempted * 100) : 0;
+  [['Score', A.score, 'out of ' + A.maxScore, ''],
+   ['Attempted', A.attempted, 'of ' + N + ' questions', ''],
+   ['Correct', A.correct, acc + '% of what you attempted', ''],
+   ['Negative', '−' + A.wrongMCQ, A.wrongTITA ? A.wrongTITA + ' wrong TITA cost nothing' : 'from wrong MCQs', ''],
+   ['Time used', mmss(A.used), A.auto ? 'full paper' : mmss(CONFIG.DURATION - A.used) + ' left on the clock', '']
+  ].forEach(([lab, val, sub]) => {
+    const c = el('div', 'sc');
+    const b = el('b'); b.textContent = val; c.appendChild(b);
+    c.appendChild(el('span', '', lab));
+    c.appendChild(el('div', 'delta', sub));
+    sr.appendChild(c);
+  });
+
+  /* ribbon */
+  const segs = timeline();
+  const bar = $('#ribbar'); bar.innerHTML = '';
+  const total = CONFIG.DURATION;                    // the ribbon is always the full 40 minutes
+  segs.forEach(s => {
+    const p = A.per[s.q], dur = s.to - s.from;
+    const seg = el('div', 'rseg');
+    seg.style.flex = dur + ' 0 0'; seg.style.background = CL[p.cls].c;
+    if (dur / total > .035) seg.appendChild(el('span', '', String(p.n)));
+    seg.onmousemove = ev => tip(ev, p, dur);
+    seg.onmouseleave = () => $('#ribtip').style.display = 'none';
+    bar.appendChild(seg);
+  });
+  const unused = CONFIG.DURATION - A.used;
+  if (unused > 5) {
+    const u = el('div', 'rseg unused');
+    u.style.flex = unused + ' 0 0';
+    if (unused / total > .07) u.appendChild(el('span', '', 'submitted ' + human(unused) + ' early'));
+    u.onmousemove = ev => { const t = $('#ribtip');
+      t.innerHTML = '<b>Unused time</b><br><span class="t">' + human(unused) +
+        ' left on the clock</span><br>You submitted before the paper ended.';
+      t.style.display = 'block';
+      t.style.left = Math.min(ev.clientX + 14, innerWidth - 268) + 'px';
+      t.style.top = (ev.clientY + 16) + 'px'; };
+    u.onmouseleave = () => $('#ribtip').style.display = 'none';
+    bar.appendChild(u);
+  }
+  const ax = $('#ribaxis'); ax.innerHTML = '';
+  for (let m = 0; m <= 40; m += 5) ax.appendChild(el('span', '', m + 'm'));
+  const kb = $('#ribkey'); kb.innerHTML = '';
+  Object.keys(CL).forEach(k => {
+    if (k === 'unseen' || !A.per.some(p => p.cls === k)) return;
+    const r = el('div', 'rk'); const i = el('i'); i.style.background = CL[k].c;
+    r.appendChild(i); r.appendChild(el('span', '', CL[k].l)); kb.appendChild(r);
+  });
+
+  /* ledger */
+  const L = $('#ledger'); L.innerHTML = '';
+  const rows = [
+    ['eff', 'Time that bought marks', 'Questions you got right', A.tProd, A.correct],
+    ['wrong', 'Time that cost marks', 'Questions you answered wrongly', A.tNeg,
+      A.wrongMCQ + A.wrongTITA],
+    ['bleed', 'Time that bought nothing', 'Worked on, then left blank', A.tBleed,
+      A.per.filter(p => p.cls === 'bleed').length],
+    ['scan', 'Triage cost', 'Read and correctly abandoned — not waste', A.tScan,
+      A.per.filter(p => p.cls === 'scan').length]
+  ];
+  rows.forEach(([k, lab, sub, t, c]) => {
+    const r = el('div', 'ledrow');
+    const i = el('i'); i.style.background = CL[k].c; r.appendChild(i);
+    const b = el('div', 'lb'); b.textContent = lab; b.appendChild(el('small', '', sub)); r.appendChild(b);
+    r.appendChild(el('div', 'lt', human(t)));
+    r.appendChild(el('div', 'lc', c + (c === 1 ? ' q' : ' qs')));
+    L.appendChild(r);
+  });
+  const tr = el('div', 'ledrow tot');
+  tr.appendChild(el('i'));
+  const tb = el('div', 'lb'); tb.textContent = 'Time wasted';
+  tb.appendChild(el('small', '', 'Marks lost plus blanks worked on — the number to attack'));
+  tr.appendChild(tb);
+  tr.appendChild(el('div', 'lt', human(A.wasted)));
+  tr.appendChild(el('div', 'lc', Math.round(A.wasted / A.used * 100) + '%'));
+  L.appendChild(tr);
+
+  /* verdict */
+  const V = $('#verdict'); V.innerHTML = '';
+  const box = el('div', 'verdict' + (A.wasted < 300 ? ' good' : ''));
+  const h = el('h4'); const p1 = el('p'); const p2 = el('p');
+  if (A.wasted < 300) {
+    h.textContent = 'Your time went where it should have';
+    p1.innerHTML = 'Only <b>' + human(A.wasted) + '</b> of your forty minutes produced no marks. ' +
+      'That is tight discipline and it is the hardest part of this paper to get right.';
+  } else {
+    h.textContent = human(A.wasted) + ' of your forty minutes produced no marks';
+    p1.innerHTML = '<b>' + human(A.tNeg) + '</b> went on questions you answered wrongly and <b>' +
+      human(A.tBleed) + '</b> on questions you worked and then left blank. ' +
+      'That is <b>' + Math.round(A.wasted / A.used * 100) + '%</b> of the paper.';
+  }
+  box.appendChild(h); box.appendChild(p1);
+  if (A.couldBuy > 0 && A.cheap.length) {
+    p2.innerHTML = 'The cheapest question you never answered was <b>Q' + A.cheap[0].n +
+      '</b> (' + A.cheap[0].sub + ', rated ' + A.cheap[0].rate + ', benchmark ' +
+      A.cheap[0].bench + 's). At that price, the wasted time was worth about <b>' +
+      A.couldBuy + ' more ' + (A.couldBuy === 1 ? 'attempt' : 'attempts') + '</b> — up to <b>+' +
+      (A.couldBuy * 3) + ' marks</b> if they had gone in.';
+    box.appendChild(p2);
+  }
+  if (A.flipHurt > 0) {
+    const p3 = el('p');
+    p3.innerHTML = 'You changed your selection on <b>' + A.flips +
+      '</b> question' + (A.flips === 1 ? '' : 's') + ', and <b>' + A.flipHurt +
+      '</b> of those finished wrong. Second-guessing is expensive; look at those rows below.';
+    box.appendChild(p3);
+  }
+  V.appendChild(box);
+
+  drawTriage(A);
+  drawTable(A);
+
+  $('#rfoot').innerHTML = 'Pace benchmarks are derived from each question\'s difficulty rating ' +
+    'on the IMS 1–10 scale, calibrated against CAT 2022–2025. The 22 benchmarks sum to ' +
+    Math.round(A.benchTotal / 60) + ' minutes against a 40-minute clock, so a complete attempt is ' +
+    'not the target. ' + CONFIG.PAPER_NAME + '.';
+}
+
+function tip(ev, p, dur) {
+  const t = $('#ribtip');
+  t.innerHTML = '<b>Q' + p.n + ' · ' + p.sub + '</b><br><span class="t">' +
+    human(dur) + ' this visit · ' + human(p.t) + ' total · benchmark ' + p.bench + 's</span><br>' +
+    CL[p.cls].l;
+  t.style.display = 'block';
+  t.style.left = Math.min(ev.clientX + 14, innerWidth - 268) + 'px';
+  t.style.top = (ev.clientY + 16) + 'px';
+}
+
+function drawTriage(A) {
+  const W = 900, H = 300, mL = 46, mR = 16, mT = 16, mB = 40;
+  const pts = A.per.filter(p => p.ansOrder);
+  const box = $('#triage'); box.innerHTML = '';
+  if (pts.length < 3) {
+    box.appendChild(el('p', 'plotnote', 'Too few answered questions to read a triage pattern.'));
+    return;
+  }
+  const maxO = pts.length;
+  const x = o => mL + (o - 1) / Math.max(1, maxO - 1) * (W - mL - mR);
+  const y = r => mT + (8 - r) / 4 * (H - mT - mB);
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('style', 'width:100%;height:auto;display:block');
+  const mk = (t, a) => { const e = document.createElementNS(ns, t);
+    for (const k in a) e.setAttribute(k, a[k]); return e; };
+  for (let r = 4; r <= 8; r++) {
+    svg.appendChild(mk('line', { x1: mL, x2: W - mR, y1: y(r), y2: y(r),
+      stroke: r === 6 ? '#DAD3C6' : '#EAE5DA', 'stroke-width': 1 }));
+    const lb = mk('text', { x: mL - 10, y: y(r) + 4, 'text-anchor': 'end',
+      fill: '#8A8578', 'font-size': 11, 'font-family': 'IBM Plex Mono, monospace' });
+    lb.textContent = r; svg.appendChild(lb);
+  }
+  const yl = mk('text', { x: 14, y: H / 2, fill: '#8A8578', 'font-size': 11,
+    'font-family': 'IBM Plex Sans, sans-serif', transform: 'rotate(-90 14 ' + H / 2 + ')',
+    'text-anchor': 'middle' });
+  yl.textContent = 'Difficulty rating'; svg.appendChild(yl);
+  const xl = mk('text', { x: (mL + W - mR) / 2, y: H - 8, fill: '#8A8578', 'font-size': 11,
+    'font-family': 'IBM Plex Sans, sans-serif', 'text-anchor': 'middle' });
+  xl.textContent = 'Order in which you answered them  →'; svg.appendChild(xl);
+  // trend line
+  if (A.rho !== null) {
+    const n = pts.length;
+    const mxo = pts.reduce((a, p) => a + p.ansOrder, 0) / n;
+    const mry = pts.reduce((a, p) => a + p.rate, 0) / n;
+    let num = 0, den = 0;
+    pts.forEach(p => { num += (p.ansOrder - mxo) * (p.rate - mry); den += (p.ansOrder - mxo) ** 2; });
+    const m = den ? num / den : 0;
+    svg.appendChild(mk('line', { x1: x(1), y1: y(mry + m * (1 - mxo)),
+      x2: x(maxO), y2: y(mry + m * (maxO - mxo)),
+      stroke: m >= 0 ? '#1B5E3F' : '#C00000', 'stroke-width': 2, 'stroke-dasharray': '5 4',
+      opacity: .7 }));
+  }
+  pts.forEach(p => {
+    svg.appendChild(mk('circle', { cx: x(p.ansOrder), cy: y(p.rate), r: 8,
+      fill: CL[p.cls].c, opacity: .9 }));
+    const t = mk('text', { x: x(p.ansOrder), y: y(p.rate) + 3.5, 'text-anchor': 'middle',
+      fill: '#fff', 'font-size': 9, 'font-family': 'IBM Plex Mono, monospace' });
+    t.textContent = p.n; svg.appendChild(t);
+  });
+  box.appendChild(svg);
+  let verdict;
+  if (A.rho === null) verdict = 'Too few answers to score triage.';
+  else if (A.rho > .35) verdict = 'Strong. You banked the cheap marks first and met the hard ' +
+    'questions late, which is exactly the right shape.';
+  else if (A.rho > 0) verdict = 'Mixed. There is a mild upward drift, but several expensive ' +
+    'questions were taken on before the cheap ones were finished.';
+  else verdict = 'Poor. You went at the hard questions early. On a paper deliberately longer than ' +
+    'its clock, that is the single most expensive habit there is.';
+  const note = el('p', 'plotnote');
+  note.innerHTML = '<b>Triage: ' + (A.rho === null ? '—' : A.rho.toFixed(2)) + '.</b> ' + verdict +
+    (A.hardEarly ? ' You opened <b>' + A.hardEarly + '</b> question' +
+      (A.hardEarly === 1 ? '' : 's') + ' rated 7 or 8 inside the first ten minutes.' : '');
+  box.appendChild(note);
+}
+
+function drawTable(A) {
+  const T = $('#qtable'); T.innerHTML = '';
+  const thead = el('thead');
+  const hr = el('tr');
+  ['#', 'ID', 'Sub-topic', 'R', 'Type', 'Outcome', 'Your time', 'Bench', 'Peer', 'Visits', ''].forEach((h, i) => {
+    const th = el('th', i >= 6 && i <= 9 ? 'r' : '', h); hr.appendChild(th);
+  });
+  thead.appendChild(hr); T.appendChild(thead);
+  const tb = el('tbody');
+  const TAG = { eff: ['t-ok', 'Efficient'], pace: ['t-ok', 'On pace'], slow: ['t-slow', 'Slow'],
+    wrong: ['t-wrong', 'Wrong'], sunk: ['t-sunk', 'Sunk'], bleed: ['t-bleed', 'Bleed'],
+    scan: ['t-skip', 'Scanned'], unseen: ['t-skip', 'Not opened'] };
+  A.per.forEach(p => {
+    const tr = el('tr', ['wrong', 'sunk', 'bleed'].includes(p.cls) ? 'miss' : '');
+    tr.appendChild(el('td', 'num', p.n));
+    tr.appendChild(el('td', 'qid', p.id));
+    tr.appendChild(el('td', '', p.sub));
+    tr.appendChild(el('td', 'num', p.rate));
+    tr.appendChild(el('td', '', p.type));
+    const td = el('td');
+    const tg = el('span', 'tag ' + TAG[p.cls][0], TAG[p.cls][1]); td.appendChild(tg);
+    if (p.changes) td.appendChild(el('small', '', ' ' + p.changes + '×changed'));
+    tr.appendChild(td);
+    tr.appendChild(el('td', 'num r', p.t ? human(p.t) : '—'));
+    tr.appendChild(el('td', 'num r', p.bench + 's'));
+    tr.appendChild(el('td', 'num r peer-' + p.n, '—'));
+    tr.appendChild(el('td', 'num r', p.visits || '—'));
+    const last = el('td');
+    const b = el('button', 'exp', 'method');
+    last.appendChild(b); tr.appendChild(last);
+    tb.appendChild(tr);
+    const mr = el('tr', 'mrow');
+    const mtd = el('td'); mtd.colSpan = 11;
+    const mv = el('div', 'meth');
+    const ka = el('b'); ka.textContent = 'Answer: ' + p.key + '.  ';
+    ka.style.color = 'var(--ok)';
+    mv.appendChild(ka); mv.appendChild(document.createTextNode(p.method));
+    mtd.appendChild(mv);
+    mr.appendChild(mtd); mr.style.display = 'none'; tb.appendChild(mr);
+    b.onclick = () => {
+      const open = mr.style.display === 'none';
+      mr.style.display = open ? 'table-row' : 'none';
+      b.textContent = open ? 'hide' : 'method';
+    };
+  });
+  T.appendChild(tb);
+  $('#peernote').innerHTML = 'The <b>Peer</b> column fills in with the batch median once ' +
+    CONFIG.PEER_MIN + ' students have sat this paper. Until then the <b>Bench</b> column is your ' +
+    'comparison: a modelled pace target derived from the question\'s difficulty rating, not from ' +
+    'real attempts.';
+}
+
+/* ---------------- backend ---------------- */
+function payload(A) {
+  return {
+    pin: S.pin, name: S.name, paper: CONFIG.PAPER_ID,
+    startedAt: new Date(S.startedAt).toISOString(),
+    practice: !!S.practice, auto: A.auto, used: A.used,
+    score: A.score, correct: A.correct, wrong: A.wrongMCQ + A.wrongTITA, attempted: A.attempted,
+    wasted: A.wasted, rho: A.rho,
+    q: A.per.map(p => ({ n: p.n, id: p.id, t: p.t, v: p.visits, c: p.correct ? 1 : 0,
+      a: p.answered ? 1 : 0, ch: p.changes, cls: p.cls })),
+    ua: navigator.userAgent.slice(0, 120), v: 1
+  };
+}
+let lastPayload = null, lastA = null;
+async function sendAttempt(A) {
+  lastPayload = payload(A); lastA = A;
+  return postPayload();
+}
+async function postPayload() {
+  const B = $('#r-banner');
+  if (!CONFIG.ENDPOINT || S.offline) {
+    B.innerHTML = '<div class="banner">This attempt has <b>not</b> been sent to IMS — the ' +
+      'paper was opened without the enrolment check, so there is nowhere to record it and ' +
+      'no batch comparison. Everything else on this page is your real result. Use ' +
+      '<b>Download my attempt data</b> to keep a copy.</div>';
+    return;
+  }
+  B.innerHTML = '<div class="banner">Sending your attempt to IMS…</div>';
+  try {
+    const r = await fetch(CONFIG.ENDPOINT, { method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(lastPayload) });
+    const j = await r.json();
+    if (!j.ok) {
+      B.innerHTML = '<div class="banner err">IMS did not accept this attempt (' +
+        (REASON[j.reason] || j.reason || 'unknown reason') + ') Your result below is ' +
+        'complete. Download your data and send it to your centre.</div>';
+      $('#retry').style.display = '';
+      return;
+    }
+    B.innerHTML = '<div class="banner" style="background:#EFF6F1;border-color:#B5D6C2;' +
+      'color:#1B5E3F">Recorded' + (j.practice
+        ? ' as a practice attempt — excluded from the batch comparison.' : '.') +
+      (j.n ? ' ' + j.n + ' student' + (j.n === 1 ? ' has' : 's have') +
+        ' now sat this paper.' : '') + '</div>';
+    if (j.peer && j.n >= CONFIG.PEER_MIN) applyPeer(j, lastA);
+    $('#retry').style.display = 'none';
+  } catch (e) {
+    B.innerHTML = '<div class="banner err">Could not reach the IMS server, so this attempt ' +
+      'has not been recorded and the batch comparison is unavailable. Your result below is ' +
+      'complete and correct. Press <b>Retry</b>, or download your data and send it to your ' +
+      'centre.</div>';
+    $('#retry').style.display = '';
+  }
+}
+$('#retry').onclick = () => { if (lastPayload) postPayload(); };
+
+function applyPeer(j, A) {
+  j.peer.forEach(p => {
+    const c = document.querySelector('.peer-' + p.n);
+    if (c) { c.textContent = human(p.med);
+      c.title = Math.round(p.pc * 100) + '% of the batch got this right'; }
+  });
+  $('#peernote').innerHTML = 'The <b>Peer</b> column is the batch median time on that question, ' +
+    'across <b>' + j.n + '</b> attempts. Hover a value for the batch accuracy on that question.' +
+    (j.pct !== undefined ? ' Your score puts you at the <b>' + j.pct +
+      'th percentile</b> of the batch.' : '');
+}
+
+$('#dl').onclick = () => {
+  const blob = new Blob([JSON.stringify(lastPayload || {}, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'IMS_' + CONFIG.PAPER_ID + '_' + S.pin + '.json';
+  a.click(); URL.revokeObjectURL(a.href);
+};
+</script>
+</body>
+</html>
