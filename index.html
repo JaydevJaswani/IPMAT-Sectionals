@@ -222,7 +222,7 @@ function render(pin, j) {
     } else {
       chip = p.openNow ? '<span class="chip open">Open now</span>'
                        : '<span class="chip shut">Not open</span>';
-      meta = p.openNow ? '22 questions · 40 minutes · passcode required'
+      meta = p.openNow ? '40 minutes · passcode required'
                        : 'Opens when your faculty starts the session at the centre';
       /* A paper that is not open yet must not offer a live button. The worker refuses the
          attempt anyway, so a clickable Start test only sends students into a dead end and
