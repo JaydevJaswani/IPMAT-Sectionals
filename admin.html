@@ -265,6 +265,13 @@ tr.prac td{opacity:.5}
     </div>
     <div id="distwrap" style="margin:22px 0 10px"></div>
     <div id="lbwrap"></div>
+    <div class="bar" style="margin-top:16px">
+      <div class="s" style="color:var(--ink-2)">Email each student their score for the selected paper
+        (and batch filter, if set). Needs students' emails in the roster.</div>
+      <div class="sp"></div>
+      <button class="btn-g btn mini" id="emailtest">Send me a test</button>
+      <button class="btn-g btn mini" id="emailscores">Email scores</button>
+    </div>
 
     <h2 class="sec">Attempts <small id="acount"></small></h2>
     <div id="tblwrap"></div>
@@ -704,6 +711,25 @@ function renderAnalytics(){
 }
 ['#fbatch','#fcentre','#lbn'].forEach(id=>{const e=$(id); if(e) e.onchange=()=>{ if(DATA) render(); };});
 
+/* ---- email scores (Resend, via the Worker) ---- */
+async function sendScores(test){
+  const paper=$('#paper').value;
+  if(!paper){ msg('Pick a single paper in the Paper selector first.','err'); return; }
+  const batch=$('#fbatch')?$('#fbatch').value:'';
+  if(!test && !confirm('Email their score for '+paper+(batch?' · batch '+batch:'')+' to every student with an email on the roster?')) return;
+  const b=test?$('#emailtest'):$('#emailscores'); const lab=b.textContent; b.disabled=true; b.textContent='Sending…';
+  try{
+    const r=await fetch(rosterUrl('email_scores'),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({paper, batch, test})});
+    const j=await r.json();
+    if(j.ok) msg((test?'Test sent to you — ':'')+'sent '+j.sent+' of '+j.candidates+(j.failed?(' ('+j.failed+' failed)'):'')+'.', j.failed?'err':'ok');
+    else msg('Could not send: '+(j.reason==='email_not_configured'?'email service not set up yet — add RESEND_API_KEY + EMAIL_FROM to the Worker.':(j.reason==='no_emails'?'no student emails on the roster for this selection.':(j.reason||'unknown'))),'err');
+  }catch(e){ msg('Could not reach the server.','err'); }
+  if(b.isConnected){ b.disabled=false; b.textContent=lab; }
+}
+$('#emailtest').onclick=()=>sendScores(true);
+$('#emailscores').onclick=()=>sendScores(false);
+
 /* ---- live control room ---- */
 let AUTO=null;
 function updateGlow(j){
@@ -779,6 +805,7 @@ function renderStudent(j, pin){
     '<div class="fld"><label>Name</label><input id="ed-name" value="'+h(st.name||'')+'"></div>'+
     '<div class="fld"><label>Batch</label><input id="ed-batch" value="'+h(st.batch||'')+'"></div>'+
     '<div class="fld"><label>Centre</label><input id="ed-centre" value="'+h(st.centre||'')+'"></div>'+
+    '<div class="fld"><label>Email</label><input id="ed-email" value="'+h(st.email||'')+'"></div>'+
     '<div class="fld"><label>Active</label><select id="ed-active"><option value="1"'+(st.active?' selected':'')+
       '>Yes</option><option value="0"'+(st.active?'':' selected')+'>No</option></select></div>'+
     '<button class="btn mini" id="ed-save">Save</button></div>';
@@ -797,7 +824,7 @@ function renderStudent(j, pin){
   wrap.innerHTML=html;
   $('#ed-save').onclick=async()=>{
     const row={pin:st.pin,name:$('#ed-name').value,batch:$('#ed-batch').value,
-      centre:$('#ed-centre').value,active:$('#ed-active').value};
+      centre:$('#ed-centre').value,email:$('#ed-email').value,active:$('#ed-active').value};
     try{ const r=await fetch(rosterUrl('roster_upload'),{method:'POST',
       headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({rows:[row]})});
       const jj=await r.json();
@@ -943,7 +970,7 @@ async function loadRoster(){
     sum.innerHTML = '<b>'+j.count+'</b> student'+(j.count===1?'':'s')+' enrolled.';
     if(!j.count){ wrap.innerHTML='<div class="empty">No students yet — upload your roster above.</div>'; return; }
     const t=el('table'),th=el('thead'),hr=el('tr');
-    ['PIN','Name','Batch','Centre','Active',''].forEach(x=>hr.appendChild(el('th','',x)));
+    ['PIN','Name','Batch','Centre','Email','Active',''].forEach(x=>hr.appendChild(el('th','',x)));
     th.appendChild(hr); t.appendChild(th);
     const tb=el('tbody');
     j.rows.forEach(s=>{
@@ -952,6 +979,7 @@ async function loadRoster(){
       tr.appendChild(el('td','nm',s.name||'—'));
       tr.appendChild(el('td','',s.batch||'—'));
       tr.appendChild(el('td','',s.centre||'—'));
+      tr.appendChild(el('td','m',s.email||'—'));
       tr.appendChild(el('td','',s.active?'yes':'no'));
       const td=el('td'); const b=el('button','btn-g btn','remove');
       b.style.padding='4px 10px'; b.dataset.rm=s.pin; td.appendChild(b); tr.appendChild(td);
@@ -970,7 +998,7 @@ function readRosterFile(file){
         const raw=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});
         const rows=raw.map(r=>{
           const m={}; Object.keys(r).forEach(k=>m[String(k).trim().toLowerCase()]=r[k]);
-          return {pin:m.pin, name:m.name, batch:m.batch, centre:(m.centre!==undefined?m.centre:m.center), active:m.active};
+          return {pin:m.pin, name:m.name, batch:m.batch, centre:(m.centre!==undefined?m.centre:m.center), email:(m.email||m.e_mail||m['e-mail']), active:m.active};
         }).filter(r=>String(r.pin==null?'':r.pin).trim().length>=4);
         resolve(rows);
       }catch(err){ reject(err); }
@@ -1013,8 +1041,8 @@ document.addEventListener('click', async e=>{
 });
 $('#rostertemplate').onclick = (e) => {
   e.preventDefault();
-  dl('IPMAT_roster_template.csv', [['pin','name','batch','centre','active'],
-    ['IMS0000000001','Aarav Shah','IPMAT-M-01','Ahmedabad','1']]);
+  dl('IPMAT_roster_template.csv', [['pin','name','batch','centre','email','active'],
+    ['IMS0000000001','Aarav Shah','IPMAT-M-01','Ahmedabad','aarav@example.com','1']]);
 };
 
 $('#load').onclick = () => load($('#paper').value || '');
