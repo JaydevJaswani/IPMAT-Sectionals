@@ -475,10 +475,10 @@ section.blk:last-of-type{border-bottom:0}
       <div class="gate-tag">Trusted for Success</div>
       <a class="homelink" href="../">&larr; All papers</a>
       NAV<br>Readiness<br><em>Section B</em>
-      <p class="gate-sub">Thirty multiple-choice questions: twenty-five on Number System &amp; Algebra and a five-question arrangement set at the end. +4 for a correct answer, &minus;1 for a wrong one. Forty minutes.</p>
+      <p class="gate-sub">Thirty multiple-choice questions: twenty-five on Number System &amp; Algebra and a five-question arrangement set at the end. +4 for a correct answer, &minus;1 for a wrong one. 35 minutes.</p>
       <div class="gate-facts">
         <div class="gate-fact"><b>30</b><span>Questions</span></div>
-        <div class="gate-fact"><b>40:00</b><span>Minutes</span></div>
+        <div class="gate-fact"><b>35:00</b><span>Minutes</span></div>
         <div class="gate-fact"><b>5.47</b><span>Mean difficulty</span></div>
         <div class="gate-fact"><b>+4/&minus;1</b><span>Marking</span></div>
       </div>
@@ -526,7 +526,7 @@ section.blk:last-of-type{border-bottom:0}
       real exam and it is scored the same way.</p>
 
     <dl class="rulegrid">
-      <div class="rulerow"><dt>Duration</dt><dd><b>40 minutes</b>, counted down on screen. When it reaches
+      <div class="rulerow"><dt>Duration</dt><dd><b>35 minutes</b>, counted down on screen. When it reaches
         zero the paper submits itself &mdash; whatever is on screen at that moment is recorded.</dd></div>
       <div class="rulerow"><dt>Questions</dt><dd><b>30</b>, shown one at a time. You may move between them
         freely using the palette on the right, in any order, as often as you like.</dd></div>
@@ -555,7 +555,7 @@ section.blk:last-of-type{border-bottom:0}
 
     <div class="callout">
       <h4>A readiness check, not a race</h4>
-      <p>At a well-prepared student's pace these 30 questions need about 42 minutes. You have 40. Every question uses only what was taught in the NAV sessions. Bank the questions you are sure of first, then return to the rest. The report at the end shows where your time went as well as what you got wrong.</p>
+      <p>At a well-prepared student's pace these 30 questions need about 42 minutes. You have 35 — nobody is expected to attempt all of them. Every question uses only what was taught in the NAV sessions. Bank the questions you are sure of first, then return to the rest. The report at the end shows where your time went as well as what you got wrong.</p>
     </div>
 
     <div style="margin-top:26px">
@@ -584,7 +584,7 @@ section.blk:last-of-type{border-bottom:0}
     <div class="startrow" id="startrow" hidden>
       <button class="btn btn-red" id="begin">Begin test &rarr;</button>
       <p class="startnote">Once you begin, leaving or reloading this page ends the attempt.
-        Make sure you have 40 uninterrupted minutes.</p>
+        Make sure you have 35 uninterrupted minutes.</p>
     </div>
   </div>
 </div>
@@ -596,7 +596,7 @@ section.blk:last-of-type{border-bottom:0}
       <span class="tb-title">NAV Readiness Paper · Section B</span></div>
     <div class="tb-r">
       <span class="tb-pin" id="pinlbl"></span>
-      <span class="timer mono" id="timer">40:00</span>
+      <span class="timer mono" id="timer">35:00</span>
     </div>
   </div></div>
   <div class="wrap"><div class="layout">
@@ -696,7 +696,7 @@ section.blk:last-of-type{border-bottom:0}
     <div id="r-rank"></div>
 
     <section class="blk">
-      <div class="blkhead"><h3>Where the forty minutes went</h3>
+      <div class="blkhead"><h3>Where the 35 minutes went</h3>
         <p>Every block is one visit to one question. Width is time; colour is what that time bought.</p></div>
       <div class="ribbon">
         <div class="ribbar" id="ribbar"></div>
@@ -750,7 +750,7 @@ const CONFIG = {
   OFFLINE_FALLBACK: false,
   PAPER_ID: "NAV-RP-MCQ",
   PAPER_NAME: "NAV Readiness Paper — Section B (MCQ)",
-  DURATION: 40 * 60,
+  DURATION: 35 * 60,
   SALT: "IMSGJ-NAV-RP-MCQ",
   PIN_SALT: "IMSGJ-PIN-NAV-RP-MCQ",
   PIN_ITER: 12000,       // hash rounds — makes offline guessing of the PIN list expensive
@@ -2498,7 +2498,7 @@ function render(A) {
   /* ribbon */
   const segs = (A.segs && A.segs.length) ? A.segs : timeline();
   const bar = $('#ribbar'); bar.innerHTML = '';
-  const total = CONFIG.DURATION;                    // the ribbon is always the full 40 minutes
+  const total = CONFIG.DURATION;                    // the ribbon is always the full paper clock
   segs.forEach(s => {
     const dur = s.to - s.from;
     if (s.q < 0) {                                   // the paper was closed and reopened here
@@ -2539,7 +2539,7 @@ function render(A) {
     bar.appendChild(u);
   }
   const ax = $('#ribaxis'); ax.innerHTML = '';
-  for (let m = 0; m <= 40; m += 5) ax.appendChild(el('span', '', m + 'm'));
+  for (let m = 0; m <= CONFIG.DURATION / 60; m += 5) ax.appendChild(el('span', '', m + 'm'));
   const kb = $('#ribkey'); kb.innerHTML = '';
   Object.keys(CL).forEach(k => {
     if (k === 'unseen' || !A.per.some(p => p.cls === k)) return;
@@ -2581,10 +2581,10 @@ function render(A) {
   const h = el('h4'); const p1 = el('p'); const p2 = el('p');
   if (A.wasted < 300) {
     h.textContent = 'Your time went where it should have';
-    p1.innerHTML = 'Only <b>' + human(A.wasted) + '</b> of your forty minutes produced no marks. ' +
+    p1.innerHTML = 'Only <b>' + human(A.wasted) + '</b> of your 35 minutes produced no marks. ' +
       'That is tight discipline and it is the hardest part of this paper to get right.';
   } else {
-    h.textContent = human(A.wasted) + ' of your forty minutes produced no marks';
+    h.textContent = human(A.wasted) + ' of your 35 minutes produced no marks';
     p1.innerHTML = '<b>' + human(A.tNeg) + '</b> went on questions you answered wrongly and <b>' +
       human(A.tBleed) + '</b> on questions you worked and then left blank. ' +
       'That is <b>' + Math.round(A.wasted / A.used * 100) + '%</b> of the paper.';
@@ -2613,7 +2613,7 @@ function render(A) {
   $('#rfoot').innerHTML = 'Pace benchmarks start from each question\'s authored difficulty and ' +
     'are corrected by what the batch actually did on it, so they tighten as more students sit ' +
     'the paper. The 30 benchmarks sum to ' + Math.round(A.benchTotal / 60) + ' minutes against a ' +
-    '40-minute clock, so a complete attempt is not the target. ' + CONFIG.PAPER_NAME + '.';
+    '35-minute clock, so a complete attempt is not the target. ' + CONFIG.PAPER_NAME + '.';
 }
 
 function tip(ev, p, dur) {
@@ -2680,7 +2680,7 @@ function renderTriage(tri) {
     '<div class="trihead">' +
       '<div><div class="triband">' + band + '</div>' +
       '<div class="triscore">' + tri.score + '<small>/100</small></div></div>' +
-      '<p class="trisum">Your forty minutes is an account. Every second went to a question ' +
+      '<p class="trisum">Your 35 minutes is an account. Every second went to a question ' +
       'you got right, a question you got wrong, or a question you decided not to try &mdash; ' +
       'and the clock you never spent belongs to that last one too. This is the share of it ' +
       'that bought you something.</p>' +
