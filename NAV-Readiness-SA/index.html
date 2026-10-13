@@ -1346,6 +1346,11 @@ async function verifyPin() {
     if (!j.ok) { gateMsg(REASON[j.reason] || 'That PIN could not be verified.'); return; }
     try { sessionStorage.setItem(HUBKEY, v); } catch (e) {}
     if (REVIEW_MODE) return doReview(v);
+    if (j.attempted) {
+      if (j.released) return doReview(v);   // already sat + report released -> review
+      gateMsg('You have already sat this paper. You cannot take it again \u2014 your report will open here once your faculty releases it.');
+      return;
+    }
     welcome(v, j);
   } catch (e) {
     gateBusy(false);
