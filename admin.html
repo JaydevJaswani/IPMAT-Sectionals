@@ -350,6 +350,9 @@ async function loadSessions(){
           '<div class="s4"><b>'+(p.sat||0)+'</b><span>Submitted</span></div>' +
           '<div class="s4"><b>'+(p.pending||0)+'</b><span>Pending</span></div>' +
         '</div>' : '') +
+        (p.ready ? '<button class="btn-g btn mini" style="margin-top:8px;width:100%" '+
+          'data-sess="'+p.id+'">Who&rsquo;s in &middot; live scores</button>'+
+          '<div class="sessdetail" id="sess-'+p.id+'" style="margin-top:8px"></div>' : '') +
         (p.ready ? '<button class="btn-g btn" style="margin-top:10px;width:100%" ' +
           'data-paper="' + p.id + '" data-open="' + (openNow ? '0' : OPEN_MINS) + '">' +
           (openNow ? 'Close now' : 'Open for ' + OPEN_MINS + ' min') + '</button>'
@@ -777,6 +780,33 @@ document.addEventListener('click', e=>{
   if(box){ const cs='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s='';
     for(let i=0;i<5;i++) s+=cs[Math.floor(Math.random()*cs.length)];
     box.value=s; box.focus(); }
+});
+
+/* ---- live session view: who's in + scores ---- */
+document.addEventListener('click', async e=>{
+  const b=e.target.closest('#sessions button[data-sess]');
+  if(!b) return;
+  const paper=b.getAttribute('data-sess');
+  const box=document.getElementById('sess-'+paper);
+  if(box.dataset.open==='1'){ box.innerHTML=''; box.dataset.open=''; b.textContent="Who’s in · live scores"; return; }
+  b.disabled=true; const lab=b.textContent; b.textContent='Loading…';
+  try{
+    const j=await (await fetch(rosterUrl('session')+'&paper='+encodeURIComponent(paper))).json();
+    if(!j.ok){ box.innerHTML='<div class="s" style="color:var(--warn)">Could not load.</div>'; }
+    else if(!j.rows.length){ box.innerHTML='<div class="s">Nobody has unlocked this paper in the current session.</div>'; }
+    else{
+      let html='<div class="s" style="margin:2px 0 6px"><b>'+j.inPaper+'</b> in paper now · <b>'+j.submitted+'</b> submitted</div>'+
+        '<table class="lb"><thead><tr><th>Student</th><th>Batch</th><th>Status</th><th class="r">Score</th><th class="r">Acc</th></tr></thead><tbody>';
+      j.rows.forEach(r=>{ html+='<tr>'+
+        '<td class="nm">'+h(r.name||r.pin)+'</td><td>'+h(r.batch||'—')+'</td>'+
+        '<td>'+(r.status==='in_paper'?'<span style="color:var(--warn)">in paper…</span>':'<span style="color:var(--ok)">submitted</span>')+'</td>'+
+        '<td class="r">'+(r.score==null?'—':r.score)+'</td>'+
+        '<td class="r">'+(r.accuracy==null?'—':r.accuracy+'%')+'</td></tr>'; });
+      html+='</tbody></table>';
+      box.innerHTML=html; box.dataset.open='1';
+    }
+  }catch(err){ box.innerHTML='<div class="s" style="color:var(--warn)">Could not reach the server.</div>'; }
+  b.disabled=false; b.textContent = box.dataset.open==='1' ? 'Hide' : lab;
 });
 
 /* ---- student lookup ---- */
